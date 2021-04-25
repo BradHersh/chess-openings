@@ -29,10 +29,14 @@
         console.log('Old position: ' + Chessboard.objToFen(oldPos))
         console.log('New position: ' + Chessboard.objToFen(newPos))
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        
+        
+        
+        
         if (Chessboard.objToFen(newPos) == moves[i]) {
-          var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
+          var board = Chessboard(board1, {position: moves[i+1], draggable: true, onChange: onChange})
           console.log('yes')
-          i = i + 1
+          i = i + 2
           
         }
         else {
