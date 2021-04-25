@@ -59,3 +59,7 @@ def learn():
 @app.route('/Test')
 def Test():
     return render_template('Test.html', title='Test')
+
+@app.route('/chess')
+def chess():
+    return render_template('chess.html', title='Test')
