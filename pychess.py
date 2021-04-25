@@ -6,14 +6,13 @@ import numpy as np
 board=chess.Board()
 board
 
-class1 = board.shredder_fen()
-end = class1.index(' ')
+
 
 #dir(board) -- to see attributes
 #%%
 #Capital letters = white pieces
 
-boardlayout = class1[:end]
+boardlayout = board.board_fen()
 boardrows = boardlayout.split('/')
 boardrows = np.array([i for i in boardrows])
 collist = ['a','b','c','d','e','f','g','h']
