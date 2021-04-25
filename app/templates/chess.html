@@ -4,7 +4,7 @@
 <html>
   <head>
     <title>Chess</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.js') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
   </head>
@@ -17,7 +17,7 @@
         onChange: onChange
       }
       var i = 0
-      var moves = ['rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR','rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR','rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R','r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R']
+      var queens_gambit = ['rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1','rnbqkb1r/1p3ppp/p3pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1']
       var two = 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR'
       var three = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
       var board = Chessboard(board1, config)
@@ -31,16 +31,16 @@
         console.log('Old position: ' + Chessboard.objToFen(oldPos))
         console.log('New position: ' + Chessboard.objToFen(newPos))
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        if (Chessboard.objToFen(newPos) == moves[i]) {
-          var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
-          console.log('yes')
-          i = i + 1
+         if (Chessboard.objToFen(newPos) == queens_gambit[i]) {
+           var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
+           console.log('yes')
+           i = i + 1
           
-        }
-        else {
-          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
-          console.log('no')
-        }
+         }
+         else {
+           var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+           console.log('no')
+         }
     
       }
 
@@ -53,7 +53,7 @@
       // }
       // else{
       //   console.log('bad')
-      // }
+      // // }
 
 
 
