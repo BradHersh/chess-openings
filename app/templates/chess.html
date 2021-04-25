@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chess</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+  </head>
+  <body>
+    <div id="board1" style="width: 400px"></div>
+    <script>
+      var config = {
+        draggable: true,
+        position: 'start',
+        onChange: onChange
+      }
+      var i = 0
+      var moves = ['rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR','rnbqkbnr/pppp1ppp/8/4p3/4P3/8/PPPP1PPP/RNBQKBNR','rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R','r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R']
+      var two = 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR'
+      var three = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
+      var board = Chessboard(board1, config)
+
+
+
+      
+// --- Begin Example JS --------------------------------------------------------
+      function onChange (oldPos, newPos) {
+        console.log('Position changed:')
+        console.log('Old position: ' + Chessboard.objToFen(oldPos))
+        console.log('New position: ' + Chessboard.objToFen(newPos))
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        if (Chessboard.objToFen(newPos) == moves[i]) {
+          var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
+          console.log('yes')
+          i = i + 1
+          
+        }
+        else {
+          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+          console.log('no')
+        }
+    
+      }
+
+    
+      // --- End Example JS ----------------------------------------------------------
+
+
+      // if (board = Chessboard(board1, two){
+      //   console.log('good')
+      // }
+      // else{
+      //   console.log('bad')
+      // }
+
+
+
+      
+
+    </script>
+    
