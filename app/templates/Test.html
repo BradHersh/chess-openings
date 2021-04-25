@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <head>
+        <title>Test</title>
+    </head>
     <h1>Hi, {{ current_user.username }}!</h1>
     <h2>What would you like to Test?</h2>
     <ul>
         <li>Queens Gambit</li>
-        <li>Once again, Jacob is better than Dean at chess!</li>
     </ul>
 {% endblock %}
