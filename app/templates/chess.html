@@ -32,12 +32,15 @@
   </head>
 
   <body>
-    <div style="color: white;">
-      <h1>This is the {{ x }}!</h1>
+    <div>
+      <h1>Hi, {{ current_user.username }}!</h1>
       {% for post in posts %}
+      <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+      {% endfor %}
+      </div>
     </div>
 
-    <br><br><br><br>
+    <br><br>
 
     <div class = "float-container">
 
