@@ -86,24 +86,29 @@
         console.log('Old position: ' + Chessboard.objToFen(oldPos))
         console.log('New position: ' + Chessboard.objToFen(newPos))
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-         if (Chessboard.objToFen(newPos) == queens_gambit[i]) {
-           var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
-           console.log('yes')
-           i = i + 2
-           console.log(Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ])
-          
-         }
-         else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+        if (i<queens_gambit.length){
+          if (Chessboard.objToFen(newPos) == queens_gambit[i]) {
             var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
             console.log('yes')
             i = i + 2
-         }
+            console.log(Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ])
+            
+          }
+          else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+              var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
+              console.log('yes')
+              i = i + 2
+          }
 
-         
-         else {
-           var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
-           console.log('no')
-         }
+          
+          else {
+            var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+            console.log('no')
+          }
+        } else {
+          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+        }
+        
     
       }
   
