@@ -3,15 +3,24 @@
 {% block content %}
     <head>
         <title>Home</title>
-        
+        <link rel="stylesheet" href="static/css/generalstyle.css">
+        <style>
+            * {
+                color: white;
+            }
+        </style>
     </head>
 
-    <h1>Hi, {{ current_user.username }}!</h1>
-    {% for post in posts %}
-    <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-    {% endfor %}
-    </div>
-    
-    <a href = "{{ url_for('learn') }}">Learn?</a>
-    <a href = "{{ url_for('Test') }}">Test?</a>
+    <body>
+
+        <h1>Hi, {{ current_user.username }}!</h1>
+        {% for post in posts %}
+        <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+        {% endfor %}
+        </div>
+        
+        <a href = "{{ url_for('learn') }}">Learn?</a>
+        <a href = "{{ url_for('Test') }}">Test?</a>
+
+    </body>
 {% endblock %}
