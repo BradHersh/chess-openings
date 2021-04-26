@@ -7,8 +7,10 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moves.js') }}"></script>
   </head>
   <body>
+    <h1 id = "openingName"> Welcome to the {{opening}} Lesson!</h1>
     <div id="board1" style="width: 400px"></div>
     <script>
       var config = {
@@ -17,14 +19,18 @@
         onChange: onChange
       }
       var i = 0
-      //Caro-Kann
-      var moves = ['rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR',
-                   'rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR',
-                   'rnbqkbnr/pp1ppppp/2p5/8/4P3/2N5/PPPP1PPP/R1BQKBNR',
-                   'rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N5/PPPP1PPP/R1BQKBNR',
-                   'rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R',
-                   ]
+      var openingName = '{{opening}}'
+      for (i in data) {
+        if (i == openingName){
+          movesArray = data[i];
+          console.log(typeof(movesArray))
+          for (i in movesArray){console.log(i)}
+          break
+        }
+      }
       
+      var moves = movesArray
+      console.log(movesArray[i])
       var board = Chessboard(board1, config)
 
       
@@ -63,4 +69,6 @@
       
 
     </script>
+
+
  {% endblock %}

@@ -60,6 +60,7 @@ def learn():
 def Test():
     return render_template('Test.html', title='Test')
 
-@app.route('/chess')
+@app.route('/chess')                                                                                  
 def chess():
-    return render_template('chess.html', title='Test')
+    opening = request.args.get("value")
+    return render_template('chess.html', title='Test', opening = opening)
