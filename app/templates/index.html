@@ -3,24 +3,100 @@
 {% block content %}
     <head>
         <title>Home</title>
-        <link rel="stylesheet" href="static/css/generalstyle.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             * {
                 color: white;
             }
+            
+            body {
+                background-color: black;
+            }
+
+            .center {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+            .container {
+            position: relative;
+            width: 50%;
+            }
+
+            .image {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: .5s ease;
+            backface-visibility: hidden;
+            }
+
+            .middle {
+            transition: .5s ease;
+            opacity: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            text-align: center;
+            }
+
+            .container:hover .image {
+            opacity: 0.1;
+            }
+
+            .container:hover .middle {
+            opacity: 1;
+            }
+
+            .text {
+            text-align: center;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            font-size: 32px;
+            }
+
         </style>
+
     </head>
 
     <body>
-
-        <h1>Hi, {{ current_user.username }}!</h1>
-        {% for post in posts %}
-        <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
-        {% endfor %}
+        <div>
+            <br><br>
+            <h1 style="text-align: center; ">Hi, {{ current_user.username }}!</h1>
+            {% for post in posts %}
+            <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
+            {% endfor %}
+            </div>
         </div>
         
-        <a href = "{{ url_for('learn') }}">Learn?</a>
-        <a href = "{{ url_for('Test') }}">Test?</a>
+
+        <div class="row">
+            <div class="col-sm-4 container">
+                <img src="static/img/chesspieces/wikipedia/wK.png" alt="Avatar" class="image center" style="width: 200px;">
+                    <div class="middle">
+                        <div class="text"><a href='{{ url_for("learn") }}'>Learn</a></div>
+                    </div>
+            </div>
+            <div class="col-sm-4 container">
+                <img src="static/img/chesspieces/wikipedia/wP.png" alt="Avatar" class="image center" style="width: 200px;">
+                    <div class="middle">
+                        <div class="text"><a href='{{ url_for("learn") }}'>Learn</a></div>
+                    </div>
+            </div>
+            <div class="col-sm-4 container">
+                <img src="static/img/chesspieces/wikipedia/wN.png" alt="Avatar" class="image center" style="width: 200px;">
+                    <div class="middle">
+                        <div class="text"><a href='{{ url_for("learn") }}'>Learn</a></div>
+                    </div>
+            </div>
+        </div>
 
     </body>
 {% endblock %}
