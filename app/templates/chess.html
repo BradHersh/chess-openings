@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% block content %}
 
 <!DOCTYPE html>
@@ -7,9 +9,31 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+    <style>
+      .float-child {
+         flex: 1;
+         
+     }  
+     .float-container {
+        display: flex;
+    }
+    .float-container:float-container{
+      margin-right:20px;
+    }
+    </style>
   </head>
+
   <body>
-    <div id="board1" style="width: 400px"></div>
+    <div class = "float-container">
+
+      <div id="board2" class = "float-child"></div>
+      <div id = "board1" class = "float-child"></div>
+
+    </div>
+    <button id='next'>Next Move</button>
+    <button id='last'>Last Move</button>
+
+
     <script>
       var config = {
         draggable: true,
@@ -17,11 +41,42 @@
         onChange: onChange
       }
       var i = 0
+      x = 0
       var queens_gambit = ['rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1','rnbqkb1r/1p3ppp/p3pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1']
-      var two = 'rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR'
-      var three = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR'
-      var board = Chessboard(board1, config)
+      var board = Chessboard('board1', {
+        draggable: true,
+        position: 'start',
+        onChange: onChange,
+      })
+      var board2 = Chessboard('board2', {'position': 'start'})
 
+
+      $('#next').on('click', function(){   
+        if (x<queens_gambit.length){
+          x = x+1
+
+        }  
+        else {
+          x = x
+        }
+        
+        board2.position(queens_gambit[x])
+        console.log(x)
+
+      })
+
+      $('#last').on('click', function(){
+        if (x>0){
+          x = x-1
+
+        }  
+        else {
+          x = x
+        }
+        console.log(x)
+        board2.position(queens_gambit[x])
+
+      })
 
 
       
@@ -32,18 +87,26 @@
         console.log('New position: ' + Chessboard.objToFen(newPos))
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
          if (Chessboard.objToFen(newPos) == queens_gambit[i]) {
-           var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
+           var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
            console.log('yes')
-           i = i + 1
+           i = i + 2
+           console.log(Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ])
           
          }
+         else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+            var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
+            console.log('yes')
+            i = i + 2
+         }
+
+         
          else {
            var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
            console.log('no')
          }
     
       }
-
+  
     
       // --- End Example JS ----------------------------------------------------------
 
