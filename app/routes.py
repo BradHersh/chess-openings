@@ -62,4 +62,8 @@ def Test():
 
 @app.route('/chess')
 def chess():
-    return render_template('chess.html', title='Test')
+    return render_template('chess.html', title='chess')
+
+@app.route('/results')
+def results():
+    return render_template('results.html', title='Results')
