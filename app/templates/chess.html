@@ -32,6 +32,9 @@
     </div>
     <button id='next'>Next Move</button>
     <button id='last'>Last Move</button>
+    <button id='reset'>Start Again</button>
+    <div id = 'complete'></div>
+    <div id = 'score'></div>
 
 
     <script>
@@ -43,12 +46,15 @@
       var i = 0
       x = 0
       var queens_gambit = ['rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1','rnbqkb1r/1p3ppp/p3pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1']
+      var accuracy = queens_gambit.length
+
       var board = Chessboard('board1', {
         draggable: true,
         position: 'start',
         onChange: onChange,
       })
       var board2 = Chessboard('board2', {'position': 'start'})
+      var moves = 0
 
 
       $('#next').on('click', function(){   
@@ -78,6 +84,17 @@
 
       })
 
+      $('#reset').on('click', function(){
+        var board = Chessboard(board1, config)
+        i = 0
+        accuracy = queens_gambit.length
+        document.getElementById('score').innerHTML = "";
+        document.getElementById('complete').innerHTML = "";
+
+      })
+  
+
+
 
       
 // --- Begin Example JS --------------------------------------------------------
@@ -86,42 +103,54 @@
         console.log('Old position: ' + Chessboard.objToFen(oldPos))
         console.log('New position: ' + Chessboard.objToFen(newPos))
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        if (i<queens_gambit.length){
+
+        if (i<queens_gambit.length-1){
           if (Chessboard.objToFen(newPos) == queens_gambit[i]) {
             var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
             console.log('yes')
             i = i + 2
-            console.log(Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ])
+            if (i == queens_gambit.length){
+              document.getElementById('complete').style.color = "green";
+              document.getElementById('complete').innerHTML = "Well done!";
+              document.getElementById('score').innerHTML = accuracy +  "/" + queens_gambit.length;
+
+
+            }
             
           }
           else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
               var board = Chessboard(board1, {position: queens_gambit[i+1], draggable: true, onChange: onChange})
               console.log('yes')
               i = i + 2
+              if (i == queens_gambit.length){
+              document.getElementById('complete').style.color = "green";
+              document.getElementById('complete').innerHTML = "Well done!";
+              document.getElementById('score').innerHTML = accuracy +  "/" + queens_gambit.length;
+
+
+            }
+
           }
 
           
           else {
             var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
             console.log('no')
+            accuracy = accuracy - 1
           }
         } else {
-          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
+
         }
-        
+
+      
     
       }
   
-    
+
       // --- End Example JS ----------------------------------------------------------
 
 
-      // if (board = Chessboard(board1, two){
-      //   console.log('good')
-      // }
-      // else{
-      //   console.log('bad')
-      // // }
 
 
 
