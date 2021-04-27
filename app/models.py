@@ -10,6 +10,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    results = db.relationship('Results', backref = 'student', lazy = 'dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -25,6 +26,19 @@ class Post(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Results(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    opening = db.Column(db.String(140))
+    result =db.Column(db.Integer)
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+
+    def __repr__(self):
+        return '<Results {}>'.format(self.result)
+
+
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)

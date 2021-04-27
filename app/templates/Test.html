@@ -2,9 +2,12 @@
 
 {% block content %}
     <h1>Hi, {{ current_user.username }}!</h1>
-    <h2>What would you like to Test?</h2>
+    <h2>What would you like to learn?</h2>
     <ul>
-        <li>Queens Gambit</li>
-        <li>Once again, Jacob is better than Dean at chess!</li>
+        <li>Jacob is better than Dean at chess!</li>
+        <li><a href = "{{ url_for('chesstest', opening ='Bogo-Indian Opening') }}">Bogo-Indian</a></li>
+        <li><a href = "{{ url_for('chesstest', opening ='Queens Gambit') }}">Queens Gambit</a></li>
+        <li><a href = "{{ url_for('chesstest', opening ='Caro-Kann Opening') }}">Caro-Kann</a></li>
+
     </ul>
 {% endblock %}

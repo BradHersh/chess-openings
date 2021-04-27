@@ -5,6 +5,9 @@
     <h2>What would you like to learn?</h2>
     <ul>
         <li>Jacob is better than Dean at chess!</li>
-        <li><a href = "{{ url_for('chess') }}">Queens Gambit</a></li>
+        <li><a href = "{{ url_for('chesspractice', opening ='Bogo-Indian Opening') }}">Bogo-Indian</a></li>
+        <li><a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">Queens Gambit</a></li>
+        <li><a href = "{{ url_for('chesspractice', opening ='Caro-Kann Opening') }}">Caro-Kann</a></li>
+
     </ul>
 {% endblock %}

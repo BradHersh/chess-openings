@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chess</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+    <style>
+
+    </style>
+  </head>
+
+  <body>
+    <h1 id = 'title'>{{ name.opening }}</h1>
+
+
+
+    <div id = "board1" style = "width: 400px"></div>
+      
+
+    <div id = 'complete'></div>
+    <div id = 'score'></div>
+    <form action = "{{ url_for('complete') }}" method = "post">
+        <input id = "form_score" type ="hidden" name = "score" value = "">
+        <input id = "opening" type ="hidden" name = "opening" value = {{name.opening}}>
+
+        <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
+    </form>
+    
+    <!-- <p onclick = "sendData()"> <a  href="{{ url_for('results') }}">Save</a> </p> -->
+
+
+    
+    
+
+
+    <script>
+      x = document.getElementById('title').innerHTML;
+      x = x.toLowerCase();
+      x = x.split(" ")
+      opening = x[0] + '_' + x[1]
+
+      var config = {
+        draggable: true,
+        position: 'start',
+        onChange: onChange
+      }
+      var i = 0
+      x = 0
+      var openings = {'queens_gambit':['rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1','rnbqkb1r/1p3ppp/p3pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1'],
+                      'bogo-indian_opening': ["rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR",
+        "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR",
+        "rnbqkb1r/pppppppp/5n2/8/2PP4/8/PP2PPPP/RNBQKBNR",
+        "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR",
+        "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/5N2/PP2PPPP/RNBQKB1R",
+        "rnbqk2r/pppp1ppp/4pn2/8/1bPP4/5N2/PP2PPPP/RNBQKB1R"
+       ], "caro-kann_opening" : ["rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR",
+        "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR",
+        "rnbqkbnr/pp1ppppp/2p5/8/4P3/2N5/PPPP1PPP/R1BQKBNR",
+        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N5/PPPP1PPP/R1BQKBNR",
+        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R",
+        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R"
+
+        ]}
+      this_opening = openings[opening]
+      console.log(opening)
+      var accuracy = this_opening.length
+
+      var board = Chessboard('board1', {
+        draggable: true,
+        position: 'start',
+        onChange: onChange,
+      })
+      var moves = 0
+
+
+
+
+
+
+      
+// --- Begin Example JS --------------------------------------------------------
+      function onChange (oldPos, newPos) {
+        console.log('Position changed:')
+        console.log('Old position: ' + Chessboard.objToFen(oldPos))
+        console.log('New position: ' + Chessboard.objToFen(newPos))
+        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+        console.log(i)
+        console.log(this_opening.length)
+        if (i<this_opening.length-1){
+          if (Chessboard.objToFen(newPos) == this_opening[i]) {
+            var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+            console.log('yes')
+            i = i + 2
+            if (i == this_opening.length){
+              document.getElementById('complete').style.color = "green";
+              document.getElementById('complete').innerHTML = "Complete!";
+              score = (accuracy/this_opening.length)*100
+              document.getElementById('score').innerHTML = score + '%';
+              document.getElementById('submit').type = "submit"
+
+            }
+            
+          }
+          else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+              var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+              console.log('yes')
+              i = i + 2
+              if (i == this_opening.length){
+              document.getElementById('complete').style.color = "green";
+              document.getElementById('complete').innerHTML = "Well done!";
+              document.getElementById('save').innerHTML = "Save Score?";
+              document.getElementID('submit').type = "submit"
+
+              document.getElementById('score').innerHTML =  (accuracy/this_opening.length)*100 + '%';
+
+
+            }
+
+          }
+
+          
+          else {
+            var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+            console.log('no')
+            if (accuracy > 0){
+              accuracy = accuracy - 1
+
+            }
+          }
+        } else {
+          var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
+
+        }
+
+      
+    
+      }
+  
+
+      // --- End Example JS ----------------------------------------------------------
+
+
+
+      function sendData () {
+        score = (accuracy/this_opening.length)*100
+
+        document.getElementById('form_score').value = score;
+        }
+
+
+
+      
+
+      
+
+    </script>
+ {% endblock %}
