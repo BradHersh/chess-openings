@@ -1,16 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Hi, {{ current_user.username }}!</h1>
-    <h2>What would you like to learn?</h2>
-    <ul>
-        <li>Jacob is better than Dean at chess!</li>
-        <li><a href = "{{ url_for('chesspractice', opening ='Bogo-Indian Opening') }}">Bogo-Indian</a></li>
-        <li><a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">Queens Gambit</a></li>
-        <li><a href = "{{ url_for('chesspractice', opening ='Caro-Kann Opening') }}">Caro-Kann</a></li>
 
-    </ul>
-    <head>
         <title>Learn</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -89,7 +80,7 @@
                 <div class="mask rgba-black-light"></div>
                 </div>
                 <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chess') }}">Ruy Lopez</a></h3>
+                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">Ruy Lopez</a></h3>
                 <p>White opening line</p>
                 </div>
             </div>
@@ -102,7 +93,7 @@
                 <div class="mask rgba-black-strong"></div>
                 </div>
                 <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chess') }}">Italian Game</a></h3>
+                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening ='Italian Game') }}">Italian Game</a></h3>
                 <p>White opening line</p>
                 </div>
             </div>
@@ -115,7 +106,7 @@
                 <div class="mask rgba-black-slight"></div>
                 </div>
                 <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chess') }}">Queens Gambit</a></h3>
+                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice',opening ='Queens Gambit') }}">Queens Gambit</a></h3>
                 <p>White opening line</p>
                 </div>
             </div>
@@ -128,7 +119,7 @@
                 <div class="mask rgba-black-strong"></div>
                 </div>
                 <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chess') }}">Sicilian Defence</a></h3>
+                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening = 'Sicilian Defence') }}">Sicilian Defence</a></h3>
                 <p>Black opening line</p>
                 </div>
             </div>
@@ -141,7 +132,7 @@
                 <div class="mask rgba-black-strong"></div>
                 </div>
                 <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chess') }}">French Defence</a></h3>
+                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening = 'French Defence') }}">French Defence</a></h3>
                 <p>Black opening line</p>
                 </div>
             </div>
