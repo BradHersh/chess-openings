@@ -111,12 +111,12 @@
               console.log('yes')
               i = i + 2
               if (i == this_opening.length){
-              document.getElementById('complete').style.color = "green";
-              document.getElementById('complete').innerHTML = "Well done!";
-              document.getElementById('save').innerHTML = "Save Score?";
-              document.getElementID('submit').type = "submit"
+                document.getElementById('complete').style.color = "green";
+                document.getElementById('complete').innerHTML = "Complete!";
+                score = (accuracy/this_opening.length)*100
+                document.getElementById('score').innerHTML = score + '%';
+                document.getElementById('submit').type = "submit"
 
-              document.getElementById('score').innerHTML =  (accuracy/this_opening.length)*100 + '%';
 
 
             }
