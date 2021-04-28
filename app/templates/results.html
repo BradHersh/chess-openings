@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Hi, {{current_user.username}} ! </h1>
+
+<table>
+<tr>
+
+
+
+    <th>Opening</th>
+    <th>Result</th>
+
+</tr>
+{% for r in query %}
+<tr>    
+    <td>
+        {{r.opening}}
+    </td>
+    <td>
+        {{r.result}}
+    </td>
+    
+</tr>
+{% endfor %}
+</table>
+
+    
+
+
+{% endblock %}
