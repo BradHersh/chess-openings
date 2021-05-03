@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<div class = "progress">
+    <div class = "progress-bar" role = "progressbar" style = "width: {{prog}}"  aria-valuemin="0" aria-valuemax="100">{{prog}}</div>
+</div>
+{% include "footer.html" %}
+{% endblock %}

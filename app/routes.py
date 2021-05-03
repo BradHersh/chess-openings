@@ -10,6 +10,10 @@ from werkzeug.urls import url_parse
 from app import db
 from app.forms import RegistrationForm
 from flask import jsonify, request
+from statistics import mode
+import re
+from sqlalchemy import func, select, distinct
+
 
 @app.route('/')
 @app.route('/index')
@@ -74,11 +78,15 @@ def chesstest(opening):
 @app.route('/complete', methods=['GET', 'POST'])
 def complete():
     score = request.form['score']
+    score = score.split('%')[0]
+    score = float(score)
     current_opening = request.form['opening']
-    result = Results(opening=current_opening, result=score, student = current_user)
-    db.session.add(result)
-    db.session.commit()
-    flash("well done test complete")
+    wrong = request.form['incorrect']
+    if score > 50:
+        result = Results(opening=current_opening, result=score, incorrect = wrong, student = current_user)
+        db.session.add(result)
+        db.session.commit()
+        flash("well done test complete")
     return redirect(url_for('index'))
 
 @app.route('/results', methods=['GET', 'POST'])
@@ -88,3 +96,38 @@ def results():
 
 
 
+@app.route('/feedback', methods=['GET', 'POST'])
+def feedback():
+    u = User.query.get(current_user.id)
+    results = Results.query.all()
+    lst = []
+    lst1 = []
+    flatlist = []
+    res = Results.query.filter_by(user_id = current_user.id)
+    for i in res:
+        wrong = i.incorrect
+        lst.append(wrong)
+    for i in lst:
+        i = re.sub('(,[^,]*),', r'\1 ', i).split()
+        lst1.append(i)
+    flattened = [val for sublist in lst1 for val in sublist]
+    most_wrong = mode(flattened)
+    most_wrong = most_wrong.split(',')
+    oldPos = most_wrong[0]
+    mistake = most_wrong[1]
+
+    return render_template('feedback.html', title='feedback', pos = oldPos, wrong = mistake)
+
+
+
+@app.route('/progress', methods=['GET', 'POST'])
+def progress():
+    res = Results.query.filter_by(user_id = current_user.id)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = 10
+    complete = str((numerator/denominator)*100 ) + '%'
+
+    return render_template('progress.html', title='progress', prog =complete)

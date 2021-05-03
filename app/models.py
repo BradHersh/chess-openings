@@ -3,6 +3,7 @@ from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
+from sqlalchemy.types import PickleType, ARRAY
 
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -31,6 +32,7 @@ class Results(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     opening = db.Column(db.String(140))
     result =db.Column(db.Integer)
+    incorrect = db.Column(db.ARRAY(db.String(140)))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
