@@ -83,10 +83,14 @@ def complete():
     current_opening = request.form['opening']
     wrong = request.form['incorrect']
     if score > 50:
-        result = Results(opening=current_opening, result=score, incorrect = wrong, student = current_user)
+        result = Results(opening=current_opening, result=score, incorrect = wrong, passed = True, student = current_user)
         db.session.add(result)
         db.session.commit()
         flash("well done test complete")
+    else:
+        result = Results(opening=current_opening, result=score, incorrect = wrong, passed = False, student = current_user)
+        db.session.add(result)
+        db.session.commit()
     return redirect(url_for('index'))
 
 @app.route('/results', methods=['GET', 'POST'])
@@ -96,33 +100,46 @@ def results():
 
 
 
-@app.route('/feedback', methods=['GET', 'POST'])
-def feedback():
-    u = User.query.get(current_user.id)
-    results = Results.query.all()
+@app.route('/feedback/<opening>/', methods=['GET', 'POST'])
+def feedback(opening):
     lst = []
     lst1 = []
     flatlist = []
-    res = Results.query.filter_by(user_id = current_user.id)
+    lst2 = []
+    lst3 = []
+    lst4 = []
+    res = Results.query.filter_by(user_id = current_user.id, opening = opening)
     for i in res:
         wrong = i.incorrect
         lst.append(wrong)
-    for i in lst:
-        i = re.sub('(,[^,]*),', r'\1 ', i).split()
-        lst1.append(i)
-    flattened = [val for sublist in lst1 for val in sublist]
-    most_wrong = mode(flattened)
-    most_wrong = most_wrong.split(',')
-    oldPos = most_wrong[0]
-    mistake = most_wrong[1]
+    if len(lst) != 0:
 
-    return render_template('feedback.html', title='feedback', pos = oldPos, wrong = mistake)
+        for x in lst:
+            lst2.append(x.split(','))
+        
+        flattened = [val for sublist in lst2 for val in sublist]
 
+        for i in range(1,len(flattened)):
+            if i%3 == 0:
+                lst3.append(flattened[i-3:i])
+        for i in lst3:
+            x = ','.join(i)
+            lst4.append(x)
+        most = mode(lst4)
+        most = most.split(',')
+        oldPos = most[0]
+        mistake = most[1]
+        correct = most[2]
+        
+
+        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake) 
+    else:
+        return "Test not attempted yet"
 
 
 @app.route('/progress', methods=['GET', 'POST'])
 def progress():
-    res = Results.query.filter_by(user_id = current_user.id)
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
     openings = []
     for r in res:
         openings.append(r.opening)

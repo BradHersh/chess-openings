@@ -14,8 +14,9 @@
 <div id="myBoard" style="width: 400px"></div>
 <button id="Mistake">Show Position</button>
 <button id="Pos">Mistake</button>
+<button id="correct">Correct Move</button>
 
-<p>{{wrong}}</p>
+<p>{{right}}</p>
 <script>
     var board = Chessboard('myBoard');
     $('#Pos').on('click', function () {
@@ -23,7 +24,11 @@
     })
 
     $('#Mistake').on('click', function () {
-    board.position('rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R')
+    board.position('{{Pos}}')
+    })
+
+    $('#correct').on('click', function () {
+    board.position('{{right}}')
     })
 </script>
 {% include "footer.html" %}

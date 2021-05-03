@@ -133,7 +133,7 @@
           else {
             var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
             console.log('no')
-            incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos)])
+            incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos), this_opening[i]])
             if (accuracy > 0){
               accuracy = accuracy - 1
 

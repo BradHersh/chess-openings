@@ -33,8 +33,11 @@ class Results(db.Model):
     opening = db.Column(db.String(140))
     result =db.Column(db.Integer)
     incorrect = db.Column(db.ARRAY(db.String(140)))
+    passed = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
     
 
     def __repr__(self):
