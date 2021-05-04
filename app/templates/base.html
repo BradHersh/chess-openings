@@ -7,7 +7,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>        
         <style>
           .nav-link {
               color: white;
@@ -42,14 +42,23 @@
         </li>
         <li class="nav-item dropdown" style="padding-top: 2%;">
           <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            Dropdown button
+            Feedback
           </button>
           <div class="dropdown-menu">
             <a class="dropdown-item" href="{{ url_for('feedback',opening ='Queens') }}">Queens Gambit</a>
             <a class="dropdown-item" href="{{ url_for('feedback',opening ='Bogo-Indian') }}">Bogo Indian</a>
             <a class="dropdown-item" href="#">Link 3</a>
           </div>
-        </div>
+        </li>
+        <li class="nav-item dropdown" style="padding-top: 2%;">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            Progress
+          </button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="{{ url_for('progress',opening ='Queens') }}">Queens Gambit</a>
+            <a class="dropdown-item" href="{{ url_for('progress',opening ='Bogo-Indian') }}">Bogo Indian</a>
+            <a class="dropdown-item" href="#">Link 3</a>
+          </div>
         </li>
       </ul>
 

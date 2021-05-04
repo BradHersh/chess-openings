@@ -13,7 +13,7 @@ from flask import jsonify, request
 from statistics import mode
 import re
 from sqlalchemy import func, select, distinct
-
+import numpy as np
 
 @app.route('/')
 @app.route('/index')
@@ -132,19 +132,28 @@ def feedback(opening):
         correct = most[2]
         
 
-        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake) 
+        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening) 
     else:
         return "Test not attempted yet"
 
 
-@app.route('/progress', methods=['GET', 'POST'])
-def progress():
+@app.route('/progress/<opening>/', methods=['GET', 'POST'])
+def progress(opening):
     res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
     openings = []
+    marks = []
+    time = []
     for r in res:
         openings.append(r.opening)
     numerator = len(set(openings))
     denominator = 10
     complete = str((numerator/denominator)*100 ) + '%'
+    for r in res1:
+        # r.result = r.result.split('%')[0]
+        # r.result = float(r.result)
+        marks.append(float(r.result))
+    tries = list(np.arange(1,len(marks)+1))
+    
 
-    return render_template('progress.html', title='progress', prog =complete)
+    return render_template('progress.html', title='progress', prog =complete, grades = marks, attempt = tries, opening = opening)

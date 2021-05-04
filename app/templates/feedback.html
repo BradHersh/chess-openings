@@ -9,14 +9,17 @@
 
     </style>
   </head>
-<h1>Hi, {{current_user.username}} ! </h1>
+<h1>{{opening}}  </h1>
 
 <div id="myBoard" style="width: 400px"></div>
 <button id="Mistake">Show Position</button>
 <button id="Pos">Mistake</button>
 <button id="correct">Correct Move</button>
 
-<p>{{right}}</p>
+
+
+
+
 <script>
     var board = Chessboard('myBoard');
     $('#Pos').on('click', function () {
