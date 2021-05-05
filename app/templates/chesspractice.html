@@ -34,9 +34,9 @@
 
     </div>
 
-    <button id='next'>Next Move</button>
-    <button id='last'>Last Move</button>
-    <button id='reset'>Start Again</button>
+    <button id='next' style="color: black;">Next Move</button>
+    <button id='last' style="color: black;">Last Move</button>
+    <button id='reset' style="color: black;">Start Again</button>
 
     <script>
       x = document.getElementById('title').innerHTML;
@@ -169,21 +169,13 @@
           var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
 
         }
-
-      
     
       }
   
 
       // --- End Example JS ----------------------------------------------------------
-
-
-
-
-
-      
-
     </script>
-  
-{% include "footer.html" %}
+    {% include "footer.html" %}
+  </body>
+
 {% endblock %}
