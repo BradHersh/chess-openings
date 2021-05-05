@@ -58,24 +58,30 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 @app.route('/learn')
+@login_required
 def learn():
     return render_template('learn.html', title='Learn')
 
 @app.route('/Test')
+@login_required
 def Test():
     return render_template('Test.html', title='Test')
 
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
+@login_required
+
 def chesspractice(opening):
     name = {'opening': opening}
     return render_template('chesspractice.html', title='Test', name = name)
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
+@login_required
 def chesstest(opening):
     name = {'opening': opening}
     return render_template('chesstest.html', title='Test', name = name)
 
 @app.route('/complete', methods=['GET', 'POST'])
+@login_required
 def complete():
     score = request.form['score']
     score = score.split('%')[0]
@@ -94,6 +100,7 @@ def complete():
     return redirect(url_for('index'))
 
 @app.route('/results', methods=['GET', 'POST'])
+@login_required
 def results():
     u = User.query.get(current_user.id)
     return render_template('results.html', title='results', query = u.results.all())
@@ -101,6 +108,7 @@ def results():
 
 
 @app.route('/feedback/<opening>/', methods=['GET', 'POST'])
+@login_required
 def feedback(opening):
     lst = []
     lst1 = []
@@ -119,12 +127,22 @@ def feedback(opening):
         
         flattened = [val for sublist in lst2 for val in sublist]
 
-        for i in range(1,len(flattened)):
-            if i%3 == 0:
-                lst3.append(flattened[i-3:i])
-        for i in lst3:
-            x = ','.join(i)
-            lst4.append(x)
+        length = len(flattened)
+        if length > 3:
+            for i in range(1,len(flattened)):
+                if i%3 == 0:
+                    lst3.append(flattened[i-3:i])
+            for i in lst3:
+                x = ','.join(i)
+                lst4.append(x)
+        else:
+            for i in range(1,len(flattened)+1):
+                if i%3 == 0:
+                    lst3.append(flattened[i-3:i])
+            for i in lst3:
+                x = ','.join(i)
+                lst4.append(x)           
+
         most = mode(lst4)
         most = most.split(',')
         oldPos = most[0]
@@ -138,6 +156,7 @@ def feedback(opening):
 
 
 @app.route('/progress/<opening>/', methods=['GET', 'POST'])
+@login_required
 def progress(opening):
     res = Results.query.filter_by(user_id = current_user.id, passed = True)
     res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
