@@ -26,7 +26,7 @@
     <div id = 'score'></div>
     <form action = "{{ url_for('complete') }}" method = "post">
         <input id = "form_score" type ="hidden" name = "score" value = "">
-        <input id = "opening" type ="hidden" name = "opening" value = {{name.opening}}>
+        <input id = "opening" type ="hidden" name = "opening" value = "{{name.opening}}">
         <input id = "incorrect" type = "hidden" name = "incorrect" value = "">
         <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
     </form>
