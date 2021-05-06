@@ -1,0 +1,207 @@
+{% extends "base.html" %}
+{% block content %}
+
+<head>
+    <title>Chess</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+    <style>
+        .float-child {
+           flex: 1;
+           
+       }  
+       .float-container {
+          display: flex;
+      }
+      .float-container:float-container{
+        margin-right:20px;
+      }
+      </style>
+  </head>
+
+  <h1>{{opening}}</h1>
+  <h3 id = "selecttest">Select Test</h3>
+  <h3 id = 'TestNumber'></h3>
+  <h5 id = "mistakeNumber"></h5>
+
+  <div id="myBoard" style="width: 400px; display:none",></div>
+  <button id="Pos" style = "display:none">Show Position</button>
+  <button id="Mistake" style=  "display:none">Mistake</button>
+  <button id="correct" style = "display:none">Correct Move</button>
+  <button id = "next" style = "display:none">Next</button>
+  <button id = "back" style = "display:none">Back</button>
+  <button id = "newtest" style = "display:none">Select New Test</button>
+
+
+  <div id = 'foo'>
+
+  </div>
+
+ 
+
+
+
+  <script>
+  x = {{mistakes|safe}}
+  console.log(x)
+
+  var Test
+  function makeUL(array) {
+    // Create the list element:
+    var list = document.createElement('ul');
+    list.id = 'list';
+
+    for (var i = 0; i < x.length; i++) {
+        // console.log('{{mistakes[i]}}')
+        // Create the list item:
+        var item = document.createElement('li');
+        item.id = i;
+        item.onclick = function (){
+             Test = this.id
+             document.getElementById('list').style.display = "none";
+             testnum = parseInt(this.id) + 1
+             document.getElementById('TestNumber').innerHTML = "Test number" + " " + testnum;
+             document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + 1;
+             document.getElementById('myBoard').style.display = "block";
+             document.getElementById('Pos').style.display = "block";
+             document.getElementById('Mistake').style.display = "block";
+             document.getElementById('correct').style.display = "block";
+             document.getElementById('newtest').style.display = "block";
+             document.getElementById("selecttest").style.display = "none";
+             if (x[parseInt(Test)].length > 1){
+             document.getElementById('next').style.display = "block";
+             }
+            //  document.getElementById('back').style.display = "block";
+                
+
+             
+             
+
+        }
+
+        // Set its contents:
+        item.appendChild(document.createTextNode(i+1));
+
+
+        // Add it to the list:
+        list.appendChild(item);
+    }
+
+    // Finally, return the constructed list:
+    return list;
+}
+
+
+
+// Add the contents of options[0] to #foo:
+document.getElementById('foo').appendChild(makeUL('{{mistakes}}'));
+
+var i = 0
+
+board = Chessboard('myBoard')
+    
+
+    $('#Pos').on('click', function () {
+    board.position(x[parseInt(Test)][i].split(',')[0])
+    })
+
+    $('#Mistake').on('click', function () {
+    board.position(board.position(x[parseInt(Test)][i].split(',')[1]))
+    })
+
+    $('#correct').on('click', function () {
+    board.position(board.position(x[parseInt(Test)][i].split(',')[2]))
+    })
+
+
+$('#next').on('click', function () {
+board.position(board.position('start'))
+console.log(x[parseInt(Test)].length - 1)
+var mistakesmade = x[parseInt(Test)].length - 1
+i = i + 1
+if (i<mistakesmade) {
+    document.getElementById('back').style.display = "block";
+
+    
+
+    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
+    console.log(i)
+    } else if ( i ==mistakesmade) {
+        document.getElementById('next').style.display = "none";
+        document.getElementById('back').style.display = "block";
+
+        document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
+
+    }
+    else {
+        document.getElementById('next').style.display = "none";
+        document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
+
+
+    }  
+})
+
+$('#back').on('click', function () {
+board.position(board.position('start'))
+// document.getElementById('next').style.display = "block";
+
+var mistakesmade = x[parseInt(Test)].length -1
+if (i<=mistakesmade && i>0) {
+    document.getElementById('next').style.display = "block";
+
+    i = i - 1
+    console.log(i)
+    if (i != 0){
+    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
+    } else {    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(1) ;
+    document.getElementById('back').style.display = "none";
+
+}
+    } else {
+        document.getElementById('back').style.display = "none";
+        if (i != 0){
+        document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(document.getElementById('mistakeNumber').innerHTML) -1 ;
+    } else {    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + 1 ;
+}
+
+    }  
+})
+
+$('#newtest').on('click', function () {
+    i = 0;
+    document.getElementById('list').style.display = "block";
+    document.getElementById('TestNumber').innerHTML = "";
+    document.getElementById('mistakeNumber').innerHTML = "";
+    document.getElementById('myBoard').style.display = "none";
+    document.getElementById('Pos').style.display = "none";
+    document.getElementById('Mistake').style.display = "none";
+    document.getElementById('correct').style.display = "none";
+    document.getElementById('next').style.display = "none";
+    document.getElementById('back').style.display = "none";
+    document.getElementById('back').style.display = "none";
+    document.getElementById('newtest').style.display = "none";
+    document.getElementById("selecttest").style.display = "block";
+
+
+
+
+})
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  </script>
+
+{% endblock %}

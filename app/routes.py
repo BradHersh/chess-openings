@@ -14,6 +14,7 @@ from statistics import mode
 import re
 from sqlalchemy import func, select, distinct
 import numpy as np
+import json
 
 @app.route('/')
 @app.route('/index')
@@ -69,7 +70,6 @@ def Test():
 
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
-
 def chesspractice(opening):
     name = {'opening': opening}
     return render_template('chesspractice.html', title='Test', name = name)
@@ -153,6 +153,29 @@ def feedback(opening):
         return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening) 
     else:
         return "Test not attempted yet"
+
+
+@app.route('/feedback2/', methods=['GET', 'POST'])
+def feedback2():
+    return render_template('feedback2.html', title='feedback') 
+
+@app.route('/feedback2/<opening>', methods=['GET', 'POST'])
+def feedback3(opening):
+     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
+     lst = []
+     i = 1
+     for r in res:
+         x = r.incorrect
+         x = re.findall(",".join(["[^,]+"] * 3), x)
+
+         lst.append(x)
+    
+    
+    
+     
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening)
+
+
 
 
 @app.route('/progress/<opening>/', methods=['GET', 'POST'])
