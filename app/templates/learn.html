@@ -47,6 +47,20 @@
                 bottom: -50px;
             }
 
+        .col-sm-5{
+            width: 200px;
+            height: max-content;
+            background-color: rgb(17, 14, 34);
+        }
+
+        .rcorners {
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            padding: 20px;
+            width: 200px;
+            height: 150px;
+        }
+
         </style>
     </head>
 
@@ -57,105 +71,57 @@
         </div>
         <br><br>
 
-
-        <!--Carousel Wrapper-->
-        <div id="carousel-example-2" class="carousel slide carousel-fade center" data-ride="carousel">
-            <!--Indicators-->
-            <ol class="carousel-indicators">
-            <li data-target="#carousel-example-2" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-2" data-slide-to="1"></li>
-            <li data-target="#carousel-example-2" data-slide-to="2"></li>
-            <li data-target="#carousel-example-2" data-slide-to="3"></li>
-            <li data-target="#carousel-example-2" data-slide-to="4"></li>
-            </ol>
-            <!--/.Indicators-->
-
-            <!--Slides-->
-            <div class="carousel-inner" role="listbox">
-            <div class="carousel-item active">
-                <div class="view">
-                <img class="d-block center" src="static/img/chesspieces/wikipedia/wR.png" style="width: 300px;height: 300px;"
-                    alt="First slide">
-                <br><br><br><br>
-                <div class="mask rgba-black-light"></div>
+        <div style="margin: 5%;">
+            <div class="row">
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">Ruy Lopez</a>
                 </div>
-                <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">Ruy Lopez</a></h3>
-                <p>White opening line</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <!--Mask color-->
-                <div class="view">
-                <img class="d-block center" src="static/img/chesspieces/wikipedia/wB.png" style="width: 300px;height: 300px;"
-                    alt="Second slide">
-                <br><br><br><br>
-                <div class="mask rgba-black-strong"></div>
-                </div>
-                <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening ='Italian Game') }}">Italian Game</a></h3>
-                <p>White opening line</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <!--Mask color-->
-                <div class="view">
-                <img class="d-block center" src="static/img/chesspieces/wikipedia/wP.png" style="width: 300px;height: 300px;"
-                    alt="Third slide">
-                <br><br><br><br>
-                <div class="mask rgba-black-slight"></div>
-                </div>
-                <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice',opening ='Queens Gambit') }}">Queens Gambit</a></h3>
-                <p>White opening line</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <!--Mask color-->
-                <div class="view">
-                <img class="d-block center" src="static/img/chesspieces/wikipedia/wQ.png" style="width: 300px;height: 300px;"
-                    alt="Second slide">
-                <br><br><br><br>
-                <div class="mask rgba-black-strong"></div>
-                </div>
-                <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening = 'Sicilian Defence') }}">Sicilian Defence</a></h3>
-                <p>Black opening line</p>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <!--Mask color-->
-                <div class="view">
-                <img class="d-block center" src="static/img/chesspieces/wikipedia/wR.png" style="width: 300px;height: 300px;"
-                    alt="Second slide">
-                <br><br><br><br>
-                <div class="mask rgba-black-strong"></div>
-                </div>
-                <div class="carousel-caption">
-                <h3 class="h3-responsive"><a href = "{{ url_for('chesspractice', opening = 'French Defence') }}">French Defence</a></h3>
-                <p>Black opening line</p>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">Queens Gambit</a>
                 </div>
             </div>
 
-
-
+            <div class="row">
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Sicilian Defence') }}">Sicilian Defence</a>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Italian Game') }}">Italian Game</a>
+                </div>
             </div>
-            <!--/.Slides-->
 
-            <!--Controls-->
-            <a class="carousel-control-prev" href="#carousel-example-2" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carousel-example-2" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-            </a>
-            <!--/.Controls-->
+            <div class="row">
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Bogo Indian') }}">Bogo Indian</a>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
+                </div>
+            </div>
 
+            <div class="row">
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">??</a>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">??</a>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-5 rcorners">
+                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
+                </div>
+            </div>
         </div>
-        <!--/.Carousel Wrapper-->
-
 
 
 
