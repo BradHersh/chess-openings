@@ -219,23 +219,23 @@ def newopeningform():
     db.session.commit()
     return render_template('index.html', title='newopening')
 
-@app.route('/testdynamicopenings', methods=['GET', 'POST'])
+@app.route('/newLearn', methods=['GET', 'POST'])
 @login_required
-def testdynamicopenings():
+def newLearn():
     openings = Openings.query.all()
     lst = []
     for o in openings:
         lst.append((o.name, o.FEN))
-    return render_template('testdynamicopenings.html', title='Learn', openings = json.dumps(lst))
+    return render_template('newLearn.html', title='Learn', openings = json.dumps(lst))
 
 
-@app.route('/dynamicopeningsTEST', methods=['GET', 'POST'])
+@app.route('/newTest', methods=['GET', 'POST'])
 @login_required
-def dynamicopeningsTEST():
+def newTest():
     openings = Openings.query.all()
     lst = []
     for o in openings:
         lst.append((o.name, o.FEN))
-    return render_template('dynamicopeningsTEST.html', title='Test', openings = json.dumps(lst))
+    return render_template('newTest.html', title='Test', openings = json.dumps(lst))
 
 
