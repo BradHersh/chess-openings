@@ -9,11 +9,6 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         
         <style>
-        /* Make the image fully responsive */
-        .carousel-inner img {
-            width: 100%;
-            height: 100%;
-        }
 
         * {
             color: white;
@@ -30,29 +25,6 @@
                 margin-bottom: auto;
             }
 
-
-        .carousel {
-                width:640px;
-                height:360px;
-            }
-        
-
-        .carousel-indicators li {
-                width: 10px;
-                height: 10px;
-                border-radius: 100%;
-            }
-
-        .carousel-indicators {
-                bottom: -50px;
-            }
-
-        .col-sm-5{
-            width: 200px;
-            height: max-content;
-            background-color: rgb(17, 14, 34);
-        }
-
         .rcorners {
             border-radius: 25px;
             border: 2px solid #73AD21;
@@ -61,72 +33,85 @@
             height: 150px;
         }
 
+
+        .sidebar {
+            margin: 0;
+            padding: 0;
+            width: 200px;
+            background-color: #141414;
+            position: absolute;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 16px;
+            text-decoration: none;
+        }
+            
+        .sidebar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        .sidebar a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+
+        div.content {
+            margin-left: 200px;
+            margin-top: 20px;
+            padding: 1px 16px;
+            height: 1000px;
+        }
+
+        @media screen and (max-width: 700px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .sidebar a {float: left;}
+            div.content {margin-left: 0;}
+        }
+
+        @media screen and (max-width: 400px) {
+        .sidebar a {
+            text-align: center;
+            float: none;
+            }
+        }
+
         </style>
     </head>
 
     <body>
-        <div>
-            <h1>Hi, {{ current_user.username }}!</h1>
-            <h2>Welcome to the learning portal -- Please select an Opening</h2>
-        </div>
-        <br><br>
-
-        <div style="margin: 5%;">
-            <div class="row">
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">Ruy Lopez</a>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">Queens Gambit</a>
-                </div>
+        <div class="sidebar">
+            <a class="active" href="#news">Queens Gambit</a>
+            <a href="#contact">Sicilian Defence</a>
+            <a href="#contact">Italian Game</a>
+            <a href="#about">Ruy Lopez</a>
+            <a href="#about">Bogo Indian</a>
+            <a href="#about">Caro Kann</a>
+            <a href="#about">English Opening</a>
+            <a href="#about">French Defence</a>
+            <a href="#about">Pirc Defence</a>
+            <a href="#about">Reti Opening</a>
+          </div>
+          
+          <div class="content">
+            <div style="margin-left: auto; margin-right: auto; margin-top: 10%; text-align: center;">
+                <img src="static/img/Openingpics/QueensGambit.png" style="width: 400px; height: 400px;">
+                <br>
+                <a style="text-align: center;" href="{{ url_for('chesspractice',opening='Queens Gambit') }}">Queens Gambit</a>
             </div>
-
-            <div class="row">
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Sicilian Defence') }}">Sicilian Defence</a>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Italian Game') }}">Italian Game</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Bogo Indian') }}">Bogo Indian</a>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">??</a>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Ruy Lopez') }}">??</a>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-5 rcorners">
-                    <a href = "{{ url_for('chesspractice', opening ='Queens Gambit') }}">??</a>
-                </div>
-            </div>
-        </div>
-
-
-
-
+          </div>
+          
     </body>
-
 {% include "footer.html" %}
+
 {% endblock %}
+
