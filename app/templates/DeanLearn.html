@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <title>Learn</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <style>
+
+        * {
+            color: white;
+        }
+
+        body {
+            background-color: black;
+        }
+
+        .center {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: auto;
+                margin-bottom: auto;
+            }
+
+        .rcorners {
+            border-radius: 25px;
+            border: 2px solid #73AD21;
+            padding: 20px;
+            width: 200px;
+            height: 150px;
+        }
+
+
+        .sidebar {
+            margin: 0;
+            padding: 0;
+            width: 200px;
+            background-color: #141414;
+            position: absolute;
+            height: 100%;
+            overflow: auto;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 16px;
+            text-decoration: none;
+        }
+            
+        .sidebar a.active {
+            background-color: #04AA6D;
+            color: white;
+        }
+
+        .sidebar a:hover:not(.active) {
+            background-color: #555;
+            color: white;
+        }
+
+        div.content {
+            margin-left: 200px;
+            margin-top: 20px;
+            padding: 1px 16px;
+            height: 1000px;
+        }
+
+        @media screen and (max-width: 700px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .sidebar a {float: left;}
+            div.content {margin-left: 0;}
+        }
+
+        @media screen and (max-width: 400px) {
+        .sidebar a {
+            text-align: center;
+            float: none;
+            }
+        }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="sidebar">
+            <a class="active" href="#news">Queens Gambit</a>
+            <a href="#contact">Sicilian Defence</a>
+            <a href="#contact">Italian Game</a>
+            <a href="#about">Ruy Lopez</a>
+            <a href="#about">Bogo Indian</a>
+            <a href="#about">Caro Kann</a>
+            <a href="#about">English Opening</a>
+            <a href="#about">French Defence</a>
+            <a href="#about">Pirc Defence</a>
+            <a href="#about">Reti Opening</a>
+          </div>
+          
+          <div class="content">
+            <div style="margin-left: auto; margin-right: auto; margin-top: 10%; text-align: center;">
+                <img src="static/img/chesspieces/wikipedia/wK.png" style="width: 400px; height: 400px;">
+                <br>
+                <a style="text-align: center;" href="{{ url_for('chesspractice',opening='Queens Gambit') }}">Queens Gambit</a>
+            </div>
+          </div>
+          
+    </body>
+{% include "footer.html" %}
+
+{% endblock %}
