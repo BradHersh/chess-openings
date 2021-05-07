@@ -20,7 +20,17 @@ import json
 @app.route('/index')
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+
+    return render_template('index.html', title='Home' , prog =complete)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -166,23 +176,44 @@ def feedback(opening):
 
 @app.route('/feedback2/', methods=['GET', 'POST'])
 def feedback2():
-    return render_template('feedback2.html', title='feedback') 
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append(o.name)
+    return render_template('feedback2.html', title='feedback', openings = lst) 
 
 @app.route('/feedback2/<opening>', methods=['GET', 'POST'])
 def feedback3(opening):
-     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
+     res3 = Results.query.filter_by(user_id = current_user.id, opening = opening)
      lst = []
      i = 1
-     for r in res:
+     for r in res3:
          x = r.incorrect
          x = re.findall(",".join(["[^,]+"] * 3), x)
 
          lst.append(x)
-    
+
+     res = Results.query.filter_by(user_id = current_user.id, passed = True)
+     res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
+     openings = []
+     marks = []
+     time = []
+     for r in res:
+         openings.append(r.opening)
+     numerator = len(set(openings))
+     denominator = Openings.query.all()
+     denominator = len(denominator)
+     complete = str((numerator/denominator)*100 ) + '%'
+     for r in res1:
+         # r.result = r.result.split('%')[0]
+         # r.result = float(r.result)
+         marks.append(float(r.result))
+     tries = list(np.arange(1,len(marks)+1))
+
     
     
      
-     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening)
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening, prog =complete, grades = marks, attempt = tries)
 
 
 
@@ -198,7 +229,8 @@ def progress(opening):
     for r in res:
         openings.append(r.opening)
     numerator = len(set(openings))
-    denominator = 10
+    denominator = Openings.query.all()
+    denominator = len(denominator)
     complete = str((numerator/denominator)*100 ) + '%'
     for r in res1:
         # r.result = r.result.split('%')[0]
