@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, session
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user
@@ -34,6 +34,9 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
+        if request.form.get("username") == "admin":
+            session['logged_in'] = True
+            return redirect('/admin')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
@@ -42,6 +45,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -71,16 +75,19 @@ def Test():
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesspractice(opening):
-    opening = Openings.query.get(opening)
-    return render_template('chesspractice.html', title='Test', name = json.dumps(opening.FEN))
+    # opening = Openings.query.get(opening)
+    opening = Openings.query.filter_by(name = opening)
+    fen = opening[0].FEN
+    return render_template('chesspractice.html', title='Test', name = json.dumps(fen))
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesstest(opening):
-    name = {'opening': opening}
-    opening = Openings.query.get(opening)
+    opening = Openings.query.filter_by(name = opening)
+    fen = opening[0].FEN
+    name = opening[0].name
 
-    return render_template('chesstest.html', title='Test', opening = json.dumps(opening.FEN), name = opening.name)
+    return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name)
 
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
