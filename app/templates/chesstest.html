@@ -15,7 +15,7 @@
   </head>
 
   <body>
-    <h1 id = 'title'>{{ name.opening }}</h1>
+    <h1 id = 'title'>{{ name }}</h1>
 
 
 
@@ -26,7 +26,7 @@
     <div id = 'score'></div>
     <form action = "{{ url_for('complete') }}" method = "post">
         <input id = "form_score" type ="hidden" name = "score" value = "">
-        <input id = "opening" type ="hidden" name = "opening" value = "{{name.opening}}">
+        <input id = "opening" type ="hidden" name = "opening" value = "{{name}}">
         <input id = "incorrect" type = "hidden" name = "incorrect" value = "">
         <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
     </form>
@@ -66,8 +66,20 @@
         "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R"
 
         ]}
-      this_opening = openings[opening]
-      console.log(opening)
+       this_opening = {{opening|safe}}
+       this_opening = this_opening.split(',')
+       var fixed_opening = []
+       for (var i; i<this_opening.length; i++){
+          console.log(this_opening[i])
+          fixedstring = this_opening[i].trim()
+          console.log(fixedstring)
+          fixed_opening.push(fixedstring)
+      }
+      this_opening = fixed_opening;
+      console.log(this_opening.length)
+      var i = 0
+
+
       var accuracy = this_opening.length
       var incorrect = []
     
@@ -90,6 +102,7 @@
         console.log('Position changed:')
         console.log('Old position: ' + Chessboard.objToFen(oldPos))
         console.log('New position: ' + Chessboard.objToFen(newPos))
+        console.log('right position ' + this_opening[i])
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         console.log(i)
         console.log(this_opening.length)

@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User, Results
+from app.models import User, Results, Openings
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request
@@ -71,14 +71,16 @@ def Test():
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesspractice(opening):
-    name = {'opening': opening}
-    return render_template('chesspractice.html', title='Test', name = name)
+    opening = Openings.query.get(opening)
+    return render_template('chesspractice.html', title='Test', name = json.dumps(opening.FEN))
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesstest(opening):
     name = {'opening': opening}
-    return render_template('chesstest.html', title='Test', name = name)
+    opening = Openings.query.get(opening)
+
+    return render_template('chesstest.html', title='Test', opening = json.dumps(opening.FEN), name = opening.name)
 
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
@@ -199,3 +201,41 @@ def progress(opening):
     
 
     return render_template('progress.html', title='progress', prog =complete, grades = marks, attempt = tries, opening = opening)
+
+
+@app.route('/newopening', methods=['GET', 'POST'])
+@login_required
+def newopening():
+
+    return render_template('newopening.html', title='newopening')
+
+@app.route('/newopeningform', methods=['GET', 'POST'])
+@login_required
+def newopeningform():
+    opening = request.form['openingname']
+    FENstring = request.form['FENopening']
+    opening = Openings(name=opening, FEN=FENstring)
+    db.session.add(opening)
+    db.session.commit()
+    return render_template('index.html', title='newopening')
+
+@app.route('/testdynamicopenings', methods=['GET', 'POST'])
+@login_required
+def testdynamicopenings():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append((o.name, o.FEN))
+    return render_template('testdynamicopenings.html', title='Learn', openings = json.dumps(lst))
+
+
+@app.route('/dynamicopeningsTEST', methods=['GET', 'POST'])
+@login_required
+def dynamicopeningsTEST():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append((o.name, o.FEN))
+    return render_template('dynamicopeningsTEST.html', title='Test', openings = json.dumps(lst))
+
+

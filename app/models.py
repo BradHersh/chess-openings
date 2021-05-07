@@ -37,6 +37,13 @@ class Results(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
+
+class Openings(db.Model):
+    name = db.Column(db.String(140), primary_key=True)
+    FEN = db.Column(db.String(140))
+
     
     
 

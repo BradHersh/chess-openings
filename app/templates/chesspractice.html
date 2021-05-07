@@ -24,7 +24,7 @@
   </head>
 
   <body>
-    <h1 id = 'title'>{{ name.opening }}</h1>
+    <h1 id = 'title'></h1>
     <div class = "float-container">
 
       <div id="board2" class = "float-child"></div>
@@ -66,8 +66,17 @@
         "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R"
 
         ]}
-      this_opening = openings[opening]
-      console.log(opening)
+      this_opening = {{name|safe}}
+      this_opening = this_opening.split(',')
+      var fixed_opening = []
+      for (var i; i<this_opening.length; i++){
+        console.log(this_opening[i])
+        fixedstring = this_opening[i].trim()
+        console.log(fixedstring)
+        fixed_opening.push(fixedstring)
+      }
+      console.log(this_opening)
+      this_opening = fixed_opening;
       var accuracy = this_opening.length
 
       var board = Chessboard('board1', {

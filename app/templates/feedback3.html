@@ -37,7 +37,7 @@
   <div id = 'foo'>
 
   </div>
-
+  <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
  
 
 
@@ -69,6 +69,7 @@
              document.getElementById('correct').style.display = "block";
              document.getElementById('newtest').style.display = "block";
              document.getElementById("selecttest").style.display = "none";
+             document.getElementById('newopening').style.display = "none"
              if (x[parseInt(Test)].length > 1){
              document.getElementById('next').style.display = "block";
              }
@@ -182,6 +183,8 @@ $('#newtest').on('click', function () {
     document.getElementById('back').style.display = "none";
     document.getElementById('newtest').style.display = "none";
     document.getElementById("selecttest").style.display = "block";
+    document.getElementById('newopening').style.display = "block";
+
 
 
 
