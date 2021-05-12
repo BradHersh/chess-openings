@@ -60,7 +60,13 @@
   <body>
     <br>
     <h1 id = 'title'>{{opening}}</h1>
-    <div class="row" style="padding-bottom: 1%; margin-top: 4%;">
+
+    <p><span style="font-weight: bold; font-size: x-large;">How to learn: </span> This page is designed to teach you the {{opening}}.</p>
+
+    
+
+
+    <div class="row" style="padding-bottom: 1%; margin-top: 2%;">
       <div class="col-sm-2"></div>
 
       <div class = "float-child col-sm-3">
@@ -82,17 +88,46 @@
 
       <div id="board2" class = "float-child col-sm-3"></div>
 
-      <div class="col-sm-2"></div>
+      <div class="col-sm-2" style="text-align: center;">
+        <br><br><br><br><br><br>
+        <div id = 'complete' style="font-size: 24px;"></div>
+        <div id = 'score' style="font-size: 20px;"></div>
+      </div>
 
       <div id="board1" class = "float-child col-sm-3"></div>
 
       <div class="col-sm-2"></div>
     </div>
 
-    <div>
-      <!--Need to add box at bottom that says score and percentage. Little button next to needs to appear to start again aswell-->
-      <div id = 'complete'></div>
-      <div id = 'score'></div>
+
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-sm-1"></div>
+
+      <div class="col-sm-5">
+        <p>
+          The left board is the <b>demonstration</b> board and is used to show you the correct sequence of moves. The buttons above the board are for manipulation of the stages.
+          <ul>
+            <li>
+              Click <span style="color: greenyellow;">Next Move</span> to show the next move in the sequence. 
+            </li>
+            <li>
+              Click <span style="color: red;">Last Move</span> to show the previous move in the sequence.
+            </li>
+          </ul>  
+        </p>
+        <p>Note: The <span style="color: greenyellow;">Next Move</span> and <span style="color: red;">Last Move</span> buttons control the sequence move by move, so the resulting move will be either black or white.</p>
+      </div>
+      <div class="col-sm-5">
+        <p>
+          The right board is the <b>practice</b> board and is used for you to practice the sequence of moves presented on the right. The button on top of the board is used to reset you progress if you get confused.
+          <ul>
+            <li>
+              Click <span style="color: rgb(38, 115, 141);">Start Again</span> to reset your current progress on the right board.
+            </li>
+          </ul>
+        </p>
+      </div>
+      <div class="col-sm-1"></div>
     </div>
 
     <script>
@@ -190,6 +225,7 @@
         accuracy = this_opening.length
         document.getElementById('score').innerHTML = "";
         document.getElementById('complete').innerHTML = "";
+        document.getElementsByClassName('tryagain').innerHTML = "";
 
       })
   
@@ -221,6 +257,7 @@ function onChange (oldPos, newPos) {
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
+                
 
                 
 
