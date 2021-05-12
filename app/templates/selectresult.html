@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Select opening to see results</h1>
+
+<ul id = 'list'>
+
+</ul>
+
+
+<script>
+    x = {{openings|safe}}
+    console.log(x.length)
+    console.log(x)
+    function createopenings(array){
+        for(var i = 0; i<x.length; i++){
+            var opening = x[i];
+            console.log(opening)
+            var li = document.createElement('li');
+            anchor = document.createElement('a');
+            anchor.href = "{{url_for('results', opening = 'x')}}".replace("x", opening);
+            anchor.innerHTML = opening;
+            li.appendChild(anchor)
+            document.getElementById('list').appendChild(li)
+
+        }
+
+
+    }
+    createopenings(x)
+</script>
+{% include "footer.html" %}
+{% endblock %}

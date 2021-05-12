@@ -97,7 +97,9 @@ def chesspractice(opening):
     # opening = Openings.query.get(opening)
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
-    return render_template('chesspractice.html', title='Test', name = json.dumps(fen), prog=complete)
+    opening = opening[0].name
+    return render_template('chesspractice.html', title='Test', name = json.dumps(fen), prog=complete, opening = opening)
+
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
@@ -127,9 +129,19 @@ def complete():
         db.session.commit()
     return redirect(url_for('index'))
 
-@app.route('/results', methods=['GET', 'POST'])
+@app.route('/selectresult/', methods=['GET', 'POST'])
+def selectresult():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append(o.name)
+    return render_template('selectresult.html', title='Results', openings = lst) 
+
+
+
+@app.route('/results/<opening>/', methods=['GET', 'POST'])
 @login_required
-def results():
+def results(opening):
     res = Results.query.filter_by(user_id = current_user.id, passed = True)
     openings = []
     for r in res:
@@ -140,7 +152,10 @@ def results():
 
     complete = str((numerator/denominator)*100 ) + '%'
     u = User.query.get(current_user.id)
-    return render_template('results.html', title='results', query = u.results.all(), prog=complete)
+
+    res = Results.query.filter_by(user_id = current_user.id, opening = opening)
+    return render_template('results.html', title='results', query = res, prog=complete)
+
 
 
 
