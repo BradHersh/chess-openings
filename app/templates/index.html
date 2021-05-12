@@ -13,7 +13,7 @@
             }
             
             body {
-                background-color: black;
+                background-color: rgb(5, 4, 19);
             }
 
             .center {
@@ -60,21 +60,29 @@
             text-align: center;
             font-family: Georgia, 'Times New Roman', Times, serif;
             font-size: 32px;
+            font-weight: bolder;
+            margin-top: 20%;
             }
 
             .row{
                 margin-top: 5%;
             }
 
+            .progress{
+                margin-top: 2%;
+                margin-left: 2%;
+                margin-right: 2%;
+            }
+
+            .innertext {
+                text-decoration: none; 
+                color: rgb(138, 13, 13);
+            }
         </style>
 
     </head>
 
-    <body>
-        <div class = "progress">
-            <p id = "prog" style= "color:black; margin: 6px;">{{prog}}</p>
-            <div class = "progress-bar" role = "progressbar" style = "width: {{prog}}; color: black;";  aria-valuemin="0" aria-valuemax="100">{{prog}}</div>
-        </div>
+    <body >
 
         <div>
             <br><br>
@@ -86,13 +94,13 @@
         </div>
 
 
-        <div class="row" style="padding-bottom: 10%;">
+        <div class="row" style="margin-bottom: 20%;">
 
 
             <div class="col-sm-4 container">
                 <img src="static/img/chesspieces/wikipedia/wK.png" alt="Avatar" class="image center" style="width: 200px;">
                     <div class="middle">
-                        <div class="text"><a href='{{ url_for("newLearn") }}'>Learn</a></div>
+                        <div class="text"><a style="text-decoration: none; color: rgb(138, 13, 13);" href='{{ url_for("newLearn") }}'>Learn</a></div>
                     </div>
             </div>
 
@@ -101,7 +109,7 @@
             <div class="col-sm-4 container">
                 <img src="static/img/chesspieces/wikipedia/wP.png" alt="Avatar" class="image center" style="width: 200px;">
                     <div class="middle">
-                        <div class="text"><a href='{{ url_for("Test") }}'>Test</a></div>
+                        <div class="text"><a style="text-decoration: none; color: rgb(138, 13, 13);" href='{{ url_for("Test") }}'>Test</a></div>
                     </div>
             </div>
 
@@ -110,26 +118,15 @@
             <div class="col-sm-4 container">
                 <img src="static/img/chesspieces/wikipedia/wN.png" alt="Avatar" class="image center" style="width: 200px;">
                     <div class="middle">
-                        <div class="text"><a href='{{ url_for("results") }}'>Results</a></div>
+                        <div class="text"><a style="text-decoration: none; color: rgb(138, 13, 13);" href='{{ url_for("results") }}'>Results</a></div>
                     </div>
             </div>
 
 
         </div>
-        
+
     </body>
-    <script>
-        console.log('{{prog}}')
-        if ("{{prog}}" == '0.0%'){
-            console.log('meow')
-            document.getElementById('prog').style.display = "block";
 
-        } else {
-            document.getElementById('prog').style.display = "none";
-
-        }
-
-    </script>
 {% include "footer.html" %}
 
 {% endblock %}
