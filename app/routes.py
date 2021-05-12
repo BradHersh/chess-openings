@@ -127,7 +127,16 @@ def selectresult():
     lst = []
     for o in openings:
         lst.append(o.name)
-    return render_template('selectresult.html', title='Results', openings = lst) 
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+    return render_template('selectresult.html', title='Results', openings = lst, prog=complete) 
 
 
 
