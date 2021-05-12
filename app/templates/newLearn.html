@@ -59,6 +59,7 @@
     
             .sidebar a:hover:not(.active) {
                 background-color: #555;
+                font-weight: bolder;
                 color: white;
             }
     
@@ -98,8 +99,11 @@
         </div>
 
         <div class="content">
-            <div style="margin-left: auto; margin-right: auto; margin-top: 10%; text-align: center;">
-                <img src="static/img/chesspieces/wikipedia/wK.png" style="width: 400px; height: 400px;">
+            <div style="margin-left: auto; margin-right: auto; text-align: center;">
+                <h1 style="text-align: center;"><b>Welcome to the Learn portal!</b></h1>
+            </div>
+            <div style="margin-left: auto; margin-right: auto; margin-top: 5%; text-align: center;">
+                <img id="myImg" src="static/img/gifs/pawnmovingstatic.png" style="width: 900px; height: 400px; border-radius: 25px;">
                 <br>
                 <a id = "meow" style="text-align: center;" href="{{ url_for('chesspractice',opening='Queens Gambit') }}">Queens Gambit</a>
             </div>
@@ -113,8 +117,6 @@
     </body>
 
     <script>
-
-
 
         x = {{openings|safe}}
         function makeOpenings(array){
@@ -145,59 +147,21 @@
 
 
 
-        // console.log(x.length)
-        // div = document.createElement('div')
-        // function makeOpenings(array){
-        //     for (var i = 0; i<x.length; i++){
-        //         var variable1 = x[i][0];
-        //         var div2 = document.createElement('div');
-        //         if (i==0){
-        //             div2.className = "carousel-item active";
-        //         } else {
-        //             div2.className = "carousel-item";
-        //         }
-                
-        //         var div3 = document.createElement('div');
-        //         div3.className = "view";
-            
- 
-        //         var img = document.createElement("img")
-        //         img.ClassName = "d-block center";
-        //         img.src = "static/img/chesspieces/wikipedia/wR.png";
-        //         img.style.width = "300px";
-        //         img.style.height = "300px";
-        //         img.alt = "first slide"
-        //         var div4 = document.createElement('div')
-        //         div4.className = "mask rgba-black-light"
-        //         div3.appendChild(document.createElement('br'))
-        //         div3.appendChild(document.createElement('br'))
-        //         div3.appendChild(document.createElement('br'))
-        //         div3.appendChild(img)
-        //         div3.appendChild(img)
-        //         div3.appendChild(div4)
-        //         var div5 = document.createElement('div')
-        //         div5.ClassName = "carousel-caption";
-        //         var h3 = document.createElement('h3');
-        //         h3.className = "h3-responsive"
-        //         var anchor = document.createElement('a');
-        //         anchor.href =  "{{url_for('chesspractice', opening = 'x')}}".replace("x", variable1)
-        //         anchor.innerHTML = x[i][0]
-        //         h3.appendChild(anchor)
-        //         div5.appendChild(h3)
-        //         div3.appendChild(div5)
-        //         div2.appendChild(div3);
-                
-        //         document.getElementById("tester").appendChild(div2)
-                
-
-        //     }
-   
-        //     return div;
-        // }
-        makeOpenings(x)            
-
+        makeOpenings(x)   
         
+        $(function() {
+            $("#myImg").hover(
+                function() {
+                    $(this).attr("src", "static/img/gifs/pawnmoving.gif");
+                },
+                function() {
+                    $(this).attr("src", "static/img/gifs/pawnmovingstatic.png");
+                }                         
+            );                  
+        });
+
     </script>
+
 
 {% endblock %}
 

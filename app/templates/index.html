@@ -84,13 +84,17 @@
 
     <body >
 
+
+
         <div>
             <br><br>
+            
             <h1 style="text-align: center; ">Hi, {{ current_user.username }}!</h1>
             {% for post in posts %}
             <div><p>{{ post.author.username }} says: <b>{{ post.body }}</b></p></div>
             {% endfor %}
             </div>
+
         </div>
 
 
@@ -126,6 +130,11 @@
         </div>
 
     </body>
+
+    <script>
+
+        
+    </script>
 
 {% include "footer.html" %}
 

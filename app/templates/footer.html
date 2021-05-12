@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -44,23 +45,7 @@
           <img src="static/img/chesspieces/wikipedia/wR.png" alt="footerking" style="height: 40px; width:30px;">
         </h3>
       </div>
-
-      <div class = "progress">
-        <p id = "prog" style= "color:black; margin-top: 0.5%; margin-left: auto; margin-right: auto;">{{prog}}</p>
-        <div class = "progress-bar" role = "progressbar" style = "width: {{prog}}; color: black;";  aria-valuemin="0" aria-valuemax="100">{{prog}}</div>
-      </div>
+    
     </body>
-
-    <script>
-      console.log('{{prog}}')
-        if ("{{prog}}" == '0.0%'){
-            console.log('meow')
-            document.getElementById('prog').style.display = "block";
-
-        } else {
-            document.getElementById('prog').style.display = "none";
-
-        }
-    </script>
 
 </html>
