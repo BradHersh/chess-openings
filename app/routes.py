@@ -118,11 +118,21 @@ def complete():
         db.session.commit()
     return redirect(url_for('index'))
 
-@app.route('/results', methods=['GET', 'POST'])
+@app.route('/selectresult/', methods=['GET', 'POST'])
+def selectresult():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append(o.name)
+    return render_template('selectresult.html', title='Results', openings = lst) 
+
+
+
+@app.route('/results/<opening>/', methods=['GET', 'POST'])
 @login_required
-def results():
-    u = User.query.get(current_user.id)
-    return render_template('results.html', title='results', query = u.results.all())
+def results(opening):
+    res = Results.query.filter_by(user_id = current_user.id, opening = opening)
+    return render_template('results.html', title='results', query = res)
 
 
 
