@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 
     <head>
@@ -18,7 +19,7 @@
   <body>
 
 
-    <nav class="navbar navbar-expand-sm justify-content-center" style="background-color: rgb(5, 4, 19); padding-left: 2.6%; border-bottom: 5px white double; padding-bottom: 2%;">
+    <nav class="navbar navbar-expand-sm justify-content-center" style="background-color: rgb(5, 4, 19); padding-left: 2.6%;">
       <ul class="navbar-nav nav-fill w-100">
         <li class="nav-item" style="padding-top: 2%; padding-right: 0.5%;">
           <a class="nav-link" href="{{ url_for('index') }}">Home</a>
@@ -43,12 +44,25 @@
         <li class="nav-item" style="padding-top: 2%;">
           <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
         </li>
-        
-
       </ul>
-
     </nav>
+    <div class = "progress" style="margin-top: 1%;">
+      <p id = "prog" style= "color:black; margin-left: auto; margin-right: auto;">{{prog}}</p>
+      <div class = "progress-bar" role = "progressbar" style = "width: {{prog}}; color: black;";  aria-valuemin="0" aria-valuemax="100">{{prog}}</div>
+    </div>
 
         {% block content %}{% endblock %}
     </body>
+
+  <script>
+    console.log('{{prog}}')
+      if ("{{prog}}" == '0.0%'){
+          console.log('meow')
+          document.getElementById('prog').style.display = "block";
+
+      } else {
+          document.getElementById('prog').style.display = "none";
+
+      }
+  </script>
 </html>

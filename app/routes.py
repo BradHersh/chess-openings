@@ -75,20 +75,29 @@ def register():
 @app.route('/learn')
 @login_required
 def learn():
-    return render_template('learn.html', title='Learn')
+    return render_template('learn.html', title='Learn', prog=complete)
 
 @app.route('/Test')
 @login_required
 def Test():
-    return render_template('Test.html', title='Test')
+    return render_template('Test.html', title='Test', prog=complete)
 
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesspractice(opening):
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
     # opening = Openings.query.get(opening)
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
-    return render_template('chesspractice.html', title='Test', name = json.dumps(fen))
+    return render_template('chesspractice.html', title='Test', name = json.dumps(fen), prog=complete)
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
@@ -121,8 +130,17 @@ def complete():
 @app.route('/results', methods=['GET', 'POST'])
 @login_required
 def results():
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
     u = User.query.get(current_user.id)
-    return render_template('results.html', title='results', query = u.results.all())
+    return render_template('results.html', title='results', query = u.results.all(), prog=complete)
 
 
 
@@ -135,6 +153,17 @@ def feedback(opening):
     lst2 = []
     lst3 = []
     lst4 = []
+
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+
     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
     for i in res:
         wrong = i.incorrect
@@ -168,8 +197,9 @@ def feedback(opening):
         mistake = most[1]
         correct = most[2]
         
+        
 
-        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening) 
+        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening, prog=complete) 
     else:
         return "Test not attempted yet"
 
@@ -180,7 +210,18 @@ def feedback2():
     lst = []
     for o in openings:
         lst.append(o.name)
-    return render_template('feedback2.html', title='feedback', openings = lst) 
+
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+
+    return render_template('feedback2.html', title='feedback', openings = lst, prog=complete) 
 
 @app.route('/feedback2/<opening>', methods=['GET', 'POST'])
 def feedback3(opening):
@@ -265,7 +306,17 @@ def newLearn():
     lst = []
     for o in openings:
         lst.append((o.name, o.FEN))
-    return render_template('newLearn.html', title='Learn', openings = json.dumps(lst))
+    
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+    return render_template('newLearn.html', title='Learn', openings = json.dumps(lst), prog=complete)
 
 
 @app.route('/newTest', methods=['GET', 'POST'])
@@ -275,6 +326,16 @@ def newTest():
     lst = []
     for o in openings:
         lst.append((o.name, o.FEN))
-    return render_template('newTest.html', title='Test', openings = json.dumps(lst))
+
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+    return render_template('newTest.html', title='Test', openings = json.dumps(lst), prog=complete)
 
 
