@@ -127,13 +127,15 @@
       })
 
       $('#reset').on('click', function(){
-        if (is_black == "False")
-        var board = Chessboard('board1', {'position': 'start'})
+        if (is_black == "False"){
+          
+          var board = Chessboard(board1, {position: 'start', draggable: true, onChange: onChange})
+          i = 0;}
         else {
-          var board = Chessboard('board1', {'position': 'start', 'orientation': 'black'})
-
+          var board = Chessboard(board1, {position: this_opening[0], draggable: true, onChange: onChange, orientation: 'black'})
+          i = 1;
         }
-        i = 0
+        console.log(i)
         accuracy = this_opening.length
         document.getElementById('score').innerHTML = "";
         document.getElementById('complete').innerHTML = "";
