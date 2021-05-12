@@ -71,6 +71,11 @@
     </head>
 
     <body>
+        <div class = "progress">
+            <p id = "prog" style= "color:black; margin: 6px;">{{prog}}</p>
+            <div class = "progress-bar" role = "progressbar" style = "width: {{prog}}; color: black;";  aria-valuemin="0" aria-valuemax="100">{{prog}}</div>
+        </div>
+
         <div>
             <br><br>
             <h1 style="text-align: center; ">Hi, {{ current_user.username }}!</h1>
@@ -113,6 +118,18 @@
         </div>
         
     </body>
+    <script>
+        console.log('{{prog}}')
+        if ("{{prog}}" == '0.0%'){
+            console.log('meow')
+            document.getElementById('prog').style.display = "block";
+
+        } else {
+            document.getElementById('prog').style.display = "none";
+
+        }
+
+    </script>
 {% include "footer.html" %}
 
 {% endblock %}

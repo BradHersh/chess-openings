@@ -38,7 +38,12 @@
 
   </div>
   <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
+
+  <hr>
  
+  <div class="container">
+    <canvas id = "myChart"></canvas>
+    </div>
 
 
 
@@ -73,6 +78,7 @@
              if (x[parseInt(Test)].length > 1){
              document.getElementById('next').style.display = "block";
              }
+             document.getElementById("myChart").style.display = "none";
             //  document.getElementById('back').style.display = "block";
                 
 
@@ -184,13 +190,52 @@ $('#newtest').on('click', function () {
     document.getElementById('newtest').style.display = "none";
     document.getElementById("selecttest").style.display = "block";
     document.getElementById('newopening').style.display = "block";
-
-
-
+    doucument.getElementById('myChart').style.display = "block";
 
 
 })
 
+
+
+let myChart = document.getElementById('myChart').getContext('2d');
+
+let lineChart = new Chart(myChart, {
+    type: 'line', 
+    data: {
+        labels: {{attempt}},
+        datasets: [{
+            label: 'Grades',
+            data: {{grades}}
+        }]
+    },
+    options: {
+        plugins: {
+        title: {
+            display: true,
+            text: '{{opening}} Attempts'
+        }
+        },
+        scales: {
+            y: {
+              
+                beginAtZero: true,
+                title: {
+                    display: true,
+                    text: "Grade"
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: "Attempt Number"
+                }
+            }
+        }
+    }
+    
+    //   }
+ 
+});
 
 
 

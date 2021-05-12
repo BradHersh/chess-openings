@@ -80,4 +80,4 @@ def load_user(id):
 admin.add_view(SecureModelView(Openings, db.session))
 admin.add_view(SecureModelView(User, db.session))
 admin.add_view(SecureModelView(Results, db.session))
-admin.add_link(MenuLink(name='Home', category='', url='/index'))
+admin.add_link(MenuLink(name='Logout', category='', url='/logout'))
