@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Select opening</h1>
+
+<ul>
+    <li>
+        <a class="dropdown-item" href="{{ url_for('feedback3',opening ='Queens Gambit') }}">Queens Gambit</a>
+    </li>
+    <li>
+        <a class="dropdown-item" href="{{ url_for('feedback3',opening ='Bogo-Indian Opening') }}">Bogo Indian</a>
+    </li>
+    </li>
+</ul>
+
+{% include "footer.html" %}
+{% endblock %}

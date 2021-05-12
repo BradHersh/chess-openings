@@ -26,13 +26,18 @@
   </head>
 
   <body>
-    <h1 id = 'title'>{{ name.opening }}</h1>
+    <h1 id = 'title'></h1>
     <div class = "float-container">
 
       <div id="board2" class = "float-child"></div>
       <div id = "board1" class = "float-child"></div>
 
     </div>
+    <button id='next'>Next Move</button>
+    <button id='last'>Last Move</button>
+    <button id='reset'>Start Again</button>
+    <div id = 'complete'></div>
+    <div id = 'score'></div>
 
     <button id='next' style="color: black;">Next Move</button>
     <button id='last' style="color: black;">Last Move</button>
@@ -51,24 +56,20 @@
       }
       var i = 0
       x = 0
-      var openings = {'queens_gambit':['rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/3P4/8/PPP1PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/3p4/2PP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/8/PP2PPPP/RNBQKBNR','rnbqkbnr/ppp1pppp/8/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/5N2/PP2PPPP/RNBQKB1R','rnbqkb1r/ppp1pppp/5n2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2pP4/4PN2/PP3PPP/RNBQKB1R','rnbqkb1r/ppp2ppp/4pn2/8/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQK2R','rnbqkb1r/pp3ppp/4pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1','rnbqkb1r/1p3ppp/p3pn2/2p5/2BP4/4PN2/PP3PPP/RNBQ1RK1'],
-                      'bogo-indian_opening': ["rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR",
-        "rnbqkb1r/pppppppp/5n2/8/3P4/8/PPP1PPPP/RNBQKBNR",
-        "rnbqkb1r/pppppppp/5n2/8/2PP4/8/PP2PPPP/RNBQKBNR",
-        "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/8/PP2PPPP/RNBQKBNR",
-        "rnbqkb1r/pppp1ppp/4pn2/8/2PP4/5N2/PP2PPPP/RNBQKB1R",
-        "rnbqk2r/pppp1ppp/4pn2/8/1bPP4/5N2/PP2PPPP/RNBQKB1R"
-       ], "caro-kann_opening" : ["rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR",
-        "rnbqkbnr/pp1ppppp/2p5/8/4P3/8/PPPP1PPP/RNBQKBNR",
-        "rnbqkbnr/pp1ppppp/2p5/8/4P3/2N5/PPPP1PPP/R1BQKBNR",
-        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N5/PPPP1PPP/R1BQKBNR",
-        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R",
-        "rnbqkbnr/pp2pppp/2p5/3p4/4P3/2N2N2/PPPP1PPP/R1BQKB1R"
-
-        ]}
-      this_opening = openings[opening]
-      console.log(opening)
+      
+      this_opening = {{name|safe}}
+      this_opening = this_opening.split(',')
+      var fixed_opening = []
+      for (var i; i<this_opening.length; i++){
+        console.log(this_opening[i])
+        fixedstring = this_opening[i].trim()
+        console.log(fixedstring)
+        fixed_opening.push(fixedstring)
+      }
+      console.log(this_opening)
+      this_opening = fixed_opening;
       var accuracy = this_opening.length
+      var i = 0;
 
       var board = Chessboard('board1', {
         draggable: true,

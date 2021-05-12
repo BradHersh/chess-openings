@@ -1,8 +1,8 @@
-from flask import render_template, flash, redirect, url_for
+from flask import render_template, flash, redirect, url_for, session
 from app import app
 from app.forms import LoginForm
 from flask_login import current_user, login_user
-from app.models import User, Results
+from app.models import User, Results, Openings
 from flask_login import logout_user
 from flask_login import login_required
 from flask import request
@@ -14,6 +14,7 @@ from statistics import mode
 import re
 from sqlalchemy import func, select, distinct
 import numpy as np
+import json
 
 @app.route('/')
 @app.route('/index')
@@ -33,6 +34,9 @@ def login():
             return redirect(url_for('login'))
         login_user(user, remember=form.remember_me.data)
         next_page = request.args.get('next')
+        if request.form.get("username") == "admin":
+            session['logged_in'] = True
+            return redirect('/admin')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
@@ -41,6 +45,7 @@ def login():
 @app.route('/logout')
 def logout():
     logout_user()
+    session.clear()
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -69,16 +74,20 @@ def Test():
 
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
-
 def chesspractice(opening):
-    name = {'opening': opening}
-    return render_template('chesspractice.html', title='Test', name = name)
+    # opening = Openings.query.get(opening)
+    opening = Openings.query.filter_by(name = opening)
+    fen = opening[0].FEN
+    return render_template('chesspractice.html', title='Test', name = json.dumps(fen))
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesstest(opening):
-    name = {'opening': opening}
-    return render_template('chesstest.html', title='Test', name = name)
+    opening = Openings.query.filter_by(name = opening)
+    fen = opening[0].FEN
+    name = opening[0].name
+
+    return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name)
 
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
@@ -155,6 +164,29 @@ def feedback(opening):
         return "Test not attempted yet"
 
 
+@app.route('/feedback2/', methods=['GET', 'POST'])
+def feedback2():
+    return render_template('feedback2.html', title='feedback') 
+
+@app.route('/feedback2/<opening>', methods=['GET', 'POST'])
+def feedback3(opening):
+     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
+     lst = []
+     i = 1
+     for r in res:
+         x = r.incorrect
+         x = re.findall(",".join(["[^,]+"] * 3), x)
+
+         lst.append(x)
+    
+    
+    
+     
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening)
+
+
+
+
 @app.route('/progress/<opening>/', methods=['GET', 'POST'])
 @login_required
 def progress(opening):
@@ -176,3 +208,41 @@ def progress(opening):
     
 
     return render_template('progress.html', title='progress', prog =complete, grades = marks, attempt = tries, opening = opening)
+
+
+@app.route('/newopening', methods=['GET', 'POST'])
+@login_required
+def newopening():
+
+    return render_template('newopening.html', title='newopening')
+
+@app.route('/newopeningform', methods=['GET', 'POST'])
+@login_required
+def newopeningform():
+    opening = request.form['openingname']
+    FENstring = request.form['FENopening']
+    opening = Openings(name=opening, FEN=FENstring)
+    db.session.add(opening)
+    db.session.commit()
+    return render_template('index.html', title='newopening')
+
+@app.route('/newLearn', methods=['GET', 'POST'])
+@login_required
+def newLearn():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append((o.name, o.FEN))
+    return render_template('newLearn.html', title='Learn', openings = json.dumps(lst))
+
+
+@app.route('/newTest', methods=['GET', 'POST'])
+@login_required
+def newTest():
+    openings = Openings.query.all()
+    lst = []
+    for o in openings:
+        lst.append((o.name, o.FEN))
+    return render_template('newTest.html', title='Test', openings = json.dumps(lst))
+
+

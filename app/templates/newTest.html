@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+        <title>Learn</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        
+        <style>
+
+            * {
+                color: white;
+            }
+    
+            body {
+                background-color: black;
+            }
+    
+            .center {
+                    margin-left: auto;
+                    margin-right: auto;
+                    margin-top: auto;
+                    margin-bottom: auto;
+                }
+    
+            .rcorners {
+                border-radius: 25px;
+                border: 2px solid #73AD21;
+                padding: 20px;
+                width: 200px;
+                height: 150px;
+            }
+    
+    
+            .sidebar {
+                margin: 0;
+                padding: 0;
+                width: 200px;
+                background-color: #141414;
+                position: absolute;
+                height: 100%;
+                overflow: auto;
+            }
+    
+            .sidebar a {
+                display: block;
+                color: white;
+                padding: 16px;
+                text-decoration: none;
+            }
+                
+            .sidebar a.active {
+                background-color: #04AA6D;
+                color: white;
+            }
+    
+            .sidebar a:hover:not(.active) {
+                background-color: #555;
+                color: white;
+            }
+    
+            div.content {
+                margin-left: 200px;
+                margin-top: 20px;
+                padding: 1px 16px;
+                height: 1000px;
+            }
+    
+            @media screen and (max-width: 700px) {
+                .sidebar {
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                }
+                .sidebar a {float: left;}
+                div.content {margin-left: 0;}
+            }
+    
+            @media screen and (max-width: 400px) {
+            .sidebar a {
+                text-align: center;
+                float: none;
+                }
+            }
+    
+            </style>
+    </head>
+
+    <body>
+  
+
+
+        <div class="sidebar" id = "sidebar">
+
+        </div>
+
+        <div class="content">
+            <div style="margin-left: auto; margin-right: auto; margin-top: 10%; text-align: center;">
+                <img src="static/img/chesspieces/wikipedia/wK.png" style="width: 400px; height: 400px;">
+                <br>
+                <a id = "meow" style="text-align: center;" href="{{ url_for('chesstest',opening='Queens Gambit') }}">Queens Gambit</a>
+            </div>
+          </div>
+          
+
+
+
+
+
+    </body>
+
+    <script>
+
+
+
+        x = {{openings|safe}}
+        function makeOpenings(array){
+            for (var i = 0; i<x.length; i++){
+                opening_name = x[i][0]
+                anchor = document.createElement('a')
+                if (i == 0){
+                    anchor.className = "active"
+                }
+                anchor.innerHTML = opening_name
+                anchor.setAttribute("onclick",  "reply_click(this.innerHTML)");                  
+                anchor.id = opening_name
+                document.getElementById("sidebar").appendChild(anchor)
+        }}
+
+        
+        var reply_click = function(clicked)
+        {
+            document.getElementById('meow').innerHTML = clicked;
+            document.getElementById('meow').href = "{{url_for('chesstest', opening = 'x')}}".replace("x", clicked);
+            var elements = document.getElementsByClassName("active");
+            for (var i = 0; i<elements.length; i ++){
+                elements[i].className = ""
+            }
+            document.getElementById(clicked).className = "active";
+            
+        }
+
+
+
+        // console.log(x.length)
+        // div = document.createElement('div')
+        // function makeOpenings(array){
+        //     for (var i = 0; i<x.length; i++){
+        //         var variable1 = x[i][0];
+        //         var div2 = document.createElement('div');
+        //         if (i==0){
+        //             div2.className = "carousel-item active";
+        //         } else {
+        //             div2.className = "carousel-item";
+        //         }
+                
+        //         var div3 = document.createElement('div');
+        //         div3.className = "view";
+            
+ 
+        //         var img = document.createElement("img")
+        //         img.ClassName = "d-block center";
+        //         img.src = "static/img/chesspieces/wikipedia/wR.png";
+        //         img.style.width = "300px";
+        //         img.style.height = "300px";
+        //         img.alt = "first slide"
+        //         var div4 = document.createElement('div')
+        //         div4.className = "mask rgba-black-light"
+        //         div3.appendChild(document.createElement('br'))
+        //         div3.appendChild(document.createElement('br'))
+        //         div3.appendChild(document.createElement('br'))
+        //         div3.appendChild(img)
+        //         div3.appendChild(img)
+        //         div3.appendChild(div4)
+        //         var div5 = document.createElement('div')
+        //         div5.ClassName = "carousel-caption";
+        //         var h3 = document.createElement('h3');
+        //         h3.className = "h3-responsive"
+        //         var anchor = document.createElement('a');
+        //         anchor.href =  "{{url_for('chesspractice', opening = 'x')}}".replace("x", variable1)
+        //         anchor.innerHTML = x[i][0]
+        //         h3.appendChild(anchor)
+        //         div5.appendChild(h3)
+        //         div3.appendChild(div5)
+        //         div2.appendChild(div3);
+                
+        //         document.getElementById("tester").appendChild(div2)
+                
+
+        //     }
+   
+        //     return div;
+        // }
+        makeOpenings(x)            
+
+        
+    </script>
+
+{% endblock %}
+
