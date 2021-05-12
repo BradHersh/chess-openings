@@ -72,15 +72,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
-@app.route('/learn')
-@login_required
-def learn():
-    return render_template('learn.html', title='Learn', prog=complete)
 
-@app.route('/Test')
-@login_required
-def Test():
-    return render_template('Test.html', title='Test', prog=complete)
 
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
@@ -298,21 +290,8 @@ def progress(opening):
     return render_template('progress.html', title='progress', prog =complete, grades = marks, attempt = tries, opening = opening)
 
 
-@app.route('/newopening', methods=['GET', 'POST'])
-@login_required
-def newopening():
 
-    return render_template('newopening.html', title='newopening')
 
-@app.route('/newopeningform', methods=['GET', 'POST'])
-@login_required
-def newopeningform():
-    opening = request.form['openingname']
-    FENstring = request.form['FENopening']
-    opening = Openings(name=opening, FEN=FENstring)
-    db.session.add(opening)
-    db.session.commit()
-    return render_template('index.html', title='newopening')
 
 @app.route('/newLearn', methods=['GET', 'POST'])
 @login_required
