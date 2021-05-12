@@ -102,9 +102,11 @@
                 <h1 style="text-align: center;"><b>Welcome to the Test portal!</b></h1>
             </div>
             <div style="margin-left: auto; margin-right: auto; margin-top: 5%; text-align: center;">
-                <img src="static/img/chesspieces/wikipedia/wK.png" style="width: 400px; height: 400px;">
+                <img id="myImg" src="static/img/gifs/crushpawnstatic.png" style="width: 900px; height: 400px; border-radius: 25px;">
                 <br>
-                <a id = "meow" style="text-align: center;" href="{{ url_for('chesstest',opening='Queens Gambit') }}">Queens Gambit</a>
+                <div style="padding-top: 3%;">
+                    <a id = "meow" style="text-align: center; font-weight: bolder; font-size: xx-large; color: antiquewhite; text-decoration: wavy;" href="{{ url_for('chesstest',opening='Queens Gambit') }}">Queens Gambit</a>
+                </div> 
             </div>
           </div>
           
@@ -148,7 +150,17 @@
 
         makeOpenings(x)            
 
-        
+        $(function() {
+            $("#myImg").hover(
+                function() {
+                    $(this).attr("src", "static/img/gifs/crushpawn.gif");
+                },
+                function() {
+                    $(this).attr("src", "static/img/gifs/crushpawnstatic.png");
+                }                         
+            );                  
+        });
+
     </script>
 
 {% endblock %}

@@ -30,24 +30,48 @@
     .float-container:float-container{
       margin-right:20px;
     }
+
+    .button {
+      display: inline-block;
+      cursor: pointer;
+      padding: 15px;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 9px #999;
+    }
+
+    .button:hover {background-color: #3e8e41}
+
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
+    
     </style>
   </head>
 
   <body>
     <br>
     <h1 id = 'title'>{{opening}}</h1>
-    <div class="row">
+    <div class="row" style="padding-bottom: 1%; margin-top: 4%;">
       <div class="col-sm-2"></div>
 
       <div class = "float-child col-sm-3">
-        <button id='next' style="color: black;">Next Move</button>
-        <button id='last' style="color: black;">Last Move</button>
+        <button id='next' class="button">Next Move</button>
+        <button id='last' class="button">Last Move</button>
       </div>
 
       <div class="col-sm-2"></div>
 
       <div class = "float-child col-sm-3">
-        <button id='reset' style="color: black;">Start Again</button>
+        <button id='reset' class="button">Start Again</button>
       </div>
 
       <div class="col-sm-2"></div>
@@ -56,21 +80,17 @@
     <div class="row">
       <div class="col-sm-2"></div>
 
-      <div id="board2" class = "float-child col-sm-3">
-        <button id='next' style="color: black;">Next Move</button>
-        <button id='last' style="color: black;">Last Move</button>
-      </div>
+      <div id="board2" class = "float-child col-sm-3"></div>
 
       <div class="col-sm-2"></div>
 
-      <div id="board1" class = "float-child col-sm-3">
-        <button id='reset' style="color: black;">Start Again</button>
-      </div>
+      <div id="board1" class = "float-child col-sm-3"></div>
 
       <div class="col-sm-2"></div>
     </div>
 
     <div>
+      <!--Need to add box at bottom that says score and percentage. Little button next to needs to appear to start again aswell-->
       <div id = 'complete'></div>
       <div id = 'score'></div>
     </div>

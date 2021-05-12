@@ -100,7 +100,17 @@ def chesstest(opening):
     fen = opening[0].FEN
     name = opening[0].name
 
-    return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name)
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str((numerator/denominator)*100 ) + '%'
+
+    return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name, prog = complete)
 
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
