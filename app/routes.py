@@ -88,7 +88,8 @@ def chesspractice(opening):
     # opening = Openings.query.get(opening)
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
-    return render_template('chesspractice.html', title='Test', name = json.dumps(fen))
+    opening = opening[0].name
+    return render_template('chesspractice.html', title='Test', name = json.dumps(fen), opening = opening)
 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
