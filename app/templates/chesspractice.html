@@ -9,15 +9,23 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
     .float-child {
       flex: 1;
          
      }  
     .float-container {
-      height: 50%;
-      width: 50%;
+      height: 60%;
+      width: 60%;
       display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1%;
     }
     .float-container:float-container{
       margin-right:20px;
@@ -26,22 +34,46 @@
   </head>
 
   <body>
-    <h1 id = 'title'></h1>
-    <div class = "float-container">
+    <br>
+    <h1 id = 'title'>{{opening}}</h1>
+    <div class="row">
+      <div class="col-sm-2"></div>
 
-      <div id="board2" class = "float-child"></div>
-      <div id = "board1" class = "float-child"></div>
+      <div class = "float-child col-sm-3">
+        <button id='next' style="color: black;">Next Move</button>
+        <button id='last' style="color: black;">Last Move</button>
+      </div>
 
+      <div class="col-sm-2"></div>
+
+      <div class = "float-child col-sm-3">
+        <button id='reset' style="color: black;">Start Again</button>
+      </div>
+
+      <div class="col-sm-2"></div>
     </div>
-    <button id='next'>Next Move</button>
-    <button id='last'>Last Move</button>
-    <button id='reset'>Start Again</button>
-    <div id = 'complete'></div>
-    <div id = 'score'></div>
+    
+    <div class="row">
+      <div class="col-sm-2"></div>
 
-    <button id='next' style="color: black;">Next Move</button>
-    <button id='last' style="color: black;">Last Move</button>
-    <button id='reset' style="color: black;">Start Again</button>
+      <div id="board2" class = "float-child col-sm-3">
+        <button id='next' style="color: black;">Next Move</button>
+        <button id='last' style="color: black;">Last Move</button>
+      </div>
+
+      <div class="col-sm-2"></div>
+
+      <div id="board1" class = "float-child col-sm-3">
+        <button id='reset' style="color: black;">Start Again</button>
+      </div>
+
+      <div class="col-sm-2"></div>
+    </div>
+
+    <div>
+      <div id = 'complete'></div>
+      <div id = 'score'></div>
+    </div>
 
     <script>
       x = document.getElementById('title').innerHTML;
@@ -91,7 +123,6 @@
       var board2 = Chessboard('board2', {'position': 'start'})
 
       }
-
 
 
 
@@ -162,6 +193,7 @@ function onChange (oldPos, newPos) {
           if (i<this_opening.length-1){
             if (Chessboard.objToFen(newPos) == this_opening[i]) {
               var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+
               console.log('yes')
               i = i + 2
               if (i == this_opening.length){
