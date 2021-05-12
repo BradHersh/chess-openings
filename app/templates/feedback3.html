@@ -21,7 +21,7 @@
   </head>
 
   <h1>{{opening}}</h1>
-  <h3 id = "selecttest">Select Test</h3>
+  <h3 id = "selecttest">Select test with errors</h3>
   <h3 id = 'TestNumber'></h3>
   <h5 id = "mistakeNumber"></h5>
 
@@ -48,8 +48,23 @@
 
 
   <script>
+  var black = "{{opening}}".split(' ')[1]
+
+  if (black == "Defense"){
+     var is_black = "True";
+  } else {
+      var is_black = "False";                              
+  }
+  console.log(is_black)
+
+
+
   x = {{mistakes|safe}}
-  console.log(x)
+  for (var i = 0; i<x.length; i++){
+      if (x[i] == ""){
+          x.splice(i,1)
+      }
+  }
 
   var Test
   function makeUL(array) {
@@ -110,16 +125,35 @@ board = Chessboard('myBoard')
     
 
     $('#Pos').on('click', function () {
-    board.position(x[parseInt(Test)][i].split(',')[0])
-    })
+    if (is_black == 'False'){
+        board.position(x[parseInt(Test)][i].split(',')[0])}
+    else {
+        board.position(x[parseInt(Test)][i].split(',')[0])
+        board.orientation('black')
+    }
+
+    }
+    )
 
     $('#Mistake').on('click', function () {
+    if (is_black == 'False'){
+    board.position(board.position(x[parseInt(Test)][i].split(',')[1]))}
+    else {
     board.position(board.position(x[parseInt(Test)][i].split(',')[1]))
-    })
+    board.orientation('black')}
+
+    }
+    )
 
     $('#correct').on('click', function () {
+    if (is_black == 'False'){
+    board.position(board.position(x[parseInt(Test)][i].split(',')[2]))}
+    else {
     board.position(board.position(x[parseInt(Test)][i].split(',')[2]))
-    })
+    board.orientation('black')}
+
+    }
+    )
 
 
 $('#next').on('click', function () {
