@@ -1,6 +1,8 @@
+
 {% extends "base.html" %}
 
 {% block content %}
+
 
 <!DOCTYPE html>
 <html>
@@ -243,121 +245,241 @@ function onChange (oldPos, newPos) {
         console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         console.log(i)
         console.log(this_opening.length)
-        if (is_black == "False"){
-          
+        // if (this_opening.length % 2 == 0 ){
+        //   if (is_black == "False"){
+            
 
-          if (i<this_opening.length-1){
-            if (Chessboard.objToFen(newPos) == this_opening[i]) {
-              var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+        //     if (i<this_opening.length-1){
+        //       if (Chessboard.objToFen(newPos) == this_opening[i]) {
+        //         var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+        //         console.log('yes')
+        //         i = i + 2
+        //         if (i == this_opening.length){
+        //           document.getElementById('complete').style.color = "green";
+        //           document.getElementById('complete').innerHTML = "Complete!";
+        //           score = (accuracy/this_opening.length)*100
+        //           document.getElementById('score').innerHTML = score + '%';
 
-              console.log('yes')
-              i = i + 2
-              if (i == this_opening.length){
-                document.getElementById('complete').style.color = "green";
-                document.getElementById('complete').innerHTML = "Complete!";
-                score = (accuracy/this_opening.length)*100
-                document.getElementById('score').innerHTML = score + '%';
+
+        //         }
                 
+        //       }
+        //       else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+        //           var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+        //           console.log('yes')
+        //           i = i + 2
+        //           if (i == this_opening.length){
+        //             document.getElementById('complete').style.color = "green";
+        //             document.getElementById('complete').innerHTML = "Complete!";
+        //             score = (accuracy/this_opening.length)*100
+        //             document.getElementById('score').innerHTML = score + '%';
 
-                
 
-              }
+                    
+
+
+        //         }
+
+        //       }
+
               
-            }
-            else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
-                var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
-                console.log('yes')
-                i = i + 2
-                if (i == this_opening.length){
-                  document.getElementById('complete').style.color = "green";
-                  document.getElementById('complete').innerHTML = "Complete!";
-                  score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+        //       else {
+        //         var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+        //         console.log('no')
 
+        //         if (accuracy > 0){
+        //           accuracy = accuracy - 1
+
+        //         }
+        //       }
+        //     } else {
+        //       var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
+
+        //     }
+
+        //   } else {
+        //     if (i<this_opening.length+1){
+        //       if (Chessboard.objToFen(newPos) == this_opening[i]) {
+        //         var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
+        //         console.log('yes')
+        //         i = i + 2
+        //         if (i == this_opening.length+1){
+        //           var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //           console.log(i)
+        //           document.getElementById('complete').style.color = "green";
+        //           document.getElementById('complete').innerHTML = "Complete!";
+        //           score = (accuracy/this_opening.length)*100
+        //           document.getElementById('score').innerHTML = score + '%';
+
+
+        //           console.log("wowowowowowowowow")
+
+        //         }
+                
+        //       }
+        //       else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+        //           var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
+        //           console.log('yes')
+        //           i = i + 2
+        //           if (i == this_opening.length+1){
+        //             var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //             document.getElementById('complete').style.color = "green";
+        //             document.getElementById('complete').innerHTML = "Complete!";
+        //             score = (accuracy/this_opening.length)*100
+        //             document.getElementById('score').innerHTML = score + '%';
+
+
+
+
+        //         }
+
+        //       }
+
+              
+        //       else {
+        //         var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //         console.log('no')
+
+        //         if (accuracy > 0){
+        //           accuracy = accuracy - 1
+
+        //         }
+        //       }
+        //     } else {
+        //       var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'});
+        //       console.log("hi")
+        //       console.log(i)
+        //     }
+
+        //   }
+        // } else {
+
+        //   if (is_black == "False"){
+            
+
+        //     if (i<this_opening.length+1){
+        //       if (Chessboard.objToFen(newPos) == this_opening[i]) {
+        //         var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+        //         console.log('yes')
+        //         i = i + 2
+        //         console.log(i)
+        //         if (i == this_opening.length+1){
+        //           document.getElementById('complete').style.color = "green";
+        //           document.getElementById('complete').innerHTML = "Complete!";
+        //           score = (accuracy/this_opening.length)*100
+        //           document.getElementById('score').innerHTML = score + '%';
+        //           var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
 
                   
 
-
-              }
-
-            }
-
-            
-            else {
-              var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
-              console.log('no')
-              if (accuracy > 0){
-                accuracy = accuracy - 1
-
-              }
-            }
-          } else {
-            var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
-
-          }
-
-        } else {
-          if (i<this_opening.length+1){
-            if (Chessboard.objToFen(newPos) == this_opening[i]) {
-              var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-              console.log('yes')
-              i = i + 2
-              if (i == this_opening.length+1){
-                var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
-                console.log(i)
-                document.getElementById('complete').style.color = "green";
-                document.getElementById('complete').innerHTML = "Complete!";
-                score = (accuracy/this_opening.length)*100
-                document.getElementById('score').innerHTML = score + '%';
+        //         }
+                
+        //       }
+        //       else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+        //           var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+        //           console.log('yes')
+        //           i = i + 2
+        //           if (i == this_opening.length+1){
+        //             document.getElementById('complete').style.color = "green";
+        //             document.getElementById('complete').innerHTML = "Complete!";
+        //             score = (accuracy/this_opening.length)*100
+        //             document.getElementById('score').innerHTML = score + '%';
 
 
-                console.log("wowowowowowowowow")
 
-              }
+                    
+
+
+        //         }
+
+        //       }
+
               
-            }
-            else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
-                var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-                console.log('yes')
-                i = i + 2
-                if (i == this_opening.length+1){
-                  var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
-                  document.getElementById('complete').style.color = "green";
-                  document.getElementById('complete').innerHTML = "Complete!";
-                  score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+        //       else {
+        //         var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
+        //         console.log('no')
+
+        //         if (accuracy > 0){
+        //           accuracy = accuracy - 1
+
+        //         }
+        //       }
+        //     } else {
+        //       var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange});
+
+        //     }
+
+        //   } else {
+        //     if (i<this_opening.length+1){
+        //       if (Chessboard.objToFen(newPos) == this_opening[i]) {
+        //         var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
+        //         console.log('yes')
+        //         i = i + 2
+        //         console.log("this is the i : " + i)
+        //         if (i == this_opening.length){
+        //           var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //           document.getElementById('complete').style.color = "green";
+        //           document.getElementById('complete').innerHTML = "Complete!";
+        //           score = (accuracy/this_opening.length)*100
+        //           document.getElementById('score').innerHTML = score + '%';
+
+        //           var board = Chessboard(board1, {position: this_opening[i-1], draggable: true, onChange: onChange, orientation: 'black'})
+
+
+
+        //           console.log("wowowowowowowowow")
+
+        //         }
+                
+        //       }
+        //       else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
+        //           var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
+        //           console.log('yes')
+        //           i = i + 2
+        //           if (i == this_opening.length-2){
+        //             var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //             document.getElementById('complete').style.color = "green";
+        //             document.getElementById('complete').innerHTML = "Complete!";
+        //             score = (accuracy/this_opening.length)*100
+        //             document.getElementById('score').innerHTML = score + '%';
 
 
 
 
-              }
 
-            }
+        //         }
 
-            
-            else {
-              var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
-              console.log('no')
-              if (accuracy > 0){
-                accuracy = accuracy - 1
+        //       }
 
-              }
-            }
-          } else {
-            var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'});
-            console.log("hi")
-            console.log(i)
-          }
+              
+        //       else {
+        //         var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
+        //         console.log('no')
 
+        //         if (accuracy > 0){
+        //           accuracy = accuracy - 1
+
+        //         }
+        //       }
+        //     } else {
+        //       var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'});
+        //       console.log("hi")
+        //       console.log(i)
+        //     }
+
+        //   }
+
+        // }
+      
         }
     
-      }
-  
+          
+    
   
 
       // --- End Example JS ----------------------------------------------------------
     </script>
-    {% include "footer.html" %}
   </body>
 
-{% endblock %}
+  {% include "footer.html" %}
+  {% endblock %}
