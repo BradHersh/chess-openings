@@ -54,11 +54,14 @@
                 
             .sidebar a.active {
                 background-color: #04AA6D;
+                font-weight: bolder;
+                text-decoration: none;
                 color: white;
             }
     
             .sidebar a:hover:not(.active) {
                 background-color: #555;
+                font-weight: bolder;
                 color: white;
             }
     
@@ -85,6 +88,29 @@
                 float: none;
                 }
             }
+
+            a#meow:hover,  a#meow:active{
+                animation-name: wordanim;
+                animation-duration: 4s;
+                animation-iteration-count: infinite;
+            }
+
+            #meow {
+                text-align: center; 
+                font-weight: bolder; 
+                font-size: xx-large; 
+                color: antiquewhite; 
+                text-decoration: none;
+            }
+
+
+                @keyframes wordanim {
+                0%   {color:red;}
+                25%  {color:yellow;}
+                50%  {color:turquoise;}
+                75%  {color:green;}
+                100% {color:red;}
+            }
     
             </style>
     </head>
@@ -106,6 +132,7 @@
                 <br>
                 <div style="padding-top: 3%;">
                     <a id = "meow" style="text-align: center; font-weight: bolder; font-size: xx-large; color: antiquewhite; text-decoration: wavy;" href="{{ url_for('chesstest',opening='Queens Gambit') }}">Queens Gambit</a>
+                    <p style="margin-top: 1%;"> <img src="static/img/arrow.png" style="height: 50px; width: 50px; transform: scaleX(-1);"> <b>Click this!</span> <img src="static/img/arrow.png" style="height: 50px; width: 50px;"></p>
                 </div> 
             </div>
           </div>
