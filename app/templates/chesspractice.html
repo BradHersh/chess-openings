@@ -9,39 +9,126 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
     .float-child {
       flex: 1;
          
      }  
     .float-container {
-      height: 50%;
-      width: 50%;
+      height: 60%;
+      width: 60%;
       display: flex;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 1%;
     }
     .float-container:float-container{
       margin-right:20px;
     }
+
+    .button {
+      display: inline-block;
+      cursor: pointer;
+      padding: 15px;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: #fff;
+      background-color: #4CAF50;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 9px #999;
+    }
+
+    .button:hover {background-color: #3e8e41}
+
+    .button:active {
+      background-color: #3e8e41;
+      box-shadow: 0 5px #666;
+      transform: translateY(4px);
+    }
+
+    
     </style>
   </head>
 
   <body>
-    <h1 id = 'title'></h1>
-    <div class = "float-container">
+    <br>
+    <h1 id = 'title'>{{opening}}</h1>
 
-      <div id="board2" class = "float-child"></div>
-      <div id = "board1" class = "float-child"></div>
+    <p><span style="font-weight: bold; font-size: x-large;">How to learn: </span> This page is designed to teach you the {{opening}}.</p>
 
+    
+
+
+    <div class="row" style="padding-bottom: 1%; margin-top: 2%;">
+      <div class="col-sm-2"></div>
+
+      <div class = "float-child col-sm-3">
+        <button id='next' class="button">Next Move</button>
+        <button id='last' class="button">Last Move</button>
+      </div>
+
+      <div class="col-sm-2"></div>
+
+      <div class = "float-child col-sm-3">
+        <button id='reset' class="button">Start Again</button>
+      </div>
+
+      <div class="col-sm-2"></div>
     </div>
-    <button id='next'>Next Move</button>
-    <button id='last'>Last Move</button>
-    <!-- <button id='reset'>Start Again</button> -->
-    <div id = 'complete'></div>
-    <div id = 'score'></div>
+    
+    <div class="row">
+      <div class="col-sm-2"></div>
 
-    <button id='next' style="color: black;">Next Move</button>
-    <button id='last' style="color: black;">Last Move</button>
-    <!-- <button id='reset' style="color: black;">Start Again</button> -->
+      <div id="board2" class = "float-child col-sm-3"></div>
+
+      <div class="col-sm-2" style="text-align: center;">
+        <br><br><br><br><br><br>
+        <div id = 'complete' style="font-size: 24px;"></div>
+        <div id = 'score' style="font-size: 20px;"></div>
+      </div>
+
+      <div id="board1" class = "float-child col-sm-3"></div>
+
+      <div class="col-sm-2"></div>
+    </div>
+
+
+    <div class="row" style="margin-top: 3%;">
+      <div class="col-sm-1"></div>
+
+      <div class="col-sm-5">
+        <p>
+          The left board is the <b>demonstration</b> board and is used to show you the correct sequence of moves. The buttons above the board are for manipulation of the stages.
+          <ul>
+            <li>
+              Click <span style="color: greenyellow;">Next Move</span> to show the next move in the sequence. 
+            </li>
+            <li>
+              Click <span style="color: red;">Last Move</span> to show the previous move in the sequence.
+            </li>
+          </ul>  
+        </p>
+        <p>Note: The <span style="color: greenyellow;">Next Move</span> and <span style="color: red;">Last Move</span> buttons control the sequence move by move, so the resulting move will be either black or white.</p>
+      </div>
+      <div class="col-sm-5">
+        <p>
+          The right board is the <b>practice</b> board and is used for you to practice the sequence of moves presented on the right. The button on top of the board is used to reset you progress if you get confused.
+          <ul>
+            <li>
+              Click <span style="color: rgb(38, 115, 141);">Start Again</span> to reset your current progress on the right board.
+            </li>
+          </ul>
+        </p>
+      </div>
+      <div class="col-sm-1"></div>
+    </div>
 
     <script>
       x = document.getElementById('title').innerHTML;
@@ -94,6 +181,7 @@
 
 
 
+
       var moves = 0
 
 
@@ -137,6 +225,7 @@
         accuracy = this_opening.length
         document.getElementById('score').innerHTML = "";
         document.getElementById('complete').innerHTML = "";
+        document.getElementsByClassName('tryagain').innerHTML = "";
 
       })
   
@@ -170,6 +259,18 @@ function onChange (oldPos, newPos) {
                   document.getElementById('score').innerHTML = score + '%';
 
                   
+          if (i<this_opening.length-1){
+            if (Chessboard.objToFen(newPos) == this_opening[i]) {
+              var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
+
+              console.log('yes')
+              i = i + 2
+              if (i == this_opening.length){
+                document.getElementById('complete').style.color = "green";
+                document.getElementById('complete').innerHTML = "Complete!";
+                score = (accuracy/this_opening.length)*100
+                document.getElementById('score').innerHTML = score + '%';
+                
 
                 }
                 

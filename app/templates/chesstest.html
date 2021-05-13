@@ -9,27 +9,70 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
-    <style>
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+      .row{
+        min-height: 150px;
+      }
     </style>
   </head>
 
   <body>
+    <br>
     <h1 id = 'title'>{{ name }}</h1>
 
+    <p><span style="font-weight: bold; font-size: x-large;">How to Test: </span> This page is designed to test you on the {{name}}.</p>
+
+    <div class="row" style="padding-bottom: 1%; margin-top: 4%;">
+
+      <div class="col-sm-1"></div>
+
+      <div class="col-sm-5">
+        <h2>How to complete the test:</h2>
+        <p>
+          The board on the right is the <i>Test board</i>. There will be no prompts for this test so make sure you have fully utilised the 'Learn' page and know your openings. To complete the test you must provide the correct sequence of moves. If a move is incorrect the piece will not move and you will have to try again until you get it. 
+        </p>
+        <br>
+        <p>
+          Once you have completed the test the word <span style="color: greenyellow;">Complete</span> will pop up, along with your score for the test. If the score is above 50%, congratulations your progress will increase. If you don't pass, you will have to try again for the progress bar to be updated.
+        </p>
+        <br>
+        <p>
+          You can review your tests in the <span style="color: yellow;">Feedback</span> section along the navigation bar. In the <span style="color: yellow;">Feedback</span> section you can select the test that you made an error in and review your mistakes.
+        </p>
+        <br>
+        <h3>Good luck!!!!</h3>
+        <br><br>
+        
+        <div id="submitdiv" class="row" style="text-align: center;">
+          <div class="col-sm-3"></div>
+
+          <div class="col-sm-3">
+            <div id = 'complete' style="font-size: 24px;"></div>
+            <div id = 'score' style="font-size: 20px;"></div>
+          </div>
+          <div class="col-sm-3" style="padding-top: 2.5%;">
+            <!-- <a href = "{{ url_for('index') }}" id = 'submitButton' style="visibility:hidden;" onclick = sendData()>Submit</a>-->
+            <button id = 'submitButton' style="visibility:hidden; color: black; border: none; border-radius: 15px 25px; padding: 10px;" onclick = sendData()>Submit</button>
+          </div>
+
+          <div class="col-sm-3"></div>
+        </div>
+      </div>
+
+      <div class="col-sm-4" id = "board1" ></div>
 
 
-    <div id = "board1" style = "width: 400px"></div>
+      <div class="col-sm-2"></div>
+
       
+    </div>
 
-    <div id = 'complete'></div>
-    <div id = 'score'></div>
-    <form action = "{{ url_for('complete') }}" method = "post">
-        <input id = "form_score" type ="hidden" name = "score" value = "">
-        <input id = "opening" type ="hidden" name = "opening" value = "{{name}}">
-        <input id = "incorrect" type = "hidden" name = "incorrect" value = "">
-        <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
-    </form>
+    
     
 
 
@@ -88,7 +131,7 @@
 
       var accuracy = this_opening.length
       var incorrect = []
-    
+      var isComplete = 0
 
 
 
@@ -123,7 +166,8 @@
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
-                document.getElementById('submit').type = "submit"
+                document.getElementById('submitButton').style.visibility = "visible"
+                isComplete = 1
 
                 
 
@@ -136,11 +180,11 @@
                 i = i + 2
                 if (i == this_opening.length){
                   document.getElementById('complete').style.color = "green";
-                  document.getElementById('complete').innerHTML = "Complete!";
+                  document.getElementById('complete').innerHTML = "Completes!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
-                  document.getElementById('submit').type = "submit"
-
+                  document.getElementById('submitButton').style.visibility = "visible"
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -177,8 +221,8 @@
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
-                document.getElementById('submit').type = "submit"
-
+                document.getElementById('submitButton').style.visibility = "visible"
+                isComplete = 1
                 console.log("wowowowowowowowow")
 
               }
@@ -194,8 +238,8 @@
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
-                  document.getElementById('submit').type = "submit"
-
+                  document.getElementById('submitButton').style.visibility = "visible"
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -230,13 +274,22 @@
   
 
       function sendData () {
-        console.log(incorrect)
-        score = (accuracy/this_opening.length)*100
-
-        document.getElementById('form_score').value = score;
-        document.getElementById('incorrect').value = incorrect;
-
-        }
+    if (isComplete == 1) {
+    score = (accuracy/this_opening.length)*100
+    var opening_name = document.getElementById('title').innerHTML
+    var results = {'opening' : opening_name, 'score': score, 'wrong' : incorrect}
+    var dataJson = JSON.stringify(results)
+    console.log(dataJson)
+    $.ajax({
+        url: '/complete',
+        contentType: "application/json;charset=utf-8",
+        data: dataJson,
+        dataType: "json",
+        type: 'POST'
+    }) 
+    window.location.href = "{{ url_for('index') }}";
+    }
+  }
 
 
 
