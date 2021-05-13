@@ -122,7 +122,6 @@ def complete():
     wrong_moves = test_results['wrong']
     wrong_moves = [item for sublist in wrong_moves for item in sublist]
     wrong_moves = ','.join(wrong_moves)
-    print(test_results)
     if score > 50:
         result = Results(opening=current_opening, result=score, incorrect = wrong_moves, passed = True, student = current_user)
         db.session.add(result)
