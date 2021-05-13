@@ -27,8 +27,9 @@ def index():
     numerator = len(set(openings))
     denominator = Openings.query.all()
     denominator = len(denominator)
+    num = round((numerator/denominator)*100, 2)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
 
     return render_template('index.html', title='Home' , prog =complete)
 
@@ -85,7 +86,7 @@ def chesspractice(opening):
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     # opening = Openings.query.get(opening)
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
@@ -108,7 +109,7 @@ def chesstest(opening):
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
 
     return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name, prog = complete)
 
@@ -147,7 +148,7 @@ def selectresult():
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     return render_template('selectresult.html', title='Results', openings = lst, prog=complete) 
 
 
@@ -163,7 +164,7 @@ def results(opening):
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     u = User.query.get(current_user.id)
 
     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
@@ -190,7 +191,7 @@ def feedback(opening):
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
 
     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
     for i in res:
@@ -247,7 +248,7 @@ def feedback2():
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
 
     return render_template('feedback2.html', title='feedback', openings = lst, prog=complete) 
 
@@ -272,7 +273,7 @@ def feedback3(opening):
      numerator = len(set(openings))
      denominator = Openings.query.all()
      denominator = len(denominator)
-     complete = str((numerator/denominator)*100 ) + '%'
+     complete = str(round((numerator/denominator)*100, 2)) + '%'
      for r in res1:
          # r.result = r.result.split('%')[0]
          # r.result = float(r.result)
@@ -300,7 +301,7 @@ def progress(opening):
     numerator = len(set(openings))
     denominator = Openings.query.all()
     denominator = len(denominator)
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     for r in res1:
         # r.result = r.result.split('%')[0]
         # r.result = float(r.result)
@@ -330,7 +331,7 @@ def newLearn():
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     return render_template('newLearn.html', title='Learn', openings = json.dumps(lst), prog=complete)
 
 
@@ -350,7 +351,7 @@ def newTest():
     denominator = Openings.query.all()
     denominator = len(denominator)
 
-    complete = str((numerator/denominator)*100 ) + '%'
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     return render_template('newTest.html', title='Test', openings = json.dumps(lst), prog=complete)
 
 
