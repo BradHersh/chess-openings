@@ -24,12 +24,8 @@
 
     <div id = 'complete'></div>
     <div id = 'score'></div>
-    <form action = "{{ url_for('complete') }}" method = "post">
-        <input id = "form_score" type ="hidden" name = "score" value = "">
-        <input id = "opening" type ="hidden" name = "opening" value = "{{name}}">
-        <input id = "incorrect" type = "hidden" name = "incorrect" value = "">
-        <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
-    </form>
+    <!-- <a href = "{{ url_for('index') }}" id = 'submitButton' style="visibility:hidden;" onclick = sendData()>Submit</a>-->
+    <button id = 'submitButton' style="visibility:hidden;" onclick = sendData()>Submit</button>
     
 
 
@@ -123,7 +119,7 @@
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
-                document.getElementById('submit').type = "submit"
+                document.getElementById('submitButton').style.visibility = "visible"
 
                 
 
@@ -139,7 +135,7 @@
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
-                  document.getElementById('submit').type = "submit"
+                  document.getElementById('submitButton').style.visibility = "visible"
 
                   console.log(incorrect)
 
@@ -177,7 +173,7 @@
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
-                document.getElementById('submit').type = "submit"
+                document.getElementById('submitButton').style.visibility = "visible"
 
                 console.log("wowowowowowowowow")
 
@@ -194,7 +190,7 @@
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
-                  document.getElementById('submit').type = "submit"
+                  document.getElementById('submitButton').style.visibility = "visible"
 
                   console.log(incorrect)
 
@@ -230,13 +226,21 @@
   
 
       function sendData () {
-        console.log(incorrect)
-        score = (accuracy/this_opening.length)*100
-
-        document.getElementById('form_score').value = score;
-        document.getElementById('incorrect').value = incorrect;
-
-        }
+    //console.log(incorrect)
+    score = (accuracy/this_opening.length)*100
+    var opening_name = document.getElementById('title').innerHTML
+    var results = {'opening' : opening_name, 'score': score, 'wrong' : incorrect}
+    var dataJson = JSON.stringify(results)
+    console.log(dataJson)
+    $.ajax({
+        url: '/complete',
+        contentType: "application/json;charset=utf-8",
+        data: dataJson,
+        dataType: "json",
+        type: 'POST'
+    }) 
+    window.location.href = "{{ url_for('index') }}";
+  }
 
 
 

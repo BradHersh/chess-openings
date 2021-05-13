@@ -115,18 +115,20 @@ def chesstest(opening):
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
 def complete():
-    score = request.form['score']
-    score = score.split('%')[0]
+    test_results = request.json
+    score  = test_results['score']
     score = float(score)
-    current_opening = request.form['opening']
-    wrong = request.form['incorrect']
+    current_opening = test_results['opening']
+    wrong_moves = test_results['wrong']
+    wrong_moves = [item for sublist in wrong_moves for item in sublist]
+    wrong_moves = ','.join(wrong_moves)
     if score > 50:
-        result = Results(opening=current_opening, result=score, incorrect = wrong, passed = True, student = current_user)
+        result = Results(opening=current_opening, result=score, incorrect = wrong_moves, passed = True, student = current_user)
         db.session.add(result)
         db.session.commit()
         flash("well done test complete")
     else:
-        result = Results(opening=current_opening, result=score, incorrect = wrong, passed = False, student = current_user)
+        result = Results(opening=current_opening, result=score, incorrect = wrong_moves, passed = False, student = current_user)
         db.session.add(result)
         db.session.commit()
     return redirect(url_for('index'))
