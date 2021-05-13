@@ -131,7 +131,7 @@
 
       var accuracy = this_opening.length
       var incorrect = []
-    
+      var isComplete = 0
 
 
 
@@ -166,7 +166,8 @@
                 document.getElementById('complete').innerHTML = "Complete!";
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
-                document.getElementById('submitButton').style.visibility = "visible";
+                document.getElementById('submitButton').style.visibility = "visible"
+                isComplete = 1
 
                 
 
@@ -182,11 +183,8 @@
                   document.getElementById('complete').innerHTML = "Completes!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
-                  document.getElementById('submitButton').style.visibility = "visible";
-
-                  //Why doesn't this work -- I think its a problem with the image paths because background-image: url('image.png') didnt work inline either
-                  document.getElementById('submitdiv').style.backgroundImage = "url('static/img/Open/BogoIndian.png')"
-
+                  document.getElementById('submitButton').style.visibility = "visible"
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -224,7 +222,7 @@
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
                 document.getElementById('submitButton').style.visibility = "visible"
-
+                isComplete = 1
                 console.log("wowowowowowowowow")
 
               }
@@ -241,7 +239,7 @@
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
-
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -276,7 +274,7 @@
   
 
       function sendData () {
-    //console.log(incorrect)
+    if (isComplete == 1) {
     score = (accuracy/this_opening.length)*100
     var opening_name = document.getElementById('title').innerHTML
     var results = {'opening' : opening_name, 'score': score, 'wrong' : incorrect}
@@ -290,6 +288,7 @@
         type: 'POST'
     }) 
     window.location.href = "{{ url_for('index') }}";
+    }
   }
 
 
