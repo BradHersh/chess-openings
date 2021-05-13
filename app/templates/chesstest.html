@@ -84,7 +84,7 @@
 
       var accuracy = this_opening.length
       var incorrect = []
-    
+      var isComplete = 0
 
 
 
@@ -120,6 +120,7 @@
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
                 document.getElementById('submitButton').style.visibility = "visible"
+                isComplete = 1
 
                 
 
@@ -136,7 +137,7 @@
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
-
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -174,7 +175,7 @@
                 score = (accuracy/this_opening.length)*100
                 document.getElementById('score').innerHTML = score + '%';
                 document.getElementById('submitButton').style.visibility = "visible"
-
+                isComplete = 1
                 console.log("wowowowowowowowow")
 
               }
@@ -191,7 +192,7 @@
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
-
+                  isComplete = 1
                   console.log(incorrect)
 
 
@@ -226,7 +227,7 @@
   
 
       function sendData () {
-    //console.log(incorrect)
+    if (isComplete == 1) {
     score = (accuracy/this_opening.length)*100
     var opening_name = document.getElementById('title').innerHTML
     var results = {'opening' : opening_name, 'score': score, 'wrong' : incorrect}
@@ -240,6 +241,7 @@
         type: 'POST'
     }) 
     window.location.href = "{{ url_for('index') }}";
+    }
   }
 
 
