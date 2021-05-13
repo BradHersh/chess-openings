@@ -10,65 +10,61 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
     <style>
-    .float-child {
-      flex: 1;
-         
-     }  
-    .float-container {
-      height: 50%;
-      width: 50%;
-      display: flex;
-    }
-    .float-container:float-container{
-      margin-right:20px;
-    }
+
     </style>
   </head>
 
   <body>
-    <h1 id = 'title'></h1>
-    <div class = "float-container">
+    <h1 id = 'title'>{{ name }}</h1>
 
-      <div id="board2" class = "float-child"></div>
-      <div id = "board1" class = "float-child"></div>
 
-    </div>
-    <button id='next'>Next Move</button>
-    <button id='last'>Last Move</button>
-    <!-- <button id='reset'>Start Again</button> -->
+
+    <div id = "board1" style = "width: 400px"></div>
+      
+
     <div id = 'complete'></div>
     <div id = 'score'></div>
+    <form action = "{{ url_for('complete') }}" method = "post">
+        <input id = "form_score" type ="hidden" name = "score" value = "">
+        <input id = "opening" type ="hidden" name = "opening" value = "{{name}}">
+        <input id = "incorrect" type = "hidden" name = "incorrect" value = "">
+        <input id = 'submit' onclick = "sendData()" type = "hidden", value = 'submit'>
+    </form>
+    
 
-    <button id='next' style="color: black;">Next Move</button>
-    <button id='last' style="color: black;">Last Move</button>
-    <!-- <button id='reset' style="color: black;">Start Again</button> -->
+
+    
+    
+
 
     <script>
+
+      console.log(is_black)
       x = document.getElementById('title').innerHTML;
       x = x.toLowerCase();
       x = x.split(" ")
       opening = x[0] + '_' + x[1]
 
- 
+      var config = {
+        draggable: true,
+        position: 'start',
+        onChange: onChange
+      }
       var i = 0
       x = 0
-      
-      this_opening = {{name|safe}}
-      this_opening = this_opening.split(',')
-      var fixed_opening = []
-      for (var i; i<this_opening.length; i++){
-        console.log(this_opening[i])
-        fixedstring = this_opening[i].trim()
-        console.log(fixedstring)
-        fixed_opening.push(fixedstring)
-      }
-      console.log(this_opening)
-      console.log("{{opening}}");
-      this_opening = fixed_opening;
-      var accuracy = this_opening.length
 
-      var black = "{{opening}}".split(' ')[1]
-      console.log(black)
+       this_opening = {{opening|safe}}
+       this_opening = this_opening.split(',')
+       var fixed_opening = []
+       for (var i; i<this_opening.length; i++){
+          console.log(this_opening[i])
+          fixedstring = this_opening[i].trim()
+          console.log(fixedstring)
+          fixed_opening.push(fixedstring)
+      }
+      this_opening = fixed_opening;
+      console.log(this_opening.length)
+      var black = "{{name}}".split(' ')[1]
       if (black == "Defense"){
         var is_black = "True";
         var i = 1
@@ -78,73 +74,35 @@
         onChange: onChange,
         orientation: 'black'
       })
-      var board2 = Chessboard('board2', {'position': 'start', 'orientation': 'black'})
-
       } else {
         var is_black = "False";
         var i = 0
         var board = Chessboard('board1', {
         draggable: true,
         position: 'start',
-        onChange: onChange,
+        onChange: onChange
       })
-      var board2 = Chessboard('board2', {'position': 'start'})
-
       }
+     
+
+
+      var accuracy = this_opening.length
+      var incorrect = []
+    
+
 
 
 
       var moves = 0
 
 
-      $('#next').on('click', function(){   
-        if (x<this_opening.length){
-          x = x+1
 
-        }  
-        else {
-          x = x
-        }
-        
-        board2.position(this_opening[x])
-        console.log(x)
 
-      })
 
-      $('#last').on('click', function(){
-        if (x>0){
-          x = x-1
-
-        }  
-        else {
-          x = x
-        }
-        console.log(x)
-        board2.position(this_opening[x])
-
-      })
-
-      $('#reset').on('click', function(){
-        if (is_black == "False"){
-          
-          var board = Chessboard(board1, {position: 'start', draggable: true, onChange: onChange})
-          i = 0;}
-        else {
-          var board = Chessboard(board1, {position: this_opening[0], draggable: true, onChange: onChange, orientation: 'black'})
-          i = 1;
-        }
-        console.log(i)
-        accuracy = this_opening.length
-        document.getElementById('score').innerHTML = "";
-        document.getElementById('complete').innerHTML = "";
-
-      })
-  
 
 
 
       
-// --- Begin Example JS --------------------------------------------------------
 // --- Begin Example JS --------------------------------------------------------
 function onChange (oldPos, newPos) {
         console.log('Position changed:')
@@ -168,8 +126,8 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('submit').type = 'submit';
 
-                  
 
                 }
                 
@@ -183,6 +141,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
                     document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('submit').type = 'submit';
 
 
                     
@@ -196,6 +155,8 @@ function onChange (oldPos, newPos) {
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
                 console.log('no')
+                incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos), this_opening[i]])
+
                 if (accuracy > 0){
                   accuracy = accuracy - 1
 
@@ -219,6 +180,7 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('submit').type = 'submit';
 
 
                   console.log("wowowowowowowowow")
@@ -236,6 +198,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
                     document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('submit').type = 'submit';
 
 
 
@@ -248,6 +211,8 @@ function onChange (oldPos, newPos) {
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
                 console.log('no')
+                incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos), this_opening[i]])
+
                 if (accuracy > 0){
                   accuracy = accuracy - 1
 
@@ -274,6 +239,7 @@ function onChange (oldPos, newPos) {
                 if (i == this_opening.length+1){
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
+                  document.getElementById('submit').type = 'submit';
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
                   var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
@@ -292,6 +258,8 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
                     document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('submit').type = 'submit';
+
 
 
                     
@@ -305,6 +273,8 @@ function onChange (oldPos, newPos) {
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
                 console.log('no')
+                incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos), this_opening[i]])
+
                 if (accuracy > 0){
                   accuracy = accuracy - 1
 
@@ -328,6 +298,8 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('submit').type = 'submit';
+
                   var board = Chessboard(board1, {position: this_opening[i-1], draggable: true, onChange: onChange, orientation: 'black'})
 
 
@@ -347,6 +319,8 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
                     document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('submit').type = 'submit';
+
 
 
 
@@ -359,6 +333,8 @@ function onChange (oldPos, newPos) {
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
                 console.log('no')
+                incorrect.push([Chessboard.objToFen(oldPos), Chessboard.objToFen(newPos), this_opening[i]])
+
                 if (accuracy > 0){
                   accuracy = accuracy - 1
 
@@ -378,9 +354,27 @@ function onChange (oldPos, newPos) {
     
   
 
-      // --- End Example JS ----------------------------------------------------------
-    </script>
-    {% include "footer.html" %}
-  </body>
 
+      // --- End Example JS ----------------------------------------------------------
+
+  
+
+      function sendData () {
+        console.log(incorrect)
+        score = (accuracy/this_opening.length)*100
+
+        document.getElementById('form_score').value = score;
+        document.getElementById('incorrect').value = incorrect;
+
+        }
+
+
+
+      
+
+      
+
+    </script>
+
+{% include "footer.html" %}
 {% endblock %}
