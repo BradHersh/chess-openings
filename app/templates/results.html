@@ -1,30 +1,112 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Hi, {{current_user.username}} ! </h1>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        html, body {
+            height: 90%;
+            margin: 0;
+        }
 
-<table>
-<tr>
+        #wrapper {
+            min-height: 90%; 
+            
+        }
 
+        table{
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            margin-top: 2%;
+            background-color: blanchedalmond;
+            border-collapse:collapse;
+            border-radius: 25px;
+        }
 
+        tr#header {
+            background-color: rgb(250, 217, 168);
+        }
 
-    <th>Opening</th>
-    <th>Result</th>
+        tr{
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
 
-</tr>
-{% for r in query %}
-<tr>    
-    <td>
-        {{r.opening}}
-    </td>
-    <td>
-        {{r.result}}
-    </td>
-    
-</tr>
-{% endfor %}
-</table>
+        th,p{
+            color: black;
 
-    
+        }
+
+        td{
+            padding: 7px;
+        }
+
+        #square {
+            text-align: center;
+            width: 1vw;
+            height: 1vw;
+            margin-left: 50%;
+            border: 2px double black;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="wrapper">
+        <br>
+        <h1>Hi, {{current_user.username}} ! </h1>
+
+        <div class="row" style="min-height:20%;">
+
+            <div class="col-sm-3"></div>
+
+            <div class="col-sm-6">
+                <table style="padding-bottom: 50px;">
+                    <tr id="header">
+                        <th style="padding: 15px;">Opening</th>
+                        <th style="padding: 15px;">Result</th>
+                        <th style="padding: 15px;">Status</th>
+                    </tr>
+
+                    {% for r in query %}
+                    <tr>    
+                        <td>
+                            <p style="font-weight: bold; padding-top: 15px;">Test: {{loop.index}}</p>
+                        </td>
+                        <td>
+                            <p style="padding-top: 15px;">{{r.result}}</p>
+                        </td>
+                        <td>
+                            {% if r.result >= 75 %} 
+                            <div id="square" style="background-color: green;"></div>
+                            {% elif 50<=r.result<75 %}
+                            <div id="square" style="background-color: yellow;"></div>
+                            {% else %}
+                            <div id="square" style="background-color: red;"></div>
+                            {% endif %}
+                        </td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div class="col-sm-3"></div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function squarecol(i){
+        if (i > 75) {
+            document.getElementById('square').style.backgroundColor = "green";
+        }
+    }
+
+</script>
 
 {% include "footer.html" %}
 {% endblock %}

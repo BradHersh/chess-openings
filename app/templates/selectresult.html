@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <head>
+    <title>Results</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
@@ -25,21 +26,40 @@
             text-decoration: none;
         }
 
+        img.horse {  
+            height: 200px;
+            width: 200px;
+            position: absolute;  
+            top: 0;  
+            bottom: 0;  
+            left: 0;  
+            right: 0;  
+            margin: auto;
+        }
+
 
     </style>
 </head>
 <body>
     <br>
-    <h1>Welcome to the Results page:</h1>
+    <p style="font-weight: bolder; font-size: 45px;">Please select an opening to review your results:</p>
 
-    <div class="row" style = "padding-bottom: 1%; margin-top: 4%;">
-        <div class="col-sm-3"></div>
-
-        <div class="col-sm-6" style="text-align: center;">
-            <ul id = 'list'></ul>
+    <div class="row" style = "padding-bottom: 1%; margin-top: 4%; margin-bottom: 10%;">
+        <div class="col-sm-3">
+            <img src = "/static/img/gifs/spinnyhorsey.gif" class="horse" style="margin-left: 50%;">
         </div>
 
-        <div class="col-sm-3"></div>
+        <div class="col-sm-3" style="text-align: center;">
+            <ul id = 'listleft'></ul>
+        </div>
+
+        <div class="col-sm-3" style="text-align: center;">
+            <ul id = 'listright'></ul>
+        </div>
+
+        <div class="col-sm-3">
+            <img src = "/static/img/gifs/spinnyhorsey.gif" class="horse" style="margin-right: 50%;">
+        </div>
     </div>
 
     
@@ -58,9 +78,14 @@
             anchor.className = 'openings';
             anchor.href = "{{url_for('results', opening = 'x')}}".replace("x", opening);
             anchor.innerHTML = opening;
-            li.appendChild(anchor)
-            document.getElementById('list').appendChild(li)
+            li.appendChild(anchor);
 
+            if (i % 2 == 0) {
+                document.getElementById('listleft').appendChild(li);
+            }
+            else {
+                document.getElementById('listright').appendChild(li);
+            }
         }
 
 
