@@ -39,8 +39,9 @@ class Results(db.Model):
     incorrect = db.Column(db.ARRAY(db.String(140)))
     passed = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+
 
 
 
@@ -67,11 +68,15 @@ class Openings(db.Model):
         return '<Post {}>'.format(self.body)
 
 class SecureModelView(ModelView):
+    
     def is_accessible(self):
         if "logged_in" in session:
                 return True
         else:
             abort(403)
+
+class ResultsView(SecureModelView):
+    column_list = ('opening', 'result', 'student', 'passed', 'timestamp')
 
 
 @login.user_loader
@@ -80,7 +85,9 @@ def load_user(id):
 
 
 
+
+
 admin.add_view(SecureModelView(Openings, db.session))
 admin.add_view(SecureModelView(User, db.session))
-admin.add_view(SecureModelView(Results, db.session))
+admin.add_view(ResultsView(Results, db.session))
 admin.add_link(MenuLink(name='Logout', category='', url='/logout'))
