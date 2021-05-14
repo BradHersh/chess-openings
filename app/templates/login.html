@@ -6,8 +6,10 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <style>
             body {
-                background-color: black;
-                color: white;
+                background-image: url('static/img/gifs/knights.jpg');
+                background-position: center;
+                background-repeat: no-repeat;
+                background-size: cover;
             }
             .center {
                 display: flex;
@@ -24,36 +26,40 @@
             }
             .flex-item{
                 width: 25%;
-
+            }
+            .headings{
+                color: dodgerblue;
+                font-family: Verdana;   
             }
 
         </style>
     </head>
     <body>
+        
         <div class="flex-container">
-            <div class = flex-item">
-            <h1>Sign In</h1>
+            <div class = "flex-item">
+            <h1 class = "center" style="color:DodgerBlue; font-family:Copperplate">Sign In</h1>
             <hr style = "background-color: white;">
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
                 <p>
-                    {{ form.username.label }}<br>
+                    <span class = "headings">{{ form.username.label }} </span> <br>
                     {{ form.username(size=32) }}<br>
                     {% for error in form.username.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </p>
                 <p>
-                    {{ form.password.label }}<br>
+                    <span class = "headings">{{ form.password.label }}</span> <br>
                     {{ form.password(size=32) }}<br>
                     {% for error in form.password.errors %}
                     <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 </p>
-                <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+                <p> {{ form.remember_me() }} <span style="color: white;">{{ form.remember_me.label }}</span></p>
                 <p>{{ form.submit() }}</p>
             </form>
-            <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+            <p style = "color:white">New User? &nbsp<a href="{{ url_for('register') }}"><span style = "color: dodgerblue">Click to Register!</span></a></p>
             </div>
         </div>
     </body>
