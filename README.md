@@ -22,7 +22,6 @@ Next, run the application using flask on `localhost` using the following command
 
 ```
 $ flask run
-
 ```
 Open `http://127.0.0.1:5000/` and enjoy!
 
