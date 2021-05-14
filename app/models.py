@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from sqlalchemy.sql.sqltypes import NullType
 from app import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
@@ -40,6 +42,7 @@ class Results(db.Model):
     passed = db.Column(db.Boolean)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    feedback = db.Column(db.Text, default = None)
 
 
 
@@ -76,7 +79,8 @@ class SecureModelView(ModelView):
             abort(403)
 
 class ResultsView(SecureModelView):
-    column_list = ('opening', 'result', 'student', 'passed', 'timestamp')
+    column_list = ('opening', 'result', 'student', 'passed', 'timestamp', 'feedback')
+    form_columns = ('feedback', 'result', 'passed')
 
 
 @login.user_loader

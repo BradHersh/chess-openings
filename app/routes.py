@@ -256,12 +256,15 @@ def feedback2():
 def feedback3(opening):
      res3 = Results.query.filter_by(user_id = current_user.id, opening = opening)
      lst = []
+     lst1 = []
      i = 1
      for r in res3:
          x = r.incorrect
+         y = r.feedback
          x = re.findall(",".join(["[^,]+"] * 3), x)
 
          lst.append(x)
+         lst1.append(y)
 
      res = Results.query.filter_by(user_id = current_user.id, passed = True)
      res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
@@ -283,7 +286,7 @@ def feedback3(opening):
     
     
      
-     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening, prog =complete, grades = marks, attempt = tries)
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), feedback = json.dumps(lst1), opening = opening, prog =complete, grades = marks, attempt = tries)
 
 
 

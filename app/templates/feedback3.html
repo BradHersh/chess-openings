@@ -32,6 +32,7 @@
   <button id = "next" style = "display:none">Next</button>
   <button id = "back" style = "display:none">Back</button>
   <button id = "newtest" style = "display:none">Select New Test</button>
+  <p id = "feedback"></p>
 
 
   <div id = 'foo'>
@@ -60,11 +61,15 @@
 
 
   x = {{mistakes|safe}}
+  feedback = {{feedback|safe}}
   for (var i = 0; i<x.length; i++){
       if (x[i] == ""){
           x.splice(i,1)
+          feedback.splice(i,1)
       }
   }
+  console.log(feedback[0])
+
 
   var Test
   function makeUL(array) {
@@ -73,6 +78,7 @@
     list.id = 'list';
 
     for (var i = 0; i < x.length; i++) {
+        console.log(feedback[i])
         // console.log('{{mistakes[i]}}')
         // Create the list item:
         var item = document.createElement('li');
@@ -94,6 +100,7 @@
              document.getElementById('next').style.display = "block";
              }
              document.getElementById("myChart").style.display = "none";
+             document.getElementById('feedback').innerHTML = feedback[item.id];
             //  document.getElementById('back').style.display = "block";
                 
 
