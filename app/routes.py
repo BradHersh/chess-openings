@@ -168,7 +168,7 @@ def results(opening):
     u = User.query.get(current_user.id)
 
     res = Results.query.filter_by(user_id = current_user.id, opening = opening)
-    return render_template('results.html', title='results', query = res, prog=complete)
+    return render_template('results.html', title='results', query = res, prog=complete, opening = opening)
 
 
 

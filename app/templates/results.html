@@ -52,12 +52,17 @@
             border: 2px double black;
         }
 
+        h4{
+            margin-top: 2%;
+        }
+
     </style>
 </head>
 <body>
     <div id="wrapper">
         <br>
-        <h1>Hi, {{current_user.username}} ! </h1>
+        <h1><b>{{opening}}</b></h1>
+        <h4><a href="{{url_for('selectresult')}}">Go Back</a></h4>
 
         <div class="row" style="min-height:20%;">
 
@@ -72,14 +77,15 @@
                     </tr>
 
                     {% for r in query %}
-                    <tr>    
-                        <td>
-                            <p style="font-weight: bold; padding-top: 15px;">Test: {{loop.index}}</p>
+                    <tr>
+                        {% if loop.index%2 == 0 %}  
+                        <td style="background-color: grey;">
+                            <p style="font-weight: bold; padding-top: 15px; color: white;">Test: {{loop.index}}</p>
                         </td>
-                        <td>
-                            <p style="padding-top: 15px;">{{r.result}}</p>
+                        <td style="background-color: blanchedalmond;">
+                            <p style="padding-top: 15px; color: black;">{{r.result}}</p>
                         </td>
-                        <td>
+                        <td style="background-color: grey;">
                             {% if r.result >= 75 %} 
                             <div id="square" style="background-color: green;"></div>
                             {% elif 50<=r.result<75 %}
@@ -88,6 +94,23 @@
                             <div id="square" style="background-color: red;"></div>
                             {% endif %}
                         </td>
+                        {% else %}
+                        <td style="background-color: blanchedalmond;">
+                            <p style="font-weight: bold; padding-top: 15px; color: black;">Test: {{loop.index}}</p>
+                        </td>
+                        <td style="background-color: grey;">
+                            <p style="padding-top: 15px; color: white;">{{r.result}}</p>
+                        </td>
+                        <td style="background-color: blanchedalmond;">
+                            {% if r.result >= 75 %} 
+                            <div id="square" style="background-color: green;"></div>
+                            {% elif 50<=r.result<75 %}
+                            <div id="square" style="background-color: yellow;"></div>
+                            {% else %}
+                            <div id="square" style="background-color: red;"></div>
+                            {% endif %}
+                        </td>
+                        {% endif %}
                         
                     </tr>
                     {% endfor %}
@@ -99,14 +122,7 @@
         </div>
     </div>
 </body>
-<script>
-    function squarecol(i){
-        if (i > 75) {
-            document.getElementById('square').style.backgroundColor = "green";
-        }
-    }
 
-</script>
 
 {% include "footer.html" %}
 {% endblock %}

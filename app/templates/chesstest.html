@@ -171,7 +171,7 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
                   isComplete = 1
 
@@ -187,7 +187,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').style.color = "green";
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
-                    document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                     document.getElementById('submitButton').style.visibility = "visible"
                     isComplete = 1
 
@@ -228,7 +228,7 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
                   isComplete = 1
 
@@ -247,7 +247,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').style.color = "green";
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
-                    document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                     document.getElementById('submitButton').style.visibility = "visible"
                     isComplete = 1
 
@@ -291,7 +291,7 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                   var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange})
                   document.getElementById('submitButton').style.visibility = "visible"
                   isComplete = 1
@@ -308,7 +308,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').style.color = "green";
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
-                    document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                     document.getElementById('submitButton').style.visibility = "visible"
                     isComplete = 1
 
@@ -348,7 +348,7 @@ function onChange (oldPos, newPos) {
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
-                  document.getElementById('score').innerHTML = score + '%';
+                  document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                   document.getElementById('submitButton').style.visibility = "visible"
                   isComplete = 1
                   var board = Chessboard(board1, {position: this_opening[i-1], draggable: true, onChange: onChange, orientation: 'black'})
@@ -369,7 +369,7 @@ function onChange (oldPos, newPos) {
                     document.getElementById('complete').style.color = "green";
                     document.getElementById('complete').innerHTML = "Complete!";
                     score = (accuracy/this_opening.length)*100
-                    document.getElementById('score').innerHTML = score + '%';
+                    document.getElementById('score').innerHTML = score.toFixed(2) + '%';
                     document.getElementById('submitButton').style.visibility = "visible"
                     isComplete = 1
 
@@ -411,6 +411,7 @@ function onChange (oldPos, newPos) {
       function sendData () {
     if (isComplete == 1) {
     score = (accuracy/this_opening.length)*100
+    score = score.toFixed(2)
     var opening_name = document.getElementById('title').innerHTML
     var results = {'opening' : opening_name, 'score': score, 'wrong' : incorrect}
     var dataJson = JSON.stringify(results)
