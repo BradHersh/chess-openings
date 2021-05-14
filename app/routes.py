@@ -116,6 +116,15 @@ def chesstest(opening):
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
 def complete():
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     test_results = request.json
     score  = test_results['score']
     score = float(score)
@@ -132,7 +141,7 @@ def complete():
         result = Results(opening=current_opening, result=score, incorrect = wrong_moves, passed = False, student = current_user)
         db.session.add(result)
         db.session.commit()
-    return redirect(url_for('index'))
+    return render_template('index.html', title='Home' , prog =complete)
 
 @app.route('/selectresult/', methods=['GET', 'POST'])
 def selectresult():
@@ -173,64 +182,7 @@ def results(opening):
 
 
 
-@app.route('/feedback/<opening>/', methods=['GET', 'POST'])
-@login_required
-def feedback(opening):
-    lst = []
-    lst1 = []
-    flatlist = []
-    lst2 = []
-    lst3 = []
-    lst4 = []
 
-    res = Results.query.filter_by(user_id = current_user.id, passed = True)
-    openings = []
-    for r in res:
-        openings.append(r.opening)
-    numerator = len(set(openings))
-    denominator = Openings.query.all()
-    denominator = len(denominator)
-
-    complete = str(round((numerator/denominator)*100, 2)) + '%'
-
-    res = Results.query.filter_by(user_id = current_user.id, opening = opening)
-    for i in res:
-        wrong = i.incorrect
-        lst.append(wrong)
-    if len(lst) != 0:
-
-        for x in lst:
-            lst2.append(x.split(','))
-        
-        flattened = [val for sublist in lst2 for val in sublist]
-
-        length = len(flattened)
-        if length > 3:
-            for i in range(1,len(flattened)):
-                if i%3 == 0:
-                    lst3.append(flattened[i-3:i])
-            for i in lst3:
-                x = ','.join(i)
-                lst4.append(x)
-        else:
-            for i in range(1,len(flattened)+1):
-                if i%3 == 0:
-                    lst3.append(flattened[i-3:i])
-            for i in lst3:
-                x = ','.join(i)
-                lst4.append(x)           
-
-        most = mode(lst4)
-        most = most.split(',')
-        oldPos = most[0]
-        mistake = most[1]
-        correct = most[2]
-        
-        
-
-        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening, prog=complete) 
-    else:
-        return "Test not attempted yet"
 
 
 @app.route('/feedback2/', methods=['GET', 'POST'])
@@ -256,12 +208,15 @@ def feedback2():
 def feedback3(opening):
      res3 = Results.query.filter_by(user_id = current_user.id, opening = opening)
      lst = []
+     lst1 = []
      i = 1
      for r in res3:
          x = r.incorrect
+         y = r.feedback
          x = re.findall(",".join(["[^,]+"] * 3), x)
 
          lst.append(x)
+         lst1.append(y)
 
      res = Results.query.filter_by(user_id = current_user.id, passed = True)
      res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
@@ -283,7 +238,7 @@ def feedback3(opening):
     
     
      
-     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening, prog =complete, grades = marks, attempt = tries)
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), feedback = json.dumps(lst1), opening = opening, prog =complete, grades = marks, attempt = tries)
 
 
 

@@ -1,15 +1,39 @@
-{% block content %}
     <head>
         <title>Login</title>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <style>
+            body {
+                background-color: black;
+                color: white;
+            }
+            .center {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
 
+            .flex-container{
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+            }
+            .flex-item{
+                width: 25%;
+
+            }
+
+        </style>
     </head>
     <body>
-        <div class="center">
+        <div class="flex-container">
+            <div class = flex-item">
             <h1>Sign In</h1>
+            <hr style = "background-color: white;">
             <form action="" method="post" novalidate>
                 {{ form.hidden_tag() }}
                 <p>
@@ -30,6 +54,6 @@
                 <p>{{ form.submit() }}</p>
             </form>
             <p>New User? <a href="{{ url_for('register') }}">Click to Register!</a></p>
+            </div>
         </div>
     </body>
-{% endblock %}
