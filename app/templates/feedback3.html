@@ -65,6 +65,21 @@
         .dropdown:hover .dropbtn {
         background-color: #3e8e41;
         }
+
+        ul {
+            max-height: 200px; 
+            overflow-x:hidden; 
+            overflow-y:auto;   
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .testattempt:hover {
+            background-color: green;
+        }
+
       </style>
   </head>
 
@@ -84,7 +99,7 @@
       <button id = "back" style = "display:none">Back</button>
       <button id = "newtest" style = "display:none">Select New Test</button>
 
-      <div class="dropdown" id = "dropdownmenu">
+      <div class="dropdown">
         <button class="dropbtn">Dropdown</button>
         <div id="foo" class="dropdown-content"></div>
       </div>
@@ -110,6 +125,7 @@
   } else {
       var is_black = "False";                              
   }
+  console.log(is_black)
 
 
 
@@ -121,8 +137,8 @@
           feedback.splice(i,1)
       }
   }
+  console.log(feedback[0])
 
-  console.log("this is feedback: " + feedback);
 
   var Test
   function makeUL(array) {
@@ -136,10 +152,9 @@
         // Create the list item:
         var item = document.createElement('li');
         item.id = i;
+        item.className = 'testattempt';
         item.onclick = function (){
-
              Test = this.id
-             document.getElementById('dropdownmenu').style.display = "none";
              document.getElementById('list').style.display = "none";
              testnum = parseInt(this.id) + 1
              document.getElementById('TestNumber').innerHTML = "Test number" + " " + testnum;
@@ -155,8 +170,7 @@
              document.getElementById('next').style.display = "block";
              }
              document.getElementById("myChart").style.display = "none";
-             document.getElementById('feedback').innerHTML = feedback[this.id];
-      
+             document.getElementById('feedback').innerHTML = feedback[item.id];
             //  document.getElementById('back').style.display = "block";
                 
 
@@ -274,8 +288,6 @@ if (i<=mistakesmade && i>0) {
 
 $('#newtest').on('click', function () {
     i = 0;
-    document.getElementById('dropdownmenu').style.display = "block";
-
     document.getElementById('list').style.display = "block";
     document.getElementById('TestNumber').innerHTML = "";
     document.getElementById('mistakeNumber').innerHTML = "";
@@ -291,7 +303,6 @@ $('#newtest').on('click', function () {
     document.getElementById('newopening').style.display = "block";
     document.getElementById('myChart').style.display = "block";
     document.getElementById('feedback').innerHTML = "";
-
 
 
 
