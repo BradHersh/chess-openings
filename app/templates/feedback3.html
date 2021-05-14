@@ -56,7 +56,6 @@
   } else {
       var is_black = "False";                              
   }
-  console.log(is_black)
 
 
 
@@ -68,8 +67,8 @@
           feedback.splice(i,1)
       }
   }
-  console.log(feedback[0])
 
+  console.log("this is feedback: " + feedback);
 
   var Test
   function makeUL(array) {
@@ -100,7 +99,7 @@
              document.getElementById('next').style.display = "block";
              }
              document.getElementById("myChart").style.display = "none";
-             document.getElementById('feedback').innerHTML = feedback[item.id];
+             document.getElementById('feedback').innerHTML = feedback[this.id];
             //  document.getElementById('back').style.display = "block";
                 
 
