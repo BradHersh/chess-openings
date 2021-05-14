@@ -27,7 +27,7 @@ Open `http://127.0.0.1:5000/` and enjoy!
 
 ## Purpose and Design
 
-This web application simulates a educational experience for learning high quality chess openings. 
+This web application simulates an educational experience for learning high quality chess openings. 
 Users accessing the application can register an account with a username and corresponding password before loggin in.
 
 The applcation consists of several portals, namely a:
@@ -49,7 +49,7 @@ A typical user experience involves the following steps:
 
 The chess-openings web application was developed according to an *agile* software development framework. 
 
-This involved the following phases which were carried out in a cycical manner:
+This involved the following phases which were carried out in a cyclical manner:
 
 1. Brainstorming the high-level view for the application design.
 2. Developing many user stories that describe the features of the application. These stories are then broken down into tasks for each sprint.
