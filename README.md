@@ -71,7 +71,7 @@ The following user stories were created, and filtered by sprint and perceived us
 
 The web app was built using a flask web application framework, as well as utilising Python, Javascript, HTML, CSS, Jquery and AJAX. Please see the diagram below for the architecture of the web application. 
 
-![](/static/img/Chess%20Architecture.PNG)
+![](/app/static/img/Chess%20Architecture.PNG)
 
 ## Unit Tests
 
