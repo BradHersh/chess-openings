@@ -60,12 +60,11 @@ The chess-openings web application was developed according to an *agile* softwar
 This involved the following phases which were carried out in a cyclical manner:
 
 1. Brainstorming the high-level view for the application design.
-2. Developing many user stories that describe the features of the application. These stories are then broken down into tasks for each sprint.
+2. Developing many user stories that describe the features of the application. These stories are then broken down into tasks for each sprint filtered by perceived user value. We aimed to complete high value tasks first, followed by lower value tasks. Please see "User Stories Chess.xlsx" for more details..
 3. Estimating time and resources required for each story. Allocating team members to different features for each sprint.
 4. Consolidating user stories and refactoring code.
 5. Designing and executing unit tests at the end of each sprint.
 
-The following user stories were created, and filtered by sprint and perceived user value. We aimed to complete high value tasks first, followed by lower value tasks. Please see "User Stories Chess.xlsx" for more details.
 
 ## Architecture 
 
