@@ -81,7 +81,7 @@ STEVE GIVE MORE DETAIL
 
 ## Commit Logs
 
-TO BE COMPLETED
+See log.txt
 
 ## Libraries
 
