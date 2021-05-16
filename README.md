@@ -13,6 +13,18 @@ Clone repository to local machine:
 $ git clone git@github.com:BradHersh/chess-openings.git
 ```
 
+Create virtual environment: 
+```
+$ python3 -m venv venv
+
+```
+
+
+Install requirements: 
+```
+$ pip install -r requirements.txt
+```
+
 Go into the project directory on command line and run the command:
 
 ```
