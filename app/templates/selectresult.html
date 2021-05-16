@@ -43,6 +43,8 @@
 <body>
     <br>
     <p style="font-weight: bolder; font-size: 45px;">Please select an opening to review your results:</p>
+    <h5><a href = "{{url_for('aggregateresults')}}">Cick to see Aggregate Results!</a><h5>
+
 
     <div class="row" style = "padding-bottom: 1%; margin-top: 4%; margin-bottom: 10%;">
         <div class="col-sm-3">
@@ -62,17 +64,15 @@
         </div>
     </div>
 
-    
-
 </body>
 <script>
+
+    //create a list of all openings in the databse using DOM
     x = {{openings|safe}}
-    console.log(x.length)
-    console.log(x)
+
     function createopenings(array){
         for(var i = 0; i<x.length; i++){
             var opening = x[i];
-            console.log(opening)
             var li = document.createElement('li');
             anchor = document.createElement('a');
             anchor.className = 'openings';

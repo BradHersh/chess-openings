@@ -6,6 +6,8 @@ from flask_login import LoginManager
 from flask_admin import Admin 
 from flask_admin.contrib.sqla import ModelView
 
+
+#initialise the flask app, admin and the database
 app = Flask(__name__)
 admin = Admin(app, template_mode = 'bootstrap3')
 app.config.from_object(Config)

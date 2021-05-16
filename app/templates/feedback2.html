@@ -66,13 +66,12 @@
 
 </body>
 <script>
+    //uses DOM to create a list of all the openings which exist in the database
     x = {{openings|safe}}
-    console.log(x.length)
-    console.log(x)
+
     function createopenings(array){
         for(var i = 0; i<x.length; i++){
             var opening = x[i];
-            console.log(opening)
             var li = document.createElement('li');
             anchor = document.createElement('a');
             anchor.className = 'openings';

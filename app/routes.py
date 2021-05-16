@@ -12,10 +12,12 @@ from app.forms import RegistrationForm
 from flask import jsonify, request
 from statistics import mode
 import re
-from sqlalchemy import func, select, distinct
+from sqlalchemy import func, select, distinct, desc
 import numpy as np
 import json
 
+
+#create the homepage and provide variables for progress bar
 @app.route('/')
 @app.route('/index')
 @login_required
@@ -33,6 +35,7 @@ def index():
 
     return render_template('index.html', title='Home' , prog =complete)
 
+#create login page using login form
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -53,12 +56,15 @@ def login():
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
+#create logout route 
 @app.route('/logout')
 def logout():
     logout_user()
     session.clear()
     return redirect(url_for('index'))
 
+
+#create register route using flask register form 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
@@ -74,7 +80,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-
+#create the route to practice an opening
 @app.route('/chesspractice/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesspractice(opening):
@@ -87,16 +93,17 @@ def chesspractice(opening):
     denominator = len(denominator)
 
     complete = str(round((numerator/denominator)*100, 2)) + '%'
-    # opening = Openings.query.get(opening)
+    #query database to pass though relevant opening FEN and name 
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
     opening = opening[0].name
     return render_template('chesspractice.html', title='Test', name = json.dumps(fen), prog=complete, opening = opening)
 
-
+#create route to test an opening 
 @app.route('/chesstest/<opening>/', methods=['GET', 'POST'])
 @login_required
 def chesstest(opening):
+    #query database to pass through relevant FEN and opening name 
     opening = Openings.query.filter_by(name = opening)
     fen = opening[0].FEN
     name = opening[0].name
@@ -113,9 +120,19 @@ def chesstest(opening):
 
     return render_template('chesstest.html', title='Test', opening = json.dumps(fen), name = name, prog = complete)
 
+#when a test is completed, this route commits all relevant details (mistakes, grade, student etc) to the database and redirects to index
 @app.route('/complete', methods=['GET', 'POST'])
 @login_required
 def complete():
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
     test_results = request.json
     score  = test_results['score']
     score = float(score)
@@ -132,9 +149,12 @@ def complete():
         result = Results(opening=current_opening, result=score, incorrect = wrong_moves, passed = False, student = current_user)
         db.session.add(result)
         db.session.commit()
-    return redirect(url_for('index'))
+    return render_template('index.html', title='Home' , prog =complete)
 
+
+#create route to select which opening to see results for 
 @app.route('/selectresult/', methods=['GET', 'POST'])
+@login_required
 def selectresult():
     openings = Openings.query.all()
     lst = []
@@ -152,7 +172,7 @@ def selectresult():
     return render_template('selectresult.html', title='Results', openings = lst, prog=complete) 
 
 
-
+#viewing results
 @app.route('/results/<opening>/', methods=['GET', 'POST'])
 @login_required
 def results(opening):
@@ -173,67 +193,11 @@ def results(opening):
 
 
 
-@app.route('/feedback/<opening>/', methods=['GET', 'POST'])
-@login_required
-def feedback(opening):
-    lst = []
-    lst1 = []
-    flatlist = []
-    lst2 = []
-    lst3 = []
-    lst4 = []
-
-    res = Results.query.filter_by(user_id = current_user.id, passed = True)
-    openings = []
-    for r in res:
-        openings.append(r.opening)
-    numerator = len(set(openings))
-    denominator = Openings.query.all()
-    denominator = len(denominator)
-
-    complete = str(round((numerator/denominator)*100, 2)) + '%'
-
-    res = Results.query.filter_by(user_id = current_user.id, opening = opening)
-    for i in res:
-        wrong = i.incorrect
-        lst.append(wrong)
-    if len(lst) != 0:
-
-        for x in lst:
-            lst2.append(x.split(','))
-        
-        flattened = [val for sublist in lst2 for val in sublist]
-
-        length = len(flattened)
-        if length > 3:
-            for i in range(1,len(flattened)):
-                if i%3 == 0:
-                    lst3.append(flattened[i-3:i])
-            for i in lst3:
-                x = ','.join(i)
-                lst4.append(x)
-        else:
-            for i in range(1,len(flattened)+1):
-                if i%3 == 0:
-                    lst3.append(flattened[i-3:i])
-            for i in lst3:
-                x = ','.join(i)
-                lst4.append(x)           
-
-        most = mode(lst4)
-        most = most.split(',')
-        oldPos = most[0]
-        mistake = most[1]
-        correct = most[2]
-        
-        
-
-        return render_template('feedback.html', title='feedback', right = correct, Pos = oldPos, wrong = mistake, opening = opening, prog=complete) 
-    else:
-        return "Test not attempted yet"
 
 
+#creates route to select opening to view feedback for  
 @app.route('/feedback2/', methods=['GET', 'POST'])
+@login_required
 def feedback2():
     openings = Openings.query.all()
     lst = []
@@ -252,16 +216,22 @@ def feedback2():
 
     return render_template('feedback2.html', title='feedback', openings = lst, prog=complete) 
 
+
+#creates route to view feedback 
 @app.route('/feedback2/<opening>', methods=['GET', 'POST'])
+@login_required
 def feedback3(opening):
      res3 = Results.query.filter_by(user_id = current_user.id, opening = opening)
      lst = []
+     lst1 = []
      i = 1
      for r in res3:
          x = r.incorrect
+         y = r.feedback
          x = re.findall(",".join(["[^,]+"] * 3), x)
 
          lst.append(x)
+         lst1.append(y)
 
      res = Results.query.filter_by(user_id = current_user.id, passed = True)
      res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
@@ -279,42 +249,12 @@ def feedback3(opening):
          # r.result = float(r.result)
          marks.append(float(r.result))
      tries = list(np.arange(1,len(marks)+1))
-
-    
-    
      
-     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), opening = opening, prog =complete, grades = marks, attempt = tries)
+     return render_template('feedback3.html', title='feedback3', mistakes = json.dumps(lst), feedback = json.dumps(lst1), opening = opening, prog =complete, grades = marks, attempt = tries)
 
 
 
-
-@app.route('/progress/<opening>/', methods=['GET', 'POST'])
-@login_required
-def progress(opening):
-    res = Results.query.filter_by(user_id = current_user.id, passed = True)
-    res1 = Results.query.filter_by(user_id = current_user.id, opening = opening)
-    openings = []
-    marks = []
-    time = []
-    for r in res:
-        openings.append(r.opening)
-    numerator = len(set(openings))
-    denominator = Openings.query.all()
-    denominator = len(denominator)
-    complete = str(round((numerator/denominator)*100, 2)) + '%'
-    for r in res1:
-        # r.result = r.result.split('%')[0]
-        # r.result = float(r.result)
-        marks.append(float(r.result))
-    tries = list(np.arange(1,len(marks)+1))
-    
-
-    return render_template('progress.html', title='progress', prog =complete, grades = marks, attempt = tries, opening = opening)
-
-
-
-
-
+#creates route to generate page to select opening to learn 
 @app.route('/newLearn', methods=['GET', 'POST'])
 @login_required
 def newLearn():
@@ -334,7 +274,7 @@ def newLearn():
     complete = str(round((numerator/denominator)*100, 2)) + '%'
     return render_template('newLearn.html', title='Learn', openings = json.dumps(lst), prog=complete)
 
-
+#creates route to generate page to select opening to test
 @app.route('/newTest', methods=['GET', 'POST'])
 @login_required
 def newTest():
@@ -353,5 +293,46 @@ def newTest():
 
     complete = str(round((numerator/denominator)*100, 2)) + '%'
     return render_template('newTest.html', title='Test', openings = json.dumps(lst), prog=complete)
+
+
+#create route to see aggregate results for whole website
+@app.route('/aggregateresults', methods=['GET', 'POST'])
+@login_required
+def aggregateresults():
+    res = Results.query.filter_by(user_id = current_user.id, passed = True)
+    openings = []
+    for r in res:
+        openings.append(r.opening)
+    numerator = len(set(openings))
+    denominator = Openings.query.all()
+    denominator = len(denominator)
+
+    complete = str(round((numerator/denominator)*100, 2)) + '%'
+    lst = []
+    numopenings = db.session.query(Openings.name).count()
+    numtests = db.session.query(Results.result).count()
+    numusers  = db.session.query(User.username).count()-1
+    commonopening = db.session.query(Results.opening,
+    func.count(Results.opening).label('qty')
+    ).group_by(Results.opening
+    ).order_by(desc('qty'))[0][0]
+    # averagemark = np.array(db.session.query(Results.result))
+    averagemark = Results.query.all()
+    for r in averagemark:
+        lst.append(int(r.result))
+    lst = np.array(lst)
+    averagemark = str(round(np.average(lst),2)) + '%'
+    bestusers = db.session.query(Results.user_id,
+    func.count(Results.opening).label('qty')
+    ).group_by(Results.opening
+    ).order_by(desc('qty'))
+    bestuser = bestusers[0][0]
+    bestuser = User.query.get(bestuser).username
+
+
+
+
+    return render_template('aggregateresults.html', title='Aggregateresults', numopenings = numopenings, numtests = numtests, 
+    numusers = numusers, commonopening = commonopening, averagemark = averagemark, bestuser = bestuser, prog=complete) 
 
 

@@ -6,48 +6,128 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/chessboard-1.0.0.css') }}">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{{ url_for('static', filename='js/chessboard-1.0.0.js') }}"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <style>
         .float-child {
-           flex: 1;
-           
-       }  
+            flex: 1;
+        }  
        .float-container {
           display: flex;
-      }
-      .float-container:float-container{
-        margin-right:20px;
-      }
+        }
+        .float-container:float-container{
+            margin-right:20px;
+        }
+        body{
+            background-color: rgb(5, 4, 19);
+        }
+
+
+        .dropbtn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        }
+
+        .dropdown-content li {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+        }
+
+        .dropdown-content a:hover {background-color: #f1f1f1}
+
+        .dropdown:hover .dropdown-content {
+        display: block;
+        }
+
+        .dropdown:hover .dropbtn {
+        background-color: #3e8e41;
+        }
+
+        ul {
+            max-height: 200px; 
+            overflow-x:hidden; 
+            overflow-y:auto;   
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .testattempt:hover {
+            background-color: green;
+        }
+
+        li {
+            list-style-type: none;
+        }
+
+        button {
+            color:rgb(5, 4, 19)
+        }
+
       </style>
   </head>
 
-  <h1>{{opening}}</h1>
-  <h3 id = "selecttest">Select test with errors</h3>
-  <h3 id = 'TestNumber'></h3>
-  <h5 id = "mistakeNumber"></h5>
+  <body>
+      <br>
+      <h1>{{opening}}</h1>
+      <h3 id = "selecttest">Select test with errors</h3>
+      <h3 id = 'TestNumber'></h3>
+      <h5 id = "mistakeNumber"></h5>
 
-  <div id="myBoard" style="width: 400px; display:none",></div>
-  <button id="Pos" style = "display:none">Show Position</button>
-  <button id="Mistake" style=  "display:none">Mistake</button>
-  <button id="correct" style = "display:none">Correct Move</button>
-  <button id = "next" style = "display:none">Next</button>
-  <button id = "back" style = "display:none">Back</button>
-  <button id = "newtest" style = "display:none">Select New Test</button>
+      <div id="myBoard" style="width: 400px; display:none",></div>
+
+      <button id="Pos" style = "display:none">Show Position</button>
+      <button id="Mistake" style=  "display:none">Mistake</button>
+      <button id="correct" style = "display:none">Correct Move</button>
+      <button id = "next" style = "display:none">Next</button>
+      <button id = "back" style = "display:none">Back</button>
+      <button id = "newtest" style = "display:none">Select New Test</button>
+      <p id = 'feedback'></p>
+
+      <div class="dropdown" id = "dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div id="openingsid" class="dropdown-content"></div>
+      </div>
 
 
-  <div id = 'foo'>
+      <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
 
-  </div>
-  <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
+      <hr>
 
-  <hr>
- 
-  <div class="container">
-    <canvas id = "myChart"></canvas>
-    </div>
+      <!--Search chart.js documentation to style the chart. the location is base.html-->
+      <div class="container" style="background-color: white;">
+          <canvas id = "myChart"></canvas>
+      </div>
 
+  </body>
 
 
   <script>
+//checks if opening is black of white oriented
   var black = "{{opening}}".split(' ')[1]
 
   if (black == "Defense"){
@@ -55,30 +135,37 @@
   } else {
       var is_black = "False";                              
   }
-  console.log(is_black)
 
 
-
+//reads in incorrect moves 
   x = {{mistakes|safe}}
+//reads in written feedback 
+  feedback = {{feedback|safe}}
+  //removes 100% scores (no mistakes)
   for (var i = 0; i<x.length; i++){
       if (x[i] == ""){
           x.splice(i,1)
+          feedback.splice(i,1)
       }
   }
 
+
   var Test
+  // uses DOM to create the dropdown menu in which all tests exist, also gives onclick functionality
+  // which uses DOM again to remove and show relevant elements on the page
   function makeUL(array) {
-    // Create the list element:
     var list = document.createElement('ul');
     list.id = 'list';
 
     for (var i = 0; i < x.length; i++) {
-        // console.log('{{mistakes[i]}}')
-        // Create the list item:
         var item = document.createElement('li');
+        item.style.listStyle = "none";
         item.id = i;
+        item.className = 'testattempt';
         item.onclick = function (){
              Test = this.id
+
+             document.getElementById('dropdown').style.display = "none";
              document.getElementById('list').style.display = "none";
              testnum = parseInt(this.id) + 1
              document.getElementById('TestNumber').innerHTML = "Test number" + " " + testnum;
@@ -94,7 +181,9 @@
              document.getElementById('next').style.display = "block";
              }
              document.getElementById("myChart").style.display = "none";
-            //  document.getElementById('back').style.display = "block";
+             document.getElementById('feedback').innerHTML = feedback[this.id];
+             
+
                 
 
              
@@ -102,28 +191,29 @@
 
         }
 
-        // Set its contents:
         item.appendChild(document.createTextNode(i+1));
 
 
-        // Add it to the list:
         list.appendChild(item);
     }
 
-    // Finally, return the constructed list:
     return list;
 }
 
 
-
-// Add the contents of options[0] to #foo:
-document.getElementById('foo').appendChild(makeUL('{{mistakes}}'));
+//creates list
+document.getElementById('openingsid').appendChild(makeUL('{{mistakes}}'));
 
 var i = 0
-
+//creates chessboard using the chessboard.js library 
 board = Chessboard('myBoard')
     
-
+//create the buttons using jquery for the user to see their feedback,
+// 1. which position was the mistake made in 
+// 2. what was the mistake
+// 3. what should the correct move have been 
+// 4. and 5. next mistake and last mistake
+//6. select new test
     $('#Pos').on('click', function () {
     if (is_black == 'False'){
         board.position(x[parseInt(Test)][i].split(',')[0])}
@@ -158,7 +248,6 @@ board = Chessboard('myBoard')
 
 $('#next').on('click', function () {
 board.position(board.position('start'))
-console.log(x[parseInt(Test)].length - 1)
 var mistakesmade = x[parseInt(Test)].length - 1
 i = i + 1
 if (i<mistakesmade) {
@@ -167,7 +256,6 @@ if (i<mistakesmade) {
     
 
     document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
-    console.log(i)
     } else if ( i ==mistakesmade) {
         document.getElementById('next').style.display = "none";
         document.getElementById('back').style.display = "block";
@@ -192,7 +280,6 @@ if (i<=mistakesmade && i>0) {
     document.getElementById('next').style.display = "block";
 
     i = i - 1
-    console.log(i)
     if (i != 0){
     document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
     } else {    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(1) ;
@@ -211,6 +298,8 @@ if (i<=mistakesmade && i>0) {
 
 $('#newtest').on('click', function () {
     i = 0;
+    document.getElementById('dropdown').style.display = "block";
+
     document.getElementById('list').style.display = "block";
     document.getElementById('TestNumber').innerHTML = "";
     document.getElementById('mistakeNumber').innerHTML = "";
@@ -224,13 +313,15 @@ $('#newtest').on('click', function () {
     document.getElementById('newtest').style.display = "none";
     document.getElementById("selecttest").style.display = "block";
     document.getElementById('newopening').style.display = "block";
-    doucument.getElementById('myChart').style.display = "block";
+    document.getElementById('myChart').style.display = "block";
+    document.getElementById('feedback').innerHTML = "";
+
 
 
 })
 
 
-
+//creating a line chart using the Chart.js library 
 let myChart = document.getElementById('myChart').getContext('2d');
 
 let lineChart = new Chart(myChart, {
@@ -286,4 +377,5 @@ let lineChart = new Chart(myChart, {
 
   </script>
 
+{% include 'footer.html' %}
 {% endblock %}
