@@ -109,7 +109,7 @@
 
       <div class="dropdown" id = "dropdown">
         <button class="dropbtn">Dropdown</button>
-        <div id="foo" class="dropdown-content"></div>
+        <div id="openingsid" class="dropdown-content"></div>
       </div>
 
 
@@ -126,6 +126,7 @@
 
 
   <script>
+//checks if opening is black of white oriented
   var black = "{{opening}}".split(' ')[1]
 
   if (black == "Defense"){
@@ -133,31 +134,29 @@
   } else {
       var is_black = "False";                              
   }
-  console.log(is_black)
 
 
-
+//reads in incorrect moves 
   x = {{mistakes|safe}}
+//reads in written feedback 
   feedback = {{feedback|safe}}
+  //removes 100% scores (no mistakes)
   for (var i = 0; i<x.length; i++){
       if (x[i] == ""){
           x.splice(i,1)
           feedback.splice(i,1)
       }
   }
-  console.log(feedback[0])
 
 
   var Test
+  // uses DOM to create the dropdown menu in which all tests exist, also gives onclick functionality
+  // which uses DOM again to remove and show relevant elements on the page
   function makeUL(array) {
-    // Create the list element:
     var list = document.createElement('ul');
     list.id = 'list';
 
     for (var i = 0; i < x.length; i++) {
-        console.log(feedback[i])
-        // console.log('{{mistakes[i]}}')
-        // Create the list item:
         var item = document.createElement('li');
         item.style.listStyle = "none";
         item.id = i;
@@ -181,7 +180,6 @@
              }
              document.getElementById("myChart").style.display = "none";
              document.getElementById('feedback').innerHTML = feedback[item.id];
-            //  document.getElementById('back').style.display = "block";
                 
 
              
@@ -189,28 +187,29 @@
 
         }
 
-        // Set its contents:
         item.appendChild(document.createTextNode(i+1));
 
 
-        // Add it to the list:
         list.appendChild(item);
     }
 
-    // Finally, return the constructed list:
     return list;
 }
 
 
-
-// Add the contents of options[0] to #foo:
-document.getElementById('foo').appendChild(makeUL('{{mistakes}}'));
+//creates list
+document.getElementById('openingsid').appendChild(makeUL('{{mistakes}}'));
 
 var i = 0
-
+//creates chessboard using the chessboard.js library 
 board = Chessboard('myBoard')
     
-
+//create the buttons using jquery for the user to see their feedback,
+// 1. which position was the mistake made in 
+// 2. what was the mistake
+// 3. what should the correct move have been 
+// 4. and 5. next mistake and last mistake
+//6. select new test
     $('#Pos').on('click', function () {
     if (is_black == 'False'){
         board.position(x[parseInt(Test)][i].split(',')[0])}
@@ -245,7 +244,6 @@ board = Chessboard('myBoard')
 
 $('#next').on('click', function () {
 board.position(board.position('start'))
-console.log(x[parseInt(Test)].length - 1)
 var mistakesmade = x[parseInt(Test)].length - 1
 i = i + 1
 if (i<mistakesmade) {
@@ -254,7 +252,6 @@ if (i<mistakesmade) {
     
 
     document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
-    console.log(i)
     } else if ( i ==mistakesmade) {
         document.getElementById('next').style.display = "none";
         document.getElementById('back').style.display = "block";
@@ -279,7 +276,6 @@ if (i<=mistakesmade && i>0) {
     document.getElementById('next').style.display = "block";
 
     i = i - 1
-    console.log(i)
     if (i != 0){
     document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(i + 1);
     } else {    document.getElementById('mistakeNumber').innerHTML = "Mistake Number " + parseInt(1) ;
@@ -321,7 +317,7 @@ $('#newtest').on('click', function () {
 })
 
 
-
+//creating a line chart using the Chart.js library 
 let myChart = document.getElementById('myChart').getContext('2d');
 
 let lineChart = new Chart(myChart, {
