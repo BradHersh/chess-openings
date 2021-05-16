@@ -152,7 +152,7 @@
       this_opening = fixed_opening;
       var accuracy = this_opening.length
 
-      // check if opening is play
+      // check if opening is black or white orientation, and create board using chessboard.js library
       var black = "{{opening}}".split(' ')[1]
       if (black == "Defense"){
         var is_black = "True";
@@ -182,7 +182,7 @@
 
       var moves = 0
 
-
+      //create buttons for the learning board
       $('#next').on('click', function(){   
         if (x<this_opening.length){
           x = x+1
@@ -226,8 +226,12 @@
   
 
 
+// use function, provided by chessboard.js libray, which allows us to pick up when a piece has been moved, 
+// and therefore limit correct moves to those defined in the FEN string array
 
 
+// this function does the majority of the work, in which we make sure the new position matches the indexed position in our opening array
+// it also checks to see if an opening is completed, calculates grade etc
 function onChange (oldPos, newPos) {
 
         if (this_opening.length % 2 == 0 ){
