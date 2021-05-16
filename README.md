@@ -71,7 +71,7 @@ The following user stories were created, and filtered by sprint and perceived us
 
 The web app was built using a flask web application framework, as well as utilising Python, Javascript, HTML, CSS, Jquery and AJAX. Please see the diagram below for the architecture of the web application. 
 
-![Architecture](/static/img/Chess Architecture.PNG)
+![](/app/static/img/Chess%20Architecture.PNG)
 
 ## Unit Tests
 
@@ -85,7 +85,7 @@ TO BE COMPLETED
 
 ## Libraries
 
-We used two main javascript open source libraries
+The following libraries were used:
 
 1. Chessboard.js:
 Link: https://chessboardjs.com/index.html
@@ -95,7 +95,22 @@ Author: Chris Oakman
 2. Chart.js
 Link: https://www.chartjs.org/
 Github: https://github.com/chartjs/Chart.js
-Major Contributors (Github Usernames): etiemberg, kurkle, benmccann, tannerlinsley, simonbrunel
+Major Contributors (Github usernames): etiemberg, kurkle, benmccann, tannerlinsley, simonbrunel
+
+3. Selenium
+Link: https://selenium-python.readthedocs.io/
+Github: https://github.com/baijum/selenium-python
+Author: Baiju Muthukadan
+
+4. Jquery
+Link: https://jquery.com/
+Github: https://github.com/jquery/jquery
+Author: John Resig
+
+4. Boostrap
+Link: https://getbootstrap.com/
+Github: https://github.com/twbs
+Major Contributors (Github usernames): Bardi Harborow, fat, Gael Poupard, GeoSot, Gleb Mazovetskiy, Johann-S, Martijn Cuppens, Mark Otto, Patrick H. Lauke, Thomas McDonald, XhmikosR, Shohei Yoshida
 
 ## Contributors
 
