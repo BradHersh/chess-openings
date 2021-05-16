@@ -89,13 +89,13 @@
                 }
             }
 
-            a#meow:hover,  a#meow:active{
+            a#openingname:hover,  a#openingname:active{
                 animation-name: wordanim;
                 animation-duration: 4s;
                 animation-iteration-count: infinite;
             }
 
-            #meow {
+            #openingname {
                 text-align: center; 
                 font-weight: bolder; 
                 font-size: xx-large; 
@@ -131,7 +131,7 @@
                 <img id="myImg" src="static/img/gifs/pawnmovingstatic.png" style="width: 900px; height: 400px; border-radius: 25px;">
                 <br>
                 <div style="padding-top: 3%;">
-                    <a id = "meow" href="{{ url_for('chesspractice',opening='Queens Gambit') }}">Queens Gambit</a>
+                    <a id = "openingname" href="{{ url_for('chesspractice',opening='Queens Gambit') }}">Queens Gambit</a>
                     <p style="margin-top: 1%;"> <img src="static/img/arrow.png" style="height: 50px; width: 50px; transform: scaleX(-1);"> <b>Click this!</span> <img src="static/img/arrow.png" style="height: 50px; width: 50px;"></p>
                 </div>  
                 
@@ -164,8 +164,8 @@
         
         var reply_click = function(clicked)
         {
-            document.getElementById('meow').innerHTML = clicked;
-            document.getElementById('meow').href = "{{url_for('chesspractice', opening = 'x')}}".replace("x", clicked);
+            document.getElementById('openingname').innerHTML = clicked;
+            document.getElementById('openingname').href = "{{url_for('chesspractice', opening = 'x')}}".replace("x", clicked);
             var elements = document.getElementsByClassName("active");
             for (var i = 0; i<elements.length; i ++){
                 elements[i].className = ""

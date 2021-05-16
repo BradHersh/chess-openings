@@ -10,13 +10,12 @@ from flask_admin.contrib.sqla import ModelView
 from flask import session, abort
 from flask_admin.menu import MenuLink
 
-
+#create the SQL user table
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
     password_hash = db.Column(db.String(128))
-    posts = db.relationship('Post', backref='author', lazy='dynamic')
     results = db.relationship('Results', backref = 'student', lazy = 'dynamic')
 
     def set_password(self, password):
@@ -28,12 +27,7 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-class Post(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    body = db.Column(db.String(140))
-    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+#create the SQL results table
 class Results(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     opening = db.Column(db.String(140))
@@ -47,19 +41,13 @@ class Results(db.Model):
 
 
 
-
-
-
-
+#create the SQL openings table
 class Openings(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     name = db.Column(db.String(140))
     FEN = db.Column(db.String(1000))
 
 
-
-
-    
     
 
     def __repr__(self):
@@ -70,6 +58,8 @@ class Openings(db.Model):
     def __repr__(self):
         return '<Post {}>'.format(self.body)
 
+
+#create Flask-Admin views - the user interface to access the database
 class SecureModelView(ModelView):
     
     def is_accessible(self):

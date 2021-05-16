@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<head>
+    <style>
+    table {
+      font-family: arial, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    
+    td, th {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+    
+ 
+    </style>
+    </head>
+    <body>
+
+
+<hr>
+<table>
+    <tr>
+      <th>Total Openings</th>
+      <th>Total Tests</th>
+      <th>Total Users</th>
+      <th>Most Common Opening</th>
+      <th>Average Mark</th>
+      <th>Most Active User</th>
+    </tr>
+    <tr>
+      <td>{{numopenings}}</td>
+      <td>{{numtests}}</td>
+      <td>{{numusers}}</td>
+      <td>{{commonopening}}</td>
+      <td>{{averagemark}}</td>
+      <td>{{bestuser}}</td>
+
+    </tr>
+   
+  </table>
+
+  <ol>
+
+  </ol>
+  
+  </body>
+  </html>
+
+
+{% include "footer.html" %}
+{% endblock %}

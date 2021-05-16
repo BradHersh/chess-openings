@@ -134,31 +134,26 @@
     </div>
 
     <script>
-      x = document.getElementById('title').innerHTML;
-      x = x.toLowerCase();
-      x = x.split(" ")
-      opening = x[0] + '_' + x[1]
+
+
 
  
       var i = 0
       x = 0
-      
+      // get FEN string  for opening and make into array 
       this_opening = {{name|safe}}
       this_opening = this_opening.split(',')
       var fixed_opening = []
+      //give string format, get rid of blank spaces
       for (var i; i<this_opening.length; i++){
-        console.log(this_opening[i])
         fixedstring = this_opening[i].trim()
-        console.log(fixedstring)
         fixed_opening.push(fixedstring)
       }
-      console.log(this_opening)
-      console.log("{{opening}}");
       this_opening = fixed_opening;
       var accuracy = this_opening.length
 
+      // check if opening is play
       var black = "{{opening}}".split(' ')[1]
-      console.log(black)
       if (black == "Defense"){
         var is_black = "True";
         var i = 1
@@ -198,7 +193,6 @@
         }
         
         board2.position(this_opening[x])
-        console.log(x)
 
       })
 
@@ -210,7 +204,6 @@
         else {
           x = x
         }
-        console.log(x)
         board2.position(this_opening[x])
 
       })
@@ -224,7 +217,6 @@
           var board = Chessboard(board1, {position: this_opening[0], draggable: true, onChange: onChange, orientation: 'black'})
           i = 1;
         }
-        console.log(i)
         accuracy = this_opening.length
         document.getElementById('score').innerHTML = "";
         document.getElementById('complete').innerHTML = "";
@@ -235,17 +227,9 @@
 
 
 
-      
-// --- Begin Example JS --------------------------------------------------------
-// --- Begin Example JS --------------------------------------------------------
+
 function onChange (oldPos, newPos) {
-        console.log('Position changed:')
-        console.log('Old position: ' + Chessboard.objToFen(oldPos))
-        console.log('New position: ' + Chessboard.objToFen(newPos))
-        console.log('right position ' + this_opening[i])
-        console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-        console.log(i)
-        console.log(this_opening.length)
+
         if (this_opening.length % 2 == 0 ){
           if (is_black == "False"){
             
@@ -253,7 +237,6 @@ function onChange (oldPos, newPos) {
             if (i<this_opening.length-1){
               if (Chessboard.objToFen(newPos) == this_opening[i]) {
                 var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
-                console.log('yes')
                 i = i + 2
                 if (i == this_opening.length){
                   document.getElementById('complete').style.color = "green";
@@ -267,7 +250,6 @@ function onChange (oldPos, newPos) {
               }
               else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
                   var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
-                  console.log('yes')
                   i = i + 2
                   if (i == this_opening.length){
                     document.getElementById('complete').style.color = "green";
@@ -286,7 +268,6 @@ function onChange (oldPos, newPos) {
               
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
-                console.log('no')
 
                 if (accuracy > 0){
                   accuracy = accuracy - 1
@@ -302,25 +283,21 @@ function onChange (oldPos, newPos) {
             if (i<this_opening.length+1){
               if (Chessboard.objToFen(newPos) == this_opening[i]) {
                 var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-                console.log('yes')
                 i = i + 2
                 if (i == this_opening.length+1){
                   var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
-                  console.log(i)
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
                   score = (accuracy/this_opening.length)*100
                   document.getElementById('score').innerHTML = score + '%';
 
 
-                  console.log("wowowowowowowowow")
 
                 }
                 
               }
               else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
                   var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-                  console.log('yes')
                   i = i + 2
                   if (i == this_opening.length+1){
                     var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
@@ -339,7 +316,6 @@ function onChange (oldPos, newPos) {
               
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
-                console.log('no')
 
                 if (accuracy > 0){
                   accuracy = accuracy - 1
@@ -348,8 +324,6 @@ function onChange (oldPos, newPos) {
               }
             } else {
               var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'});
-              console.log("hi")
-              console.log(i)
             }
 
           }
@@ -361,9 +335,7 @@ function onChange (oldPos, newPos) {
             if (i<this_opening.length+1){
               if (Chessboard.objToFen(newPos) == this_opening[i]) {
                 var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
-                console.log('yes')
                 i = i + 2
-                console.log(i)
                 if (i == this_opening.length+1){
                   document.getElementById('complete').style.color = "green";
                   document.getElementById('complete').innerHTML = "Complete!";
@@ -378,7 +350,6 @@ function onChange (oldPos, newPos) {
               }
               else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
                   var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange})
-                  console.log('yes')
                   i = i + 2
                   if (i == this_opening.length+1){
                     document.getElementById('complete').style.color = "green";
@@ -398,7 +369,6 @@ function onChange (oldPos, newPos) {
               
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange})
-                console.log('no')
 
                 if (accuracy > 0){
                   accuracy = accuracy - 1
@@ -414,9 +384,7 @@ function onChange (oldPos, newPos) {
             if (i<this_opening.length+1){
               if (Chessboard.objToFen(newPos) == this_opening[i]) {
                 var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-                console.log('yes')
                 i = i + 2
-                console.log("this is the i : " + i)
                 if (i == this_opening.length){
                   var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
                   document.getElementById('complete').style.color = "green";
@@ -428,14 +396,12 @@ function onChange (oldPos, newPos) {
 
 
 
-                  console.log("wowowowowowowowow")
 
                 }
                 
               }
               else if (Chessboard.objToFen(newPos)[Chessboard.objToFen(newPos).length -2 ] == 'K'){
                   var board = Chessboard(board1, {position: this_opening[i+1], draggable: true, onChange: onChange, orientation: 'black'})
-                  console.log('yes')
                   i = i + 2
                   if (i == this_opening.length-2){
                     var board = Chessboard(board1, {position: newPos, draggable: true, onChange: onChange, orientation: 'black'})
@@ -455,7 +421,6 @@ function onChange (oldPos, newPos) {
               
               else {
                 var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'})
-                console.log('no')
 
                 if (accuracy > 0){
                   accuracy = accuracy - 1
@@ -464,8 +429,6 @@ function onChange (oldPos, newPos) {
               }
             } else {
               var board = Chessboard(board1, {position: oldPos, draggable: true, onChange: onChange, orientation: 'black'});
-              console.log("hi")
-              console.log(i)
             }
 
           }
