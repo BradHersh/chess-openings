@@ -106,6 +106,7 @@
       <button id = "next" style = "display:none">Next</button>
       <button id = "back" style = "display:none">Back</button>
       <button id = "newtest" style = "display:none">Select New Test</button>
+      <p id = 'feedback'></p>
 
       <div class="dropdown" id = "dropdown">
         <button class="dropbtn">Dropdown</button>
@@ -163,6 +164,7 @@
         item.className = 'testattempt';
         item.onclick = function (){
              Test = this.id
+
              document.getElementById('dropdown').style.display = "none";
              document.getElementById('list').style.display = "none";
              testnum = parseInt(this.id) + 1
@@ -179,7 +181,10 @@
              document.getElementById('next').style.display = "block";
              }
              document.getElementById("myChart").style.display = "none";
-             document.getElementById('feedback').innerHTML = feedback[item.id];
+             console.log("meowwwwww")
+             document.getElementById('feedback').innerHTML = feedback[this.id];
+             
+
                 
 
              
