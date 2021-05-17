@@ -88,6 +88,12 @@
             color:rgb(5, 4, 19)
         }
 
+        .rndbtn{
+            height: 100px;
+            width: 80px;
+            border-radius: 30%;
+        }
+
       </style>
   </head>
 
@@ -95,33 +101,84 @@
       <br>
       <h1>{{opening}}</h1>
       <h3 id = "selecttest">Select test with errors</h3>
-      <h3 id = 'TestNumber'></h3>
-      <h5 id = "mistakeNumber"></h5>
-
-      <div id="myBoard" style="width: 400px; display:none",></div>
-
-      <button id="Pos" style = "display:none">Show Position</button>
-      <button id="Mistake" style=  "display:none">Mistake</button>
-      <button id="correct" style = "display:none">Correct Move</button>
-      <button id = "next" style = "display:none">Next</button>
-      <button id = "back" style = "display:none">Back</button>
-      <button id = "newtest" style = "display:none">Select New Test</button>
-      <p id = 'feedback'></p>
-
-      <div class="dropdown" id = "dropdown">
-        <button class="dropbtn">Dropdown</button>
-        <div id="openingsid" class="dropdown-content"></div>
+      <p id='introtext'>This is the feedback section for <b>{{opening}}</b>. Only tests with incorrect moves are shown in the drop down and your overall progress is mapped below on the graph. To select a test to review hover over the drop down bar and then select the test you want to check. The test are ordered chronologically so that if you want ot review your most recent test just go to the last one committed to the dropdown. Happy learning!!</p>
+      
+      <div class="row" style="margin-left: 2%">
+        <div class="dropdown" id = "dropdown" style="margin-right: 1%;">
+            <button class="dropbtn">Choose your test!</button>
+            <div id="openingsid" class="dropdown-content"></div>
+        </div>
+        <div>
+            <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
+        </div>
       </div>
 
 
-      <button id = "newopening"><a href = "{{ url_for('feedback2') }}">Choose new opening</a></button>
-
+      
       <hr>
 
       <!--Search chart.js documentation to style the chart. the location is base.html-->
       <div class="container" style="background-color: white;">
           <canvas id = "myChart"></canvas>
       </div>
+
+
+
+
+
+
+      <!--This section is for the rendering of feedback etc-->
+      <h3 id = 'TestNumber' style="margin-left: 4.8%;"></h3>
+      <h5 id = "mistakeNumber" style="margin-left: 4.8%;"></h5>></h5>
+
+      <div class="row">
+          <div class="col-sm-4">
+              <div id="myBoard" style="width: 400px; display:none; margin-left: 15%",></div>
+          </div>
+          <div class="col-sm-4" id = "instructions" style = "display:none;">
+              <div>
+                  <h3 style="padding-bottom: 1%;">Feedback keys:</h3>
+              </div>
+              <div class="row">
+                  <div class="col-sm-2">
+                    <button id="Pos" class='rndbtn' style = "display:none">Show Position</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button id="Mistake" class='rndbtn' style=  "display:none">Mistake</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button id="correct" class='rndbtn' style = "display:none">Correct Move</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button id = "next" class='rndbtn' style = "display:none">Next</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button id = "back" class='rndbtn' style = "display:none">Back</button>
+                  </div>
+                  <div class="col-sm-2">
+                    <button id = "newtest" class='rndbtn' style = "display:none">Select New Test</button>
+                  </div>
+              </div>
+              <div style="padding-top: 2%">
+                <p>The first button is to initially visualise the board so make sure before you click anything else click <B style="color: blue;">Show Position</B>.</p>
+
+                <p>To start your analysis click <B style="color: red;">Mistake</B>. What will happen is the board will animate the incorrect move that you made in the test in order to jog you memory. </p>
+
+                <p>Now click <B style="color: yellow;">Correct Move</B> to see what you should have done in that position.</p>
+
+                <p>If you made multiple mistakes within the test two buttons will appear between the <B style="color: yellow;">Correct Move</B> and <B style="color: lightcyan;">Select new test</B> buttons. The buttons will be labelled <B style="color: pink;">Next</B> and <B style="color: lightgreen;">Back</B>. These buttons are used to toggle between the sequence of mistakes that you made iwthin the same test. Make sure you click <B style="color: blue;">Show Position</B> between mistakes.</p>
+
+              </div>
+          </div>
+          <div class="col-sm-1"></div>
+          <div id = 'feedbackdiv' class="col-sm-2" style="border: double blanchedalmond 3px; border-radius: 5%; padding-top: 1%; display:none;">
+            <h3 style="border-bottom: double blanchedalmond 2px;">Feedback from tutor:</h3>
+            <p id = 'feedback'></p>
+          </div>
+          <div class="col-sm-1"></div>
+      </div>
+      
+      
 
   </body>
 
@@ -182,7 +239,9 @@
              }
              document.getElementById("myChart").style.display = "none";
              document.getElementById('feedback').innerHTML = feedback[this.id];
-             
+             document.getElementById('instructions').style.display = "block";
+             document.getElementById('feedbackdiv').style.display = "block";
+
 
                 
 
@@ -315,6 +374,10 @@ $('#newtest').on('click', function () {
     document.getElementById('newopening').style.display = "block";
     document.getElementById('myChart').style.display = "block";
     document.getElementById('feedback').innerHTML = "";
+    document.getElementById('instructions').style.display = "none";
+    document.getElementById('feedbackdiv').style.display = "none";
+
+
 
 
 
