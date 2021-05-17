@@ -108,13 +108,19 @@ Unit tests were designed to test all our defined user stories. Frontend tests we
 4. Select an opening
 5. Complete the test and submit the result
 
-To run these tests, run:
+To run these tests, make sure you have run the application using 
+```
+$ flask run
+```
+
+After that IN A NEW TERMINAL run 
 
 ```
-python -m tests.systemtests
+$ python -m tests.systemtests
 ```
+If all tests run succesfully, your terminal should ouput "Ran 11 tests in 74.166s"
 ```
-python -m tests.unittestDB
+$ python -m tests.unittestDB
 ```
 
 Tests include:
