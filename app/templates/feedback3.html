@@ -89,8 +89,8 @@
         }
 
         .rndbtn{
-            height: 100px;
-            width: 80px;
+            height: 110%;
+            width: 170%;
             border-radius: 30%;
         }
 
@@ -124,16 +124,12 @@
 
 
 
-
-
-
-      <!--This section is for the rendering of feedback etc-->
-      <h3 id = 'TestNumber' style="margin-left: 4.8%;"></h3>
-      <h5 id = "mistakeNumber" style="margin-left: 4.8%;"></h5>></h5>
-
       <div class="row">
           <div class="col-sm-4">
-              <div id="myBoard" style="width: 400px; display:none; margin-left: 15%",></div>
+              <!--This section is for the rendering of feedback etc-->
+              <h3 id = 'TestNumber' style="margin-left: 4.8%;"></h3>
+              <h5 id = "mistakeNumber" style="margin-left: 4.8%;"></h5>
+              <div id="myBoard" style="width: 400px; display:none;"></div>
           </div>
           <div class="col-sm-4" id = "instructions" style = "display:none;">
               <div>
@@ -204,12 +200,13 @@
   for (var i = 0; i<x.length; i++){
       if (x[i].length != 0){
           new_x.push(x[i])
-          new_feedback.push(x[i])
+          new_feedback.push(feedback[i])
       }
   }
 
   x = new_x;
   feedback = new_feedback;
+  console.log(new_feedback[0])
   var Test
   // uses DOM to create the dropdown menu in which all tests exist, also gives onclick functionality
   // which uses DOM again to remove and show relevant elements on the page

@@ -93,7 +93,7 @@
       x = 0
 
 //gets opening FEN string, splits into array and fixes it by removing white spaces
-       this_opening = {{opening|safe}}
+       var this_opening = {{opening|safe}};
        this_opening = this_opening.split(',')
        var fixed_opening = []
        for (var i; i<this_opening.length; i++){
