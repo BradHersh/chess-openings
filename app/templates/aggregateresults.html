@@ -2,6 +2,15 @@
 {% block content %}
 <head>
     <style>
+    html, body {
+        height: 90%;
+        margin: 0;
+    }
+
+    #wrapper {
+        min-height: 90%; 
+        
+    }
     table {
       font-family: arial, sans-serif;
       border-collapse: collapse;
@@ -17,35 +26,35 @@
  
     </style>
     </head>
-    <body>
+<body>
+  <div id='wrapper'>
+    <h1 style="text-align: center; padding-top: 3%;">Aggregate Results:</h1>
+    <hr>
+    <table>
+        <tr>
+          <th>Total Openings</th>
+          <th>Total Tests</th>
+          <th>Total Users</th>
+          <th>Most Common Opening</th>
+          <th>Average Mark</th>
+          <th>Most Active User</th>
+        </tr>
+        <tr>
+          <td>{{numopenings}}</td>
+          <td>{{numtests}}</td>
+          <td>{{numusers}}</td>
+          <td>{{commonopening}}</td>
+          <td>{{averagemark}}</td>
+          <td>{{bestuser}}</td>
 
+        </tr>
+      
+      </table>
 
-<hr>
-<table>
-    <tr>
-      <th>Total Openings</th>
-      <th>Total Tests</th>
-      <th>Total Users</th>
-      <th>Most Common Opening</th>
-      <th>Average Mark</th>
-      <th>Most Active User</th>
-    </tr>
-    <tr>
-      <td>{{numopenings}}</td>
-      <td>{{numtests}}</td>
-      <td>{{numusers}}</td>
-      <td>{{commonopening}}</td>
-      <td>{{averagemark}}</td>
-      <td>{{bestuser}}</td>
+      <ol>
 
-    </tr>
-   
-  </table>
-
-  <ol>
-
-  </ol>
-  
+      </ol>
+   </div>
   </body>
   </html>
 
