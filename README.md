@@ -1,17 +1,11 @@
 # chess-openings
 
-## Requirements
-
-- Python3
-- Flask
 
 ## Usage
 
-Clone repository to local machine:
+1. Unzip the folder "Chess-Openings.zip" and open in your chosen application:
 
-```
-$ git clone git@github.com:BradHersh/chess-openings.git
-```
+2. Open a terminal and navigate to the project directory
 
 Create virtual environment: 
 ```
@@ -19,7 +13,7 @@ $ python -m venv venv
 ```
 
 
-Go into the project directory on command line and run the command:
+Run the command to activate the virtual environment:
 
 ```
 $ source venv/bin/activate (for Mac)
@@ -28,7 +22,7 @@ $ source venv/bin/activate (for Mac)
 $ venv/Scripts/activate (for Windows)
 ```
 
-Install requirements: 
+Install requirements to the virtual environment: 
 ```
 $ pip install -r requirements.txt
 ```
@@ -38,7 +32,7 @@ Next, run the application using flask on `localhost` using the following command
 ```
 $ flask run
 ```
-Open `http://127.0.0.1:5000/` and enjoy!
+Open `http://127.0.0.1:5000/` in your browser and enjoy!
 
 ## Purpose and Design
 
@@ -102,19 +96,26 @@ The web app was built using a flask web application framework, as well as utilis
 
 ## Unit Tests
 
-Unit tests were designed to test all our defined user stories. Frontend tests were created with selenium, while backend tests were created by sending a new user directly to the database. For example, if doing a test, the test will use selenium to: 
+Unit tests were designed to test all our defined user stories. Frontend tests were created with selenium, while backend tests were created by sending a new user directly to the database. For example, a unit test to test whether practicing an opening is working, the test will use selenium to: 
 1. Open the website
 2. Login to a user account
 3. Navigate to the testing page
 4. Select an opening
-5. Complete the test and submit the result
+5. Pratice the opening
+
+Another example would be a unit test to complete a test for an opening, in whch the test will use selenium to:
+1. Open the website
+2. Login to the user account
+3. Navigate to the practice page
+4. Select an opening
+5. Complete the test and practice the opening
 
 To run these tests, make sure you have run the application using 
 ```
 $ flask run
 ```
 
-After that IN A NEW TERMINAL run 
+After that, IN A NEW TERMINAL, run 
 
 ```
 $ python -m tests.systemtests
