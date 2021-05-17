@@ -114,7 +114,7 @@ To run these tests, run:
 python -m tests.systemtests
 ```
 ```
-python -m tests.unittests
+python -m tests.unittestDB
 ```
 
 Tests include:
