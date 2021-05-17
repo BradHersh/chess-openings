@@ -19,11 +19,6 @@ $ python -m venv venv
 ```
 
 
-Install requirements: 
-```
-$ pip install -r requirements.txt
-```
-
 Go into the project directory on command line and run the command:
 
 ```
@@ -32,6 +27,12 @@ $ source venv/bin/activate (for Mac)
 ```
 $ venv/Scripts/activate (for Windows)
 ```
+
+Install requirements: 
+```
+$ pip install -r requirements.txt
+```
+
 Next, run the application using flask on `localhost` using the following command:
 
 ```
