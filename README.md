@@ -27,7 +27,10 @@ $ pip install -r requirements.txt
 Go into the project directory on command line and run the command:
 
 ```
-$ source venv/Scripts/activate
+$ source venv/bin/activate (for Mac)
+```
+```
+$ venv/Scripts/activate (for Windows)
 ```
 Next, run the application using flask on `localhost` using the following command:
 
@@ -76,6 +79,19 @@ This involved the following phases which were carried out in a cyclical manner:
 4. Consolidating user stories and refactoring code.
 5. Designing and executing unit tests at the end of each sprint.
 
+We broke the projec into three major sprints. You can see the designated user stories for each sprint in "User Stories Chess.xlsx". However, we will discuss our overarching philosophy for each sprint below. 
+
+### Sprint 1:
+In sprint 1 we primarily focussed on two main areas. Firstly, we fully familarised ourselves with the Flask web application framework and used this to begin building the structure for our application. Secondly, we began completing the most basic high value functionality required in an educational website - practicing content and testing. 
+
+### Sprint 2:
+In sprint 2 we were fully educated and capable of building our application, and our application contained essential functionality. In this sprint we began designing the stlying for our website, developing the additional essential functionality and connecting a back end to make our website fully dynamic. 
+
+### Sprint 3:
+In sprint 3, we had completely the most important, high value functionality required for our application. Sprint 3 was primarily concerned with including functionality which went above and beyond those required in the project brief. For example, included making the website entirely dynamic using DOM to generate web pages for when openings are added or removed. Furthermore, we worked on improving the aesthetics and styling of our website. 
+
+
+
 
 ## Architecture 
 
@@ -85,9 +101,33 @@ The web app was built using a flask web application framework, as well as utilis
 
 ## Unit Tests
 
-Unit tests were designed to test all our defined user stories. They were created with selenium. 
+Unit tests were designed to test all our defined user stories. Frontend tests were created with selenium, while backend tests were created by sending a new user directly to the database. For example, if doing a test, the test will use selenium to: 
+1. Open the website
+2. Login to a user account
+3. Navigate to the testing page
+4. Select an opening
+5. Complete the test and submit the result
 
-STEVE GIVE MORE DETAIL
+To run these tests, run:
+
+```
+python -m tests.systemtests
+```
+```
+python -m tests.unittests
+```
+
+Tests include:
+- The ability to register
+- The ability to log in
+- The ability for an admin to create/delete an opening
+- The ability to learn an opening
+- The ability to test an opening
+- The ability to check progress
+- The ability to check results
+- The ability to check feedback
+- Check if the correct inputs are sent to the databbase
+
 
 ## Commit Logs
 
