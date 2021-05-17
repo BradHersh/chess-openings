@@ -85,9 +85,29 @@ The web app was built using a flask web application framework, as well as utilis
 
 ## Unit Tests
 
-Unit tests were designed to test all our defined user stories. They were created with selenium. 
+Unit tests were designed to test all our defined user stories. Frontend tests were created with selenium, while backend tests were created by sending a new user directly to the database. For example, if the test is creating a new opening, the test will: 
+1. Open the website
+2. Login to the admin account
+3. Navigate to the openings page
+4. Create a new opening
+5. Save the opening to the database
 
-STEVE GIVE MORE DETAIL
+To run these tests, run:
+
+python -m tests.systemtests
+python -m tests.unittests
+
+Tests include:
+- The ability to register
+- The ability to log in
+- The ability for an admin to create/delete an opening
+- The ability to learn an opening
+- The ability to test an opening
+- The ability to check progress
+- The ability to check results
+- The ability to check feedback
+- Check if the correct inputs are sent to the databbase
+
 
 ## Commit Logs
 
