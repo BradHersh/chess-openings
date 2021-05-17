@@ -139,17 +139,20 @@
 
 //reads in incorrect moves 
   x = {{mistakes|safe}}
+  new_x = []
+  new_feedback = []
 //reads in written feedback 
   feedback = {{feedback|safe}}
   //removes 100% scores (no mistakes)
   for (var i = 0; i<x.length; i++){
-      if (x[i] == ""){
-          x.splice(i,1)
-          feedback.splice(i,1)
+      if (x[i].length != 0){
+          new_x.push(x[i])
+          new_feedback.push(x[i])
       }
   }
 
-
+  x = new_x;
+  feedback = new_feedback;
   var Test
   // uses DOM to create the dropdown menu in which all tests exist, also gives onclick functionality
   // which uses DOM again to remove and show relevant elements on the page
