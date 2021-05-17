@@ -323,11 +323,19 @@ def aggregateresults():
     lst = np.array(lst)
     averagemark = str(round(np.average(lst),2)) + '%'
     bestusers = db.session.query(Results.user_id,
-    func.count(Results.opening).label('qty')
-    ).group_by(Results.opening
+    func.count(Results.result).label('qty')
+    ).group_by(Results.user_id
     ).order_by(desc('qty'))
-    bestuser = bestusers[0][0]
-    bestuser = User.query.get(bestuser).username
+    for i in bestusers:
+        if i[0]!=None:
+            x = i[0]
+            bestuser = User.query.get(x).username
+
+            break
+        else: 
+            x = "not yet"
+            bestuser = x
+
 
 
 
